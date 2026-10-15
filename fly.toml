@@ -4,7 +4,7 @@
 #
 
 app = 'procurement-audit-harness'
-primary_region = 'ams'
+primary_region = 'lax'
 
 [build]
   dockerfile = 'Dockerfile'
