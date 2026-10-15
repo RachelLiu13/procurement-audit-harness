@@ -1,0 +1,48 @@
+"""Settings for the harness, read from environment variables or Streamlit secrets."""
+from __future__ import annotations
+
+import os
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+PROJECT_TEMPLATE = ROOT / "project"          # Part A: CLAUDE.md, .claude/, scripts/, data/
+EXAMPLE_RUN = ROOT / "example_run" / "outputs"  # a completed Part A run, for browsing
+RUNS_DIR = Path(os.environ.get("RUNS_DIR", "/tmp/audit-planner-runs"))
+
+
+def _secret(name: str, default: str | None = None) -> str | None:
+    """Environment first, then Streamlit secrets (st.secrets) when running under Streamlit."""
+    if os.environ.get(name):
+        return os.environ[name]
+    try:
+        import streamlit as st
+        if name in st.secrets:
+            return str(st.secrets[name])
+    except Exception:
+        pass
+    return default
+
+
+def api_key() -> str | None:
+    return _secret("ANTHROPIC_API_KEY")
+
+
+def model() -> str:
+    return _secret("CLAUDE_MODEL", "claude-opus-5-5")
+
+
+def effort() -> str:
+    return _secret("CLAUDE_EFFORT", "medium")
+
+
+def app_password() -> str | None:
+    return _secret("APP_PASSWORD")
+
+
+# Per-agent cap on model turns, so a stuck agent cannot loop (and spend) forever.
+MAX_TURNS = int(_secret("MAX_TURNS", "60"))
+# Cap on agent-team turns (one turn = one teammate handling its inbox).
+MAX_TEAM_TURNS = int(_secret("MAX_TEAM_TURNS", "30"))
+MAX_ACTIVE_RUNS = int(_secret("MAX_ACTIVE_RUNS", "1"))
+BASH_TIMEOUT = 600
+TOOL_OUTPUT_LIMIT = 30_000
