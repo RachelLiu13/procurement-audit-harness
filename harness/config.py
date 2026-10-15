@@ -7,6 +7,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PROJECT_TEMPLATE = ROOT / "part-a"            # the Part A repository: CLAUDE.md, .claude/, scripts/, data/
 EXAMPLE_RUN = PROJECT_TEMPLATE / "outputs"     # Part A's completed, signed-off run, for browsing
+SAVED_RUNS = ROOT / "saved-runs"               # Part B runs restored after a server restart
 RUNS_DIR = Path(os.environ.get("RUNS_DIR", "/tmp/audit-planner-runs"))
 
 

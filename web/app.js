@@ -129,8 +129,16 @@ function about() {
     `<li><code>${c}</code> <b>${t}</b> — ${esc(w)} → <code>${esc(o)}</code></li>`).join("");
 }
 
+// "live" is the saved end-to-end run in web/live-run/ (static files, no server needed).
+const LIVE = "live-run";
+const listFiles = (id) => id === "live" ? fetch(`${LIVE}/files.json`).then((r) => r.json())
+  : api(`/api/runs/${encodeURIComponent(id)}/files`);
+const readFile = (id, f) => id === "live"
+  ? fetch(`${LIVE}/outputs/${f.split("/").map(encodeURIComponent).join("/")}`).then((r) => r.text())
+  : api(`/api/runs/${encodeURIComponent(id)}/file?path=${encodeURIComponent(f)}`);
+
 async function filesBrowser(el, id) {
-  let files = await api(`/api/runs/${encodeURIComponent(id)}/files`);
+  let files = await listFiles(id);
   if (!files.length) { el.innerHTML = '<p class="muted">No outputs yet.</p>'; return; }
   files = [...KEY_FILES.filter((f) => files.includes(f)), ...files.filter((f) => !KEY_FILES.includes(f))];
   const keep = el.dataset.file && files.includes(el.dataset.file) ? el.dataset.file : files[0];
@@ -139,7 +147,7 @@ async function filesBrowser(el, id) {
     <a class="dl small" target="_blank" rel="noopener">open raw</a></div><div class="view card md"></div>`;
   const show = async (f) => {
     el.dataset.file = f;
-    const text = await api(`/api/runs/${encodeURIComponent(id)}/file?path=${encodeURIComponent(f)}`);
+    const text = await readFile(id, f);
     const view = $(".view", el);
     if (f.endsWith(".md")) view.innerHTML = md(text);
     else if (f.endsWith(".json")) { let t = text; try { t = JSON.stringify(JSON.parse(text), null, 1); } catch { } view.innerHTML = `<pre>${esc(t)}</pre>`; }
@@ -206,7 +214,10 @@ async function tick(id) {
   renderHeader(s);
   if (s.status !== lastStatus) { lastStatus = s.status; await renderAction(id, s); refreshRuns(); }
   await loadEvents(id);
+  // Keep polling at the gates too (more slowly): someone else may decide in another browser.
+  // The gate forms are redrawn only when the status changes, so typing is not interrupted.
   if (s.status === "running" || s.status === "created") poll = setTimeout(() => tick(id), 4000);
+  else if ((s.status || "").startsWith("awaiting")) poll = setTimeout(() => tick(id), 15000);
 }
 
 function renderHeader(s) {
@@ -304,11 +315,8 @@ async function decisionsForm(el, id, s) {
   };
 }
 
-async function loadEvents(id) {
-  const detail = $("#detail") && $("#detail").checked;
-  const { total, events } = await api(`/api/runs/${encodeURIComponent(id)}/events?after=${evCount}`);
-  evCount = total;
-  const html = events.filter((e) => detail || !["result", "thinking"].includes(e.kind)).map((e) => {
+function eventsHtml(events, detail) {
+  return events.filter((e) => detail || !["result", "thinking"].includes(e.kind)).map((e) => {
     const pre = ["tool", "result", "script", "error"].includes(e.kind);
     const long = e.text.length > 600 && !["report", "decision", "stage"].includes(e.kind);
     const body = pre ? `<pre>${esc(e.text.slice(0, 6000))}</pre>`
@@ -317,15 +325,49 @@ async function loadEvents(id) {
     return `<div class="ev ${esc(e.kind)}">` + (long ? `<details><summary>${head} ${esc(e.text.slice(0, 90))}…</summary><div class="body">${body}</div></details>`
       : `${head}<div class="body">${body}</div>`) + "</div>";
   }).reverse().join("");
+}
+
+async function loadEvents(id) {
+  const detail = $("#detail") && $("#detail").checked;
+  const { total, events } = await api(`/api/runs/${encodeURIComponent(id)}/events?after=${evCount}`);
+  evCount = total;
+  const html = eventsHtml(events, detail);
   if (html) $("#events").insertAdjacentHTML("afterbegin", html);
   if (!$("#events").innerHTML) $("#events").innerHTML = '<p class="muted">No activity yet.</p>';
   else { const p = $("#events > p.muted"); if (p && $("#events").children.length > 1) p.remove(); }
+}
+
+// ------------------------------------------------------------------ saved live run
+async function livePage() {
+  const [s, ev] = await Promise.all([fetch(`${LIVE}/state.json`).then((r) => r.json()),
+    fetch(`${LIVE}/events.json`).then((r) => r.json())]);
+  const events = ev.events || ev;
+  const first = events[0] ? events[0].t.replace("T", " ") : "", last = events.length ? events[events.length - 1].t.replace("T", " ") : "";
+  $("#main").innerHTML = `<h1>Part B live run <code>${esc(s.id)}</code></h1>
+    <p class="muted">A complete end-to-end run of this deployed harness, from the Contract Rules PDF to the auditor's
+    sign-off, ${esc(first)} → ${esc(last)} (server time, UTC). Saved from the server so it stays visible after the
+    free instance restarts. Read-only: start your own run from the left.</p>
+    <div id="stepper" class="stepper"></div><div id="banner"></div><div id="usage" class="muted small"></div>
+    ${s.lead_report ? `<div class="card"><h3>Lead's report</h3><div class="md">${md(s.lead_report)}</div></div>` : ""}
+    <div class="tabs"><button data-t="activity" class="on">Agent activity (${events.length} events)</button><button data-t="outputs">Outputs</button></div>
+    <div id="t-activity"><div class="row small"><label><input type="checkbox" id="detail"> Show tool results and thinking</label></div><div id="events"></div></div>
+    <div id="t-outputs" hidden></div>`;
+  renderHeader(s);
+  const draw = () => { $("#events").innerHTML = eventsHtml(events, $("#detail").checked); };
+  $("#detail").onchange = draw; draw();
+  document.querySelectorAll(".tabs button").forEach((b) => b.onclick = () => {
+    document.querySelectorAll(".tabs button").forEach((x) => x.classList.toggle("on", x === b));
+    $("#t-activity").hidden = b.dataset.t !== "activity";
+    $("#t-outputs").hidden = b.dataset.t !== "outputs";
+    if (b.dataset.t === "outputs" && !$("#t-outputs").innerHTML) filesBrowser($("#t-outputs"), "live");
+  });
 }
 
 // ------------------------------------------------------------------ boot
 (async function boot() {
   const id = runId();
   if (!id) about();
+  if (id === "live") livePage().catch(() => $("#main").innerHTML = '<div class="banner err">The saved run is not available.</div>');
   if (!(await connect())) {
     if (id) $("#main").innerHTML = '<div class="banner err">The server cannot be reached. Try again in a minute.</div>';
     return;
@@ -333,5 +375,5 @@ async function loadEvents(id) {
   if (health.password_required && !store.get("pw")) await login();
   refreshRuns();
   if (id === "example") examplePage().catch((e) => $("#main").textContent = e.message);
-  else if (id) runPage(id);
+  else if (id && id !== "live") runPage(id);
 })();
