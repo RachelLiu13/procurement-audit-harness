@@ -1,14 +1,14 @@
 """Save one finished run from the deployed server into the repository, in both places
 it is kept, so the two copies always match:
 
-- web/live-run/  static files for the read-only "Part B live run" page on Vercel
+- web/live-run/  static files for the read-only "Part B live run" page
                  (state.json, events.json, files.json, outputs/<text files>)
 - saved-runs/<id>/  what the agent server restores after a restart
                  (run.json, events.jsonl, outputs/)
 
-Usage: python save_live_run.py <run-id> [https://<site>.vercel.app]
+Usage: python save_live_run.py <run-id> [https://<app>.fly.dev]
 
-Pushing saved-runs/ redeploys the agent server (which then restores this run), so push
+Redeploying (fly deploy) restarts the server, which then restores this run, so deploy
 when no other run is in progress.
 """
 from __future__ import annotations
@@ -34,7 +34,7 @@ def fetch(url: str) -> bytes:
 
 def main() -> int:
     run_id = sys.argv[1]
-    site = (sys.argv[2] if len(sys.argv) > 2 else "https://procurement-audit-harness-web.vercel.app").rstrip("/")
+    site = (sys.argv[2] if len(sys.argv) > 2 else "https://procurement-audit-harness.fly.dev").rstrip("/")
     api = f"{site}/api/runs/{run_id}"
     out = Path(__file__).parent / "web" / "live-run"
     if out.exists():

@@ -1,7 +1,7 @@
 # Procurement Audit Planner: independent agent harness (Part B)
 
-- **Website (Part B submission):** https://procurement-audit-harness-web.vercel.app
-- **Completed end-to-end run, signed off:** https://procurement-audit-harness-web.vercel.app/?run=live
+- **Website (Part B submission):** https://procurement-audit-harness.fly.dev
+- **Completed end-to-end run, signed off:** https://procurement-audit-harness.fly.dev/?run=live
   (every agent's tool calls and messages, both auditor gates, the final pack, and the lead's reports
   before and after sign-off; the zip of all outputs downloads from that page)
 - **Part A repository:** https://github.com/crystaljingjiang/procurement-audit-planner
@@ -14,7 +14,7 @@ It only ran inside Claude Code on a team member's machine.
 | Folder | What it is |
 | --- | --- |
 | [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs. The architecture (skills, agents, prompts, scripts, checks) is kept as it was; the only change is to `build_pack.py`'s sample-count wording, which now reports sample rows *and* unique transactions (see `post-sign-off-notes.md` in the live run) |
-| [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (2026-10-15): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Two copies, each with a job: `saved-runs/` is what the agent server restores after a restart, `web/live-run/` is the read-only **Part B live run** page on Vercel. Update them only together, with `python save_live_run.py <run-id>`, which writes both and checks they are identical |
+| [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (2026-10-15): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Two copies, each with a job: `saved-runs/` is what the agent server restores after a restart, `web/live-run/` is the read-only **Part B live run** page. Update them only together, with `python save_live_run.py <run-id>`, which writes both and checks they are identical |
 | everything else | **Part B**, the deployed harness described below |
 
 This repository turns it into an **independently deployed web application**.
@@ -24,15 +24,19 @@ API, and a web front end gives the human auditor the two gates. Nothing runs
 on anyone's local machine:
 
 ```
-browser ──► Vercel (web/: static site)  ──/api/*──►  Render (server.py: FastAPI + harness, Docker)
+browser ──► Fly.io (server.py: FastAPI + harness, Docker)
+                 ├─ /       the website (web/)
+                 └─ /api/*  runs, gates, events, files
                                                           │
                                                           └──► Claude API (the agents)
 ```
 
-Vercel serves the site and forwards `/api/*` to the agent server. The agent
-server runs on Render because a run lasts 30–60 minutes and waits on the
-auditor between stages, which is longer than Vercel's serverless functions
-allow. It also needs `pdftotext` (poppler) for the PDF quote checks.
+One Fly.io app serves both the website and the agent API from the same Docker
+image, so there is a single URL. The agents need a long-lived server: a run
+lasts 30–60 minutes and waits on the auditor between stages, longer than
+serverless functions allow. The machine never auto-stops, and runs are kept on
+a Fly volume (`/data`), so a run waiting at a gate survives a restart. The image
+also installs `pdftotext` (poppler) for the PDF quote checks.
 
 ## What runs, end to end
 
@@ -73,8 +77,8 @@ message and report as it happens.
 ## Repository layout
 
 ```
-web/                   the Vercel site: index.html, app.js, style.css, vercel.json (/api rewrite)
-server.py              FastAPI API over the harness (runs, gates, events, files, zip)
+web/                   the website: index.html, app.js, style.css (served by server.py)
+server.py              FastAPI: the API over the harness (runs, gates, events, files, zip) and the website
 harness/
   agent.py             agent assembly and the tool-use loop
   tools.py             Bash, Read, Write, Edit, Glob, Grep, SendMessage
@@ -89,7 +93,7 @@ saved-runs/            completed Part B runs the server restores after every res
 web/live-run/          the same run as static files, for the read-only "Part B live run" page
 tools/                 sensitivity_case_variant.py (post-sign-off check of the six case-variant notices)
 tests/test_harness.py  offline tests with a scripted fake Claude client
-Dockerfile, render.yaml   the agent server on Render (Python 3.12, poppler-utils, jq)
+Dockerfile, fly.toml   the app on Fly.io (Python 3.12, poppler-utils, jq; volume at /data)
 ```
 
 ## Running it
@@ -105,7 +109,7 @@ export ANTHROPIC_API_KEY=sk-ant-...
 
 Tests (no API key needed): `.venv/bin/python tests/test_harness.py`
 
-To deploy, see [DEPLOY.md](DEPLOY.md). Settings (environment variables on the Render service):
+To deploy, see [DEPLOY.md](DEPLOY.md). Settings (Fly.io secrets, or `[env]` in `fly.toml`):
 
 | Name | Default | Meaning |
 | --- | --- | --- |
