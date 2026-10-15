@@ -69,8 +69,9 @@ harness/
   pipeline.py          stages, runs, state, gates
   gate.py              reads and writes auditor-comments.md and the review.md sign-off
   config.py            settings from environment variables
-project/               the Part A project, copied for each run (CLAUDE.md, .claude/, scripts/, data/)
-example_run/outputs/   Part A's completed and signed-off run, viewable in the app
+project/               a full copy of Part A (its README, CLAUDE.md, .claude/ agents + skills,
+                       scripts/, data/); copied into a fresh workspace for each run
+example_run/outputs/   Part A's outputs/: the completed, signed-off run, viewable in the app
 tests/test_harness.py  offline tests with a scripted fake Claude client
 Dockerfile, render.yaml   the agent server on Render (Python 3.12, poppler-utils, jq)
 ```
