@@ -6,6 +6,8 @@
  "analytics-full/near-matches.csv",
  "analytics-full/notices-clean.csv",
  "analytics-full/notices-dropped-case-variant.csv",
+ "analytics-full/sensitivity-case-variant.json",
+ "analytics-full/sensitivity-case-variant.md",
  "analytics-full/spend-clean.csv",
  "analytics-full/spend-excluded.csv",
  "analytics-full/spend_vs_award.csv",
