@@ -67,6 +67,10 @@ def write_decisions(outputs: Path, decisions: dict[str, tuple[str, str]], other:
     path.write_text(text, encoding="utf-8")
 
 
+AFTER_SIGN_OFF = "**Status after sign-off:**"
+DECIDED_HEADING = "## Auditor decisions at sign-off"
+
+
 def sign_off(outputs: Path, decision: str, name: str, role: str, date: str, comments: str) -> None:
     path = outputs / "review.md"
     text = path.read_text(encoding="utf-8")
@@ -74,4 +78,21 @@ def sign_off(outputs: Path, decision: str, name: str, role: str, date: str, comm
     for field, value in (("Decision", decision), ("Name", name), ("Role", role),
                          ("Date", date), ("Comments", comments)):
         text = re.sub(rf"^- {field}:.*$", f"- {field}: {value}".rstrip(), text, count=1, flags=re.M)
+    # The QA verdict stays as the record of review time; say beside it what the auditor then did.
+    who = f"{name}{f' ({role})' if role else ''} on {date}"
+    status = (f"{AFTER_SIGN_OFF} signed off by {who}; see Auditor sign-off below. The verdict above is "
+              "the QA verdict at review time." if decision == "Sign off" else
+              f"{AFTER_SIGN_OFF} returned to the team by {who}; see Auditor sign-off below.")
+    text = re.sub(rf"\n\n{re.escape(AFTER_SIGN_OFF)}[^\n]*", "", text)
+    text = re.sub(r"^(## Verdict:[^\n]*)$", lambda m: m.group(1) + "\n\n" + status, text, count=1, flags=re.M)
     path.write_text(text, encoding="utf-8")
+
+    # challenges.md keeps its table as the team left it; the auditor's decisions on the rows
+    # marked "for the auditor" are recorded under it.
+    cpath = outputs / "challenges.md"
+    if cpath.exists():
+        ctext = cpath.read_text(encoding="utf-8").split("\n" + DECIDED_HEADING)[0].rstrip()
+        ctext += (f"\n\n{DECIDED_HEADING}\n\nThe challenges marked *for the auditor* were decided by {who} "
+                  f"(decision: {decision}). The decisions are in `review.md` → Auditor sign-off:\n\n"
+                  f"> {comments or '(no comment: the challenges are accepted as left by the team)'}\n")
+        cpath.write_text(ctext, encoding="utf-8")

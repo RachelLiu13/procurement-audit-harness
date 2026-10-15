@@ -475,6 +475,7 @@ def write_pack(out: Path, scope, plan, risks_out, not_tested, cited_rules, P: Pr
     for old in samples_dir.glob("T-*.csv"):
         old.unlink()
     tot_tx = 0
+    row_ids: set = set()  # one transaction can be drawn by several tests
     for r in risks_out:
         for t in r["tests"]:
             s = t["sample"]
@@ -488,7 +489,10 @@ def write_pack(out: Path, scope, plan, risks_out, not_tested, cited_rules, P: Pr
             fig(f"{base}.transactions", s["transactions"], ["planning-memo.md", "audit-program.md"])
             fig(f"{base}.gbp", s["gbp"], ["planning-memo.md", "audit-program.md"])
             tot_tx += s["transactions"]
+            if "row_id" in s["df"].columns:
+                row_ids.update(s["df"]["row_id"].astype(str))
     fig("sample.transactions_total", tot_tx, ["planning-memo.md"])
+    fig("sample.unique_transactions", len(row_ids), ["planning-memo.md"])
     pbc_list = []
     for r in risks_out:
         for t in r["tests"]:
@@ -545,7 +549,8 @@ def write_pack(out: Path, scope, plan, risks_out, not_tested, cited_rules, P: Pr
                          f"{s['transactions']:,} | {s['gbp']:,.2f} |")
             else:
                 M.append(f"| {t['test_id']} | no transaction sample | – | – | – | – |")
-    M.append(f"\nTotal sampled transactions: {tot_tx:,}.")
+    M.append(f"\nTotal sample rows: {tot_tx:,}, covering {len(row_ids):,} unique transactions "
+             "(a transaction drawn by more than one test is counted once per test).")
     auto_lim = ["The spend data covers payments over £500 only; split-purchase and duplicate indicators are lower bounds."]
     if any(t["sample"] and t["sample"]["source"] in NOTICE_FILES for r in risks_out for t in r["tests"]):
         auto_lim.append("Notice-based samples rest on Contracts Finder notices, which are not a contract register; "
@@ -598,7 +603,7 @@ def write_pack(out: Path, scope, plan, risks_out, not_tested, cited_rules, P: Pr
 
     figs["from_analytics"] = sorted(P.from_analytics.values(), key=lambda x: x["path"])
     (out / "pack-figures.json").write_text(json.dumps(figs, indent=1, ensure_ascii=False, default=str), encoding="utf-8")
-    return tot_tx, len(pbc_list)
+    return tot_tx, len(pbc_list), len(row_ids)
 
 
 def main() -> int:
@@ -617,7 +622,7 @@ def main() -> int:
             return 0
         res = build(out, Path(a.plan) if a.plan else out / "audit-plan.json")
         analytics = load(out / "analytics.json", "analytics")
-        tot, npbc = write_pack(out, *res[:7], analytics)
+        tot, npbc, uniq = write_pack(out, *res[:7], analytics)
     except Fail as f:
         print("GATE CLOSED" if a.gate else "PACK NOT BUILT")
         for m in f.msgs:
@@ -626,7 +631,7 @@ def main() -> int:
         return 1
     scope = res[0]
     print(f"pack built: {len(scope['in'])} risk(s) in scope, {sum(len(r['tests']) for r in res[2])} test(s), "
-          f"{tot} sampled transaction(s), {npbc} PBC item(s)")
+          f"{tot} sample row(s) covering {uniq} unique transaction(s), {npbc} PBC item(s)")
     print(f"wrote {out}/planning-memo.md, risk-control-matrix.md, audit-program.md, pack-figures.json, samples/")
     return 0
 
