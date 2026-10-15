@@ -5,6 +5,11 @@ Claude Code project: 3 skills, 6 agents and an agent team
 ([Part A repository](https://github.com/crystaljingjiang/procurement-audit-planner)).
 It only ran inside Claude Code on a team member's machine.
 
+| Folder | What it is |
+| --- | --- |
+| [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs |
+| everything else | **Part B**, the deployed harness described below |
+
 This repository turns it into an **independently deployed web application**.
 A Python harness re-creates what Claude Code provided (the agent loop, the
 tools, sub-agents, skills, agent memory and agent-team messaging) on the Claude
@@ -50,7 +55,7 @@ indicators, not accusations.
 | `/extract-rules` typed by the human | Stage 1 runs the skill in a main-session agent |
 | Experimental agent teams + `SendMessage` | `team.py`: one persistent conversation per teammate. `SendMessage` drops a message in the recipient's inbox, and a scheduler wakes whichever teammate has mail. The lead never relays; it collects `PLANNER DONE`, `CHALLENGER DONE`, `QA DONE` and stops the team |
 | The auditor edits `auditor-comments.md` and `review.md` | `gate.py` writes the same cells from the web forms |
-| Local `.venv` | Each run gets a copy of the project in `RUNS_DIR/<id>`, with `.venv/bin/python` pointing at the server's Python. `pdftotext` and `jq` come from `packages.txt` |
+| Local `.venv` | Each run gets a fresh copy of `part-a/` (without its outputs) in `RUNS_DIR/<id>`, with `.venv/bin/python` pointing at the server's Python. `pdftotext` and `jq` are installed by the `Dockerfile` |
 
 Runs execute in a background thread on the server and record their state in
 `run.json` and an event log in `events.jsonl`. The browser can close and come
@@ -69,9 +74,8 @@ harness/
   pipeline.py          stages, runs, state, gates
   gate.py              reads and writes auditor-comments.md and the review.md sign-off
   config.py            settings from environment variables
-project/               a full copy of Part A (its README, CLAUDE.md, .claude/ agents + skills,
-                       scripts/, data/); copied into a fresh workspace for each run
-example_run/outputs/   Part A's outputs/: the completed, signed-off run, viewable in the app
+part-a/                Part A, exactly as in the Part A repository: README, CLAUDE.md, .claude/
+                       (agents, skills, agent memory), scripts/, data/, outputs/ (the signed-off run)
 tests/test_harness.py  offline tests with a scripted fake Claude client
 Dockerfile, render.yaml   the agent server on Render (Python 3.12, poppler-utils, jq)
 ```
