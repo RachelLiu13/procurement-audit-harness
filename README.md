@@ -1,5 +1,11 @@
 # Procurement Audit Planner: independent agent harness (Part B)
 
+- **Website (Part B submission):** https://procurement-audit-harness-web.vercel.app
+- **Completed end-to-end run, signed off:** https://procurement-audit-harness-web.vercel.app/?run=live
+  (every agent's tool calls and messages, both auditor gates, the final pack, and the lead's reports
+  before and after sign-off; the zip of all outputs downloads from that page)
+- **Part A repository:** https://github.com/crystaljingjiang/procurement-audit-planner
+
 Part A built a procurement audit planner for West Berkshire Council as a
 Claude Code project: 3 skills, 6 agents and an agent team
 ([Part A repository](https://github.com/crystaljingjiang/procurement-audit-planner)).
@@ -7,7 +13,7 @@ It only ran inside Claude Code on a team member's machine.
 
 | Folder | What it is |
 | --- | --- |
-| [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs. One change since: `build_pack.py` reports sample rows *and* unique transactions (see `post-sign-off-notes.md` in the live run) |
+| [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs. The architecture (skills, agents, prompts, scripts, checks) is kept as it was; the only change is to `build_pack.py`'s sample-count wording, which now reports sample rows *and* unique transactions (see `post-sign-off-notes.md` in the live run) |
 | [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (2026-10-15): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Shown on the site as **Part B live run** |
 | everything else | **Part B**, the deployed harness described below |
 
@@ -30,7 +36,7 @@ allow. It also needs `pdftotext` (poppler) for the PDF quote checks.
 
 ## What runs, end to end
 
-| Stage | Component (from Part A, unchanged) | Output |
+| Stage | Component (from Part A) | Output |
 | --- | --- | --- |
 | 1 | `extract-rules` skill, run in the main session | `rules.json`, quotes checked by `verify_quotes.py` |
 | 2 | `spend-analyst` and `findings-analyst` sub-agents, in parallel | `analytics.json`, `history.json` |
@@ -41,8 +47,9 @@ allow. It also needs `pdftotext` (poppler) for the PDF quote checks.
 | 6 | Lead report | summary for the auditor |
 | **Gate 2** | **The auditor signs off (or returns) the pack in the web UI** | `review.md` signed |
 
-Every file the agents read and write is the same as in Part A, so the Python
-builders and the four QA checks run unchanged. The principles carry over: the
+Every file the agents read and write is the same as in Part A, so Part A's
+Python builders and its four QA checks run as they are (apart from the
+sample-count wording in `build_pack.py` noted above). The principles carry over: the
 model reads and judges, Python computes every number; everything is traceable;
 indicators, not accusations.
 
@@ -75,8 +82,12 @@ harness/
   pipeline.py          stages, runs, state, gates
   gate.py              reads and writes auditor-comments.md and the review.md sign-off
   config.py            settings from environment variables
-part-a/                Part A, exactly as in the Part A repository: README, CLAUDE.md, .claude/
-                       (agents, skills, agent memory), scripts/, data/, outputs/ (the signed-off run)
+part-a/                Part A, with its original architecture: README, CLAUDE.md, .claude/
+                       (agents, skills, agent memory), scripts/, data/, outputs/ (Part A's signed-off
+                       run); only build_pack.py's sample-count wording changed
+saved-runs/            completed Part B runs the server restores after every restart
+web/live-run/          the same run as static files, for the read-only "Part B live run" page
+tools/                 sensitivity_case_variant.py (post-sign-off check of the six case-variant notices)
 tests/test_harness.py  offline tests with a scripted fake Claude client
 Dockerfile, render.yaml   the agent server on Render (Python 3.12, poppler-utils, jq)
 ```
