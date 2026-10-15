@@ -79,7 +79,15 @@ To change a setting later, go to the service → **Environment**, edit it and sa
    - Leave the build and output settings empty. The site is plain HTML, CSS and JavaScript.
 4. Click **Deploy**. It takes under a minute. Your URL is shown on the success page, for example `https://procurement-audit-harness.vercel.app`. **This is the URL you submit.**
 
-Every later push to GitHub redeploys both Vercel and Render automatically.
+After that, a push to `main` redeploys automatically, but not always both sides:
+
+- **Vercel** redeploys the website on every push.
+- **Render** redeploys the agent server only when the push changes something it runs. The
+  `buildFilter` in `render.yaml` ignores changes to `web/**`, `tests/**` and Markdown files
+  (`*.md`), so editing the website, the tests or the docs does not redeploy it. A Render redeploy
+  restarts the server and stops any run that is working, so push server changes (`harness/`,
+  `server.py`, `part-a/`, `saved-runs/`, `Dockerfile`, `requirements.txt`) only when no run is in
+  progress.
 
 ## Step 6: Check the full workflow
 
@@ -95,7 +103,7 @@ Every later push to GitHub redeploys both Vercel and Render automatically.
 
 ## Notes
 
-- **Render free plan.** The server sleeps after 15 minutes without requests and wakes on the next visit. While a run is working, the server pings itself to stay awake. Restarts and redeploys clear the stored runs, so download the zip of anything you want to keep. For a guaranteed always-on server, upgrade the Render service to the Starter plan (about $7/month).
+- **Render free plan.** The server sleeps after 15 minutes without requests and wakes on the next visit. While a run is working, the server pings itself to stay awake, but a run waiting at a gate is not kept awake. Restarts and redeploys clear runs that are not saved: a run in progress or waiting at a gate is lost, so finish the gates promptly and download the zip. Completed runs committed to `saved-runs/` (see `save_live_run.py`) are restored on every restart. For a guaranteed always-on server, upgrade the Render service to the Starter plan (about $7/month).
 - **Before you submit,** open the site once yourself so the server is awake when the grader visits.
 - **Part A example run** in the sidebar shows Part A's complete, signed-off outputs. Viewing it doesn't call Claude.
 - **Troubleshooting.**

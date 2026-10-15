@@ -1,10 +1,15 @@
-"""Copy one finished run from the deployed server into web/live-run/, so the site keeps
-showing it after the free Render instance restarts (which clears stored runs).
+"""Save one finished run from the deployed server into the repository, in both places
+it is kept, so the two copies always match:
+
+- web/live-run/  static files for the read-only "Part B live run" page on Vercel
+                 (state.json, events.json, files.json, outputs/<text files>)
+- saved-runs/<id>/  what the agent server restores after a restart
+                 (run.json, events.jsonl, outputs/)
 
 Usage: python save_live_run.py <run-id> [https://<site>.vercel.app]
 
-Writes web/live-run/state.json, events.json, files.json and outputs/<text files>.
-Only web/ changes, so pushing it does not redeploy the agent server.
+Pushing saved-runs/ redeploys the agent server (which then restores this run), so push
+when no other run is in progress.
 """
 from __future__ import annotations
 
@@ -50,8 +55,26 @@ def main() -> int:
                 dest.write_bytes(z.read(name))
                 files.append(rel)
     (out / "files.json").write_text(json.dumps(sorted(files), indent=1))
-    print(f"saved run {run_id} ({state.get('status')}): {len(files)} files to {out}")
-    return 0
+
+    saved = Path(__file__).parent / "saved-runs" / run_id
+    if saved.exists():
+        shutil.rmtree(saved)
+    (saved / "outputs").mkdir(parents=True)
+    for rel in files:
+        dest = saved / "outputs" / rel
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(out / "outputs" / rel, dest)
+    run_state = {k: state.get(k) for k in KEEP_STATE if k != "status_text"}
+    (saved / "run.json").write_text(json.dumps(run_state, indent=1))
+    events = json.loads((out / "events.json").read_text())["events"]
+    (saved / "events.jsonl").write_text("".join(json.dumps(e, ensure_ascii=False) + "\n" for e in events))
+
+    a = sorted(p.relative_to(out / "outputs") for p in (out / "outputs").rglob("*") if p.is_file())
+    b = sorted(p.relative_to(saved / "outputs") for p in (saved / "outputs").rglob("*") if p.is_file())
+    same = a == b and all((out / "outputs" / f).read_bytes() == (saved / "outputs" / f).read_bytes() for f in a)
+    print(f"saved run {run_id} ({state.get('status')}): {len(files)} files to {out} and {saved}; "
+          f"copies identical: {same}")
+    return 0 if same else 1
 
 
 if __name__ == "__main__":
