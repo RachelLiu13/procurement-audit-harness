@@ -18,7 +18,8 @@ from pathlib import Path
 
 TEXT = {".md", ".json", ".csv", ".txt"}
 KEEP_STATE = ["id", "status", "stage", "created", "updated", "reuse_phase1", "model", "effort", "usage",
-              "verdict", "gate_output", "assessor_report", "lead_report", "status_text"]
+              "verdict", "gate_output", "assessor_report", "lead_report", "final_report", "final_report_status",
+              "status_text"]
 
 
 def fetch(url: str) -> bytes:

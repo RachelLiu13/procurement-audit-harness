@@ -218,6 +218,7 @@ async function tick(id) {
   // The gate forms are redrawn only when the status changes, so typing is not interrupted.
   if (s.status === "running" || s.status === "created") poll = setTimeout(() => tick(id), 4000);
   else if ((s.status || "").startsWith("awaiting")) poll = setTimeout(() => tick(id), 15000);
+  else if (s.final_report_status === "writing") { lastStatus = null; poll = setTimeout(() => tick(id), 5000); }
 }
 
 function renderHeader(s) {
@@ -242,11 +243,16 @@ function renderHeader(s) {
 function leadCard(s) {
   if (!s.lead_report) return "";
   const decided = s.status === "complete" || (s.status === "blocked" && (s.stage || "").startsWith("Returned"));
-  const title = decided ? "Lead's report · before sign-off" : "Lead's report";
-  const note = !decided ? "" : `<p class="banner ok small">Historical report, written before the auditor's decision.
-    Final status: <b>${s.status === "complete" ? "Signed off" : "Returned to the team"}</b>. The decision, the
-    auditor's comments and the status note are in <code>review.md</code> → Auditor sign-off (Outputs tab).</p>`;
-  return `<div class="card"><h3>${title}</h3>${note}<div class="md">${md(s.lead_report)}</div></div>`;
+  if (!decided) return `<div class="card"><h3>Lead's report</h3><div class="md">${md(s.lead_report)}</div></div>`;
+  const final = s.final_report
+    ? `<div class="card"><h3>Lead's report · after sign-off</h3><div class="md">${md(s.final_report)}</div></div>`
+    : s.final_report_status === "writing"
+      ? `<div class="banner run">⏳ The lead is writing its report on the auditor's decision…</div>`
+      : `<div class="banner ok small">Final status: <b>${s.status === "complete" ? "Signed off" : "Returned to the team"}</b>.
+         The decision and the auditor's comments are in <code>review.md</code> → Auditor sign-off (Outputs tab).</div>`;
+  return final + `<div class="card"><details><summary><b>Lead's report · before sign-off</b>
+    <span class="muted small">(historical: written before the auditor's decision, kept as it was)</span></summary>
+    <div class="md">${md(s.lead_report)}</div></details></div>`;
 }
 
 async function renderAction(id, s) {

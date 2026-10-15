@@ -56,6 +56,26 @@ Copy figures from those files; compute nothing. If review.md is missing or
 the verdict is BLOCKED, say the pack is not ready for sign-off and why.
 """
 
+LEAD_FINAL_ROLE = """\
+You are the lead (the main session) of the Phase 3 agent team. You wrote a report
+for the auditor before sign-off. The auditor has now recorded a decision in the
+sign-off block at the end of `outputs/review.md`. Write the lead's final report,
+under 250 words, for someone reading the pack after the decision:
+
+- the final status (signed off, or returned to the team), who decided, their
+  role and the date, copied from the sign-off block;
+- the auditor's decision on each challenge marked *for the auditor* in
+  `outputs/challenges.md`, quoting the auditor's comments;
+- what the pack contains: risks in scope and out of scope, the three documents,
+  and the sample size, copied from `outputs/planning-memo.md`;
+- if `outputs/post-sign-off-notes.md` exists, one line per note on what was
+  clarified after sign-off.
+
+Copy every figure from those files; compute nothing. Do not restate the QA
+check table. Your earlier report stays on record unchanged; do not repeat its
+request to sign.
+"""
+
 _active_lock = threading.Lock()
 _active: dict[str, "Run"] = {}
 
@@ -141,6 +161,8 @@ class Run:
         if run.state().get("status") == "running":
             # No live thread owns it: the server restarted mid-stage.
             run.save(status="failed", error="Interrupted: the server restarted while agents were working.")
+        if run.state().get("final_report_status") == "writing":
+            run.save(final_report_status="failed")
         return run
 
     @staticmethod
@@ -330,6 +352,42 @@ class Run:
         self.log("auditor", "decision", f"Sign-off: {decision} by {name}")
         self.save(status="complete" if decision == "Sign off" else "blocked",
                   stage="Signed off" if decision == "Sign off" else "Returned to the team")
+        if config.api_key():
+            self.start_final_report()
+
+    def start_final_report(self) -> None:
+        """After the auditor's decision the lead writes a final report; the report it wrote
+        before sign-off is kept as it was. Runs beside the run's status, which stays as is."""
+        state = self.state()
+        if state.get("final_report_status") == "writing":
+            raise RuntimeError("The final report is already being written.")
+        if not (self.outputs / "review.md").exists() or "- Decision: Sign off / Return" in \
+                (self.outputs / "review.md").read_text(encoding="utf-8"):
+            raise RuntimeError("The auditor has not recorded a decision yet.")
+        self.save(final_report_status="writing")
+        with _active_lock:
+            _active[self.id] = self
+
+        def work():
+            try:
+                before = self.state().get("lead_report")
+                if before:
+                    (self.outputs / "lead-report-before-sign-off.md").write_text(
+                        "# Lead's report · before sign-off\n\n" + before + "\n", encoding="utf-8")
+                lead = self._agent(self._client(), "lead", role=LEAD_FINAL_ROLE)
+                report = lead.run("The auditor has decided. Write the lead's final report now.")
+                self.log("lead", "report", report)
+                (self.outputs / "lead-report-after-sign-off.md").write_text(
+                    "# Lead's report · after sign-off\n\n" + report + "\n", encoding="utf-8")
+                self.save(final_report=report, final_report_status="done")
+            except Exception as e:
+                self.log("harness", "error", f"Final report failed: {type(e).__name__}: {e}")
+                self.save(final_report_status="failed")
+            finally:
+                with _active_lock:
+                    _active.pop(self.id, None)
+
+        threading.Thread(target=work, name=f"final-{self.id}", daemon=True).start()
 
     def zip_outputs(self) -> bytes:
         import io
