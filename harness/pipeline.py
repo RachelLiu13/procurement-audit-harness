@@ -80,7 +80,11 @@ class Run:
     def create(cls, reuse_phase1: bool) -> "Run":
         run_id = dt.datetime.now().strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         run = cls(run_id)
-        shutil.copytree(config.PROJECT_TEMPLATE, run.dir)
+        template = config.PROJECT_TEMPLATE.resolve()
+        # Each run starts from Part A without its outputs/, which hold Part A's own finished run.
+        shutil.copytree(template, run.dir, ignore=lambda d, names: (
+            [n for n in names if n in {".venv", "__pycache__"}]
+            + (["outputs"] if Path(d).resolve() == template else [])))
         run.outputs.mkdir(exist_ok=True)
         # The agent files call `.venv/bin/python`; point it at this interpreter.
         venv_bin = run.dir / ".venv" / "bin"

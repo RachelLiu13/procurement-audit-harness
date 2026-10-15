@@ -5,8 +5,8 @@ import os
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PROJECT_TEMPLATE = ROOT / "project"          # Part A: CLAUDE.md, .claude/, scripts/, data/
-EXAMPLE_RUN = ROOT / "example_run" / "outputs"  # a completed Part A run, for browsing
+PROJECT_TEMPLATE = ROOT / "part-a"            # the Part A repository: CLAUDE.md, .claude/, scripts/, data/
+EXAMPLE_RUN = PROJECT_TEMPLATE / "outputs"     # Part A's completed, signed-off run, for browsing
 RUNS_DIR = Path(os.environ.get("RUNS_DIR", "/tmp/audit-planner-runs"))
 
 
