@@ -283,6 +283,9 @@ class Run:
                 raise RuntimeError("extract-rules did not write outputs/rules.json")
             self._script("verify quotes", ".claude/skills/extract-rules/verify_quotes.py",
                          "outputs/rules.json", "data/contract-rules.pdf")
+            # The rules cite the Procurement Act thresholds without stating them; the auditor
+            # supplies them with sources in data/statutory-thresholds.json.
+            self._script("statutory thresholds", "scripts/apply_thresholds.py")
 
             self._stage("2 · spend-analyst ∥ findings-analyst → analytics.json, history.json")
             prompts = {

@@ -85,8 +85,12 @@ Understand these before writing code; they drive the design.
 
 ## Step 1: Load rules and confirm inputs
 
-Read `outputs/rules.json`. List the thresholds you derived, with rule IDs
-and inclusivity, and the null parameters. Confirm which input files exist.
+Read `outputs/rules.json`. If any statutory parameter is still `null` and
+`data/statutory-thresholds.json` exists, run
+`.venv/bin/python scripts/apply_thresholds.py` first (it copies the
+auditor's sourced figures in). A `threshold_low_ref` / `threshold_high_ref`
+resolves to its parameter's `value` when set. List the thresholds you
+derived, with rule IDs and inclusivity, and the null parameters. Confirm which input files exist.
 Set `contracts_present` and `register_present` (both optional inputs) and
 state which tests will run in full, in degraded form, or be skipped. Report
 this before writing code.
@@ -139,8 +143,10 @@ Each row gets exactly one tag, first match wins in the order above.
 
 **Contracts loading (only if `data/contracts.csv` exists).** Read it. Keep
 rows where `Organisation Name` is `West Berkshire Council` or
-`West Berkshire` (keyword search pulls in other buyers); log rows dropped
-and the organisation names kept. Explode the packed supplier field: split
+`West Berkshire`, compared case-insensitively after trimming (some of the
+council's notices are filed as `WEST BERKSHIRE COUNCIL`; keyword search
+also pulls in other buyers); log rows dropped, the organisation names kept
+and how many case variants were kept. Explode the packed supplier field: split
 on `][`, strip the outer brackets, take the FIRST pipe-delimited element as
 the supplier name and the FOURTH as the Companies House number where the
 third element is `COMPANIES_HOUSE`. One (notice, supplier) row per block.
