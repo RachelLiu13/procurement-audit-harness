@@ -158,6 +158,18 @@ def sign_off(run_id: str, body: SignOff) -> dict:
     return {"ok": True}
 
 
+@app.post("/api/runs/{run_id}/final-report", dependencies=[Depends(check_password)])
+def final_report(run_id: str) -> dict:
+    """The lead's report after the auditor's decision. Written automatically at sign-off;
+    this starts it for a run signed before that existed. Once written, it is not redone."""
+    run = get_run(run_id)
+    if run.state().get("final_report_status") == "done":
+        raise HTTPException(409, "The final report has already been written.")
+    if not config.api_key():
+        raise HTTPException(503, "ANTHROPIC_API_KEY is not configured on the server.")
+    return _act(run.start_final_report)
+
+
 # ------------------------------------------------------------------ files
 @app.get("/api/runs/{run_id}/files", dependencies=[Depends(check_password)])
 def files(run_id: str) -> list[str]:

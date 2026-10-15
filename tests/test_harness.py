@@ -179,6 +179,33 @@ def test_quiet_team_gets_one_lead_nudge_then_stops():
     assert team.done == set()
 
 
+def test_sign_off_writes_final_lead_report_and_keeps_the_first():
+    import time
+    os.environ.setdefault("ANTHROPIC_API_KEY", "sk-ant-test-not-used")
+    run = new_run()
+    (run.outputs / "review.md").write_text(
+        "# QA review\n\n## Verdict: READY FOR SIGN-OFF\n\n## Auditor sign-off\n\n"
+        "- [ ] I have read planning-memo.md\n- [ ] I accept the challenges\n"
+        "- Decision: Sign off / Return to the team\n- Name:\n- Role:\n- Date:\n- Comments:\n")
+    run.save(status="awaiting_signoff", lead_report="Ready for your sign-off.")
+    client = FakeClient({"lead (the main session)": [
+        resp(tool("r1", "Read", file_path="outputs/review.md"), stop="tool_use"),
+        resp(text("Signed off by Team 9 on 2026-10-15.")),
+    ]})
+    run._client = lambda: client
+    run.sign_off("Sign off", "Team 9", "Internal auditor", "ok")
+    for _ in range(100):
+        if run.state().get("final_report_status") != "writing":
+            break
+        time.sleep(0.05)
+    s = run.state()
+    assert s["status"] == "complete" and s["final_report_status"] == "done"
+    assert s["final_report"] == "Signed off by Team 9 on 2026-10-15."
+    assert s["lead_report"] == "Ready for your sign-off."  # the first report stays as it was
+    assert "Ready for your sign-off." in (run.outputs / "lead-report-before-sign-off.md").read_text()
+    assert "Team 9" in (run.outputs / "lead-report-after-sign-off.md").read_text()
+
+
 def test_gate_files_round_trip():
     run = new_run()
     (run.outputs / "auditor-comments.md").write_text(
