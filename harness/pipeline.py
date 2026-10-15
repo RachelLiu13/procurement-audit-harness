@@ -94,6 +94,12 @@ class Run:
         self.cancel = threading.Event()
         self._log_lock = threading.Lock()
         self.usage = Usage()
+        # Each stage runs on a fresh Run object: carry the run's token totals forward so they add up.
+        stored = self.state().get("usage") or {}
+        self.usage.input_tokens = stored.get("input_tokens", 0)
+        self.usage.output_tokens = stored.get("output_tokens", 0)
+        self.usage.cache_read = stored.get("cache_read", 0)
+        self.usage.cache_write = stored.get("cache_write", 0)
 
     # ---------------------------------------------------------------- state
     @classmethod
