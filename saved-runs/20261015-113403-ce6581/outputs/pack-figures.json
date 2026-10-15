@@ -533,6 +533,13 @@
    "where": [
     "planning-memo.md"
    ]
+  },
+  {
+   "name": "sample.unique_transactions",
+   "value": 612,
+   "where": [
+    "planning-memo.md"
+   ]
   }
  ],
  "from_register": [

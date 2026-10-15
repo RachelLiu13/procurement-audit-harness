@@ -58,7 +58,7 @@ Samples are targeted, not random: each test draws the highest-indicator items fr
 | T-08-2 | duplicates.csv | 204 | 15 | 101 | 2,110,700.78 |
 | T-09-1 | no transaction sample | – | – | – | – |
 
-Total sampled transactions: 686.
+Total sample rows: 686, covering 612 unique transactions. Transactions may appear in multiple tests.
 
 ## Limitations
 

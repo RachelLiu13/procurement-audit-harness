@@ -237,11 +237,23 @@ function renderHeader(s) {
   $("#usage").innerHTML = usageLine(s);
 }
 
+// The lead writes its report before the auditor decides; once the pack is signed off (or
+// returned) the report is history, so say so and point to the decision in review.md.
+function leadCard(s) {
+  if (!s.lead_report) return "";
+  const decided = s.status === "complete" || (s.status === "blocked" && (s.stage || "").startsWith("Returned"));
+  const title = decided ? "Lead's report · before sign-off" : "Lead's report";
+  const note = !decided ? "" : `<p class="banner ok small">Historical report, written before the auditor's decision.
+    Final status: <b>${s.status === "complete" ? "Signed off" : "Returned to the team"}</b>. The decision, the
+    auditor's comments and the status note are in <code>review.md</code> → Auditor sign-off (Outputs tab).</p>`;
+  return `<div class="card"><h3>${title}</h3>${note}<div class="md">${md(s.lead_report)}</div></div>`;
+}
+
 async function renderAction(id, s) {
   const el = $("#action");
   const base = `/api/runs/${encodeURIComponent(id)}`;
   const zip = `<p><button id="zip">⬇ Download all outputs (.zip)</button></p>`;
-  const lead = s.lead_report ? `<div class="card"><h3>Lead's report</h3><div class="md">${md(s.lead_report)}</div></div>` : "";
+  const lead = leadCard(s);
   if (s.status === "created") {
     el.innerHTML = `<p><button class="primary" id="go">▶ Start the agents</button></p>`;
     $("#go").onclick = async () => { $("#go").disabled = true; try { await api(base + "/start", { method: "POST" }); } catch (e) { alert(e.message); } tick(id); };
@@ -348,7 +360,8 @@ async function livePage() {
     sign-off, ${esc(first)} → ${esc(last)} (server time, UTC). Saved from the server so it stays visible after the
     free instance restarts. Read-only: start your own run from the left.</p>
     <div id="stepper" class="stepper"></div><div id="banner"></div><div id="usage" class="muted small"></div>
-    ${s.lead_report ? `<div class="card"><h3>Lead's report</h3><div class="md">${md(s.lead_report)}</div></div>` : ""}
+    <p><a class="btn" href="${API}/api/runs/${encodeURIComponent(s.id)}/zip">⬇ Download all outputs (.zip)</a></p>
+    ${leadCard(s)}
     <div class="tabs"><button data-t="activity" class="on">Agent activity (${events.length} events)</button><button data-t="outputs">Outputs</button></div>
     <div id="t-activity"><div class="row small"><label><input type="checkbox" id="detail"> Show tool results and thinking</label></div><div id="events"></div></div>
     <div id="t-outputs" hidden></div>`;

@@ -549,8 +549,8 @@ def write_pack(out: Path, scope, plan, risks_out, not_tested, cited_rules, P: Pr
                          f"{s['transactions']:,} | {s['gbp']:,.2f} |")
             else:
                 M.append(f"| {t['test_id']} | no transaction sample | – | – | – | – |")
-    M.append(f"\nTotal sample rows: {tot_tx:,}, covering {len(row_ids):,} unique transactions "
-             "(a transaction drawn by more than one test is counted once per test).")
+    M.append(f"\nTotal sample rows: {tot_tx:,}, covering {len(row_ids):,} unique transactions. "
+             "Transactions may appear in multiple tests.")
     auto_lim = ["The spend data covers payments over £500 only; split-purchase and duplicate indicators are lower bounds."]
     if any(t["sample"] and t["sample"]["source"] in NOTICE_FILES for r in risks_out for t in r["tests"]):
         auto_lim.append("Notice-based samples rest on Contracts Finder notices, which are not a contract register; "

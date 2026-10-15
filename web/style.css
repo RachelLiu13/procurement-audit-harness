@@ -33,7 +33,7 @@ main { padding: 24px 28px 60px; max-width: 1100px; }
 h1 { font-size: 26px; margin: 0 0 10px; } h2 { font-size: 19px; margin: 26px 0 10px; }
 .lead { font-size: 16px; } .muted { color: var(--muted); } .small { font-size: 13px; }
 .error { color: var(--err); }
-button { font: inherit; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
+button, a.btn { font: inherit; text-decoration: none; display: inline-block; border: 1px solid var(--line); background: var(--panel); color: var(--ink);
   padding: 7px 14px; border-radius: 8px; cursor: pointer; }
 button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
 button:disabled { opacity: .5; cursor: not-allowed; }
