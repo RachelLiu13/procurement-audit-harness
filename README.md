@@ -13,8 +13,8 @@ It only ran inside Claude Code on a team member's machine.
 
 | Folder | What it is |
 | --- | --- |
-| [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs. The architecture (skills, agents, prompts, scripts, checks) is kept as it was; the only change is to `build_pack.py`'s sample-count wording, which now reports sample rows *and* unique transactions (see `post-sign-off-notes.md` in the live run) |
-| [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (2026-10-15): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Two copies, each with a job: `saved-runs/` is what the agent server restores after a restart, `web/live-run/` is the read-only **Part B live run** page. Update them only together, with `python save_live_run.py <run-id>`, which writes both and checks they are identical |
+| [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs. The architecture (skills, agents, prompts, scripts, checks) is kept as it was; the only change is to `build_pack.py`'s sample-count wording, which now reports sample rows *and* unique transactions (see `post-sign-off-notes.md` in the completed run) |
+| [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (2026-10-15): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Two copies, each with a job: `saved-runs/` is what the agent server restores after a restart, `web/live-run/` is the read-only **Completed end-to-end run** page. Update them only together, with `python save_live_run.py <run-id>`, which writes both and checks they are identical |
 | everything else | **Part B**, the deployed harness described below |
 
 This repository turns it into an **independently deployed web application**.
@@ -90,7 +90,7 @@ part-a/                Part A, with its original architecture: README, CLAUDE.md
                        (agents, skills, agent memory), scripts/, data/, outputs/ (Part A's signed-off
                        run); only build_pack.py's sample-count wording changed
 saved-runs/            completed Part B runs the server restores after every restart
-web/live-run/          the same run as static files, for the read-only "Part B live run" page
+web/live-run/          the same run as static files, for the read-only "Completed end-to-end run" page
 tools/                 sensitivity_case_variant.py (post-sign-off check of the six case-variant notices)
 tests/test_harness.py  offline tests with a scripted fake Claude client
 Dockerfile, fly.toml   the app on Fly.io (Python 3.12, poppler-utils, jq; volume at /data)

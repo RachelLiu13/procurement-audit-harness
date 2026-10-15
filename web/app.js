@@ -188,7 +188,7 @@ function csvTable(text) {
 async function examplePage() {
   $("#main").innerHTML = `<h1>Part A example run</h1>
     <p class="muted">The complete outputs of the team's Claude Code run (Part A), signed off on 2026-10-14.
-    Read-only; compare it with a live run.</p><div id="files"></div>`;
+    Read-only; compare it with the completed Part B run.</p><div id="files"></div>`;
   await filesBrowser($("#files"), "example");
 }
 
@@ -343,7 +343,7 @@ async function decisionsForm(el, id, s) {
 function eventsHtml(events, detail) {
   return events.filter((e) => detail || !["result", "thinking"].includes(e.kind)).map((e) => {
     const pre = ["tool", "result", "script", "error"].includes(e.kind);
-    const long = e.text.length > 600 && !["report", "decision", "stage"].includes(e.kind);
+    const long = e.text.length > 600 && !["decision", "stage"].includes(e.kind);
     const body = pre ? `<pre>${esc(e.text.slice(0, 6000))}</pre>`
       : e.kind === "message" ? esc(e.text) : `<div class="md">${md(e.text)}</div>`;
     const head = `<span class="h">${ICON[e.kind] || "•"} <b>${esc(e.agent)}</b> · ${esc(e.kind)} · ${esc(e.t.slice(11))}</span>`;
@@ -368,17 +368,18 @@ async function livePage() {
     fetch(`${LIVE}/events.json`).then((r) => r.json())]);
   const events = ev.events || ev;
   const first = events[0] ? events[0].t.replace("T", " ") : "", last = events.length ? events[events.length - 1].t.replace("T", " ") : "";
-  $("#main").innerHTML = `<h1>Part B live run <code>${esc(s.id)}</code></h1>
-    <p class="muted">A complete end-to-end run of this deployed harness, from the Contract Rules PDF to the auditor's
-    sign-off, ${esc(first)} → ${esc(last)} (server time, UTC). Saved from the server so it stays visible after the
-    free instance restarts. Read-only: start your own run from the left.</p>
+  $("#main").innerHTML = `<h1>Completed end-to-end run <code>${esc(s.id)}</code></h1>
+    <p class="muted">A finished run of this harness, from the Contract Rules PDF to the auditor's sign-off,
+    ${esc(first)} → ${esc(last)} (UTC). This page is a read-only replay: the run's outputs and activity log are saved
+    in the repository, so they stay available after every redeploy. To watch agents work live, start your own run from the left.</p>
     <div id="stepper" class="stepper"></div><div id="banner"></div><div id="usage" class="muted small"></div>
     <p><a class="btn" href="${API}/api/runs/${encodeURIComponent(s.id)}/zip">⬇ Download all outputs (.zip)</a></p>
     ${leadCard(s)}
-    <div class="tabs"><button data-t="activity" class="on">Agent activity (${events.length} events)</button><button data-t="outputs">Outputs</button></div>
-    <div id="t-activity"><div class="row small"><label><input type="checkbox" id="detail"> Show tool results and thinking</label></div><div id="events"></div></div>
-    <div id="t-outputs" hidden></div>`;
+    <div class="tabs"><button data-t="outputs" class="on">Outputs</button><button data-t="activity">Agent activity log (${events.length} events)</button></div>
+    <div id="t-activity" hidden><div class="row small"><label><input type="checkbox" id="detail"> Show tool results and thinking</label></div><div id="events"></div></div>
+    <div id="t-outputs"></div>`;
   renderHeader(s);
+  filesBrowser($("#t-outputs"), "live").catch((e) => $("#t-outputs").textContent = e.message);
   const draw = () => { $("#events").innerHTML = eventsHtml(events, $("#detail").checked); };
   $("#detail").onchange = draw; draw();
   document.querySelectorAll(".tabs button").forEach((b) => b.onclick = () => {
