@@ -8,6 +8,7 @@ It only ran inside Claude Code on a team member's machine.
 | Folder | What it is |
 | --- | --- |
 | [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs |
+| [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (2026-10-15): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Shown on the site as **Part B live run** |
 | everything else | **Part B**, the deployed harness described below |
 
 This repository turns it into an **independently deployed web application**.

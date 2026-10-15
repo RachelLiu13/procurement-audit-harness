@@ -38,12 +38,12 @@ See `outputs/challenges.md` ("For the auditor"): 2 challenges, #4 and #5.
 
 ## Auditor sign-off
 
-- [ ] I have read planning-memo.md, risk-control-matrix.md, audit-program.md,
+- [x] I have read planning-memo.md, risk-control-matrix.md, audit-program.md,
       challenges.md and this review.
-- [ ] I accept the challenges marked "for the auditor" as decided, or have
+- [x] I accept the challenges marked "for the auditor" as decided, or have
       recorded my decision on each below.
-- Decision: Sign off / Return to the team
-- Name:
-- Role:
-- Date:
-- Comments:
+- Decision: Sign off
+- Name: Team 9
+- Role: Internal auditor
+- Date: 2026-10-15
+- Comments: Approved for this coursework demonstration. For challenge #4, retain the approved scope and defer the £1,000 clustering issue for future consideration given its comparatively low financial exposure. For challenge #5, retain R-08’s current rating because the available evidence does not establish that AUD-12 concerns the same control theme; reassess if further evidence confirms a link.
