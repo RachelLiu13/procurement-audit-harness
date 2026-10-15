@@ -80,19 +80,7 @@ class Run:
     def create(cls, reuse_phase1: bool) -> "Run":
         run_id = dt.datetime.now().strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:6]
         run = cls(run_id)
-        template = config.PROJECT_TEMPLATE.resolve()
-        # Each run starts from Part A without its outputs/, which hold Part A's own finished run.
-        shutil.copytree(template, run.dir, ignore=lambda d, names: (
-            [n for n in names if n in {".venv", "__pycache__"}]
-            + (["outputs"] if Path(d).resolve() == template else [])))
-        run.outputs.mkdir(exist_ok=True)
-        # The agent files call `.venv/bin/python`; point it at this interpreter.
-        venv_bin = run.dir / ".venv" / "bin"
-        venv_bin.mkdir(parents=True, exist_ok=True)
-        for name in ("python", "python3"):
-            p = venv_bin / name
-            p.write_text(f'#!/bin/sh\nexec "{sys.executable}" "$@"\n')
-            p.chmod(0o755)
+        run._workspace()
         if reuse_phase1:
             for name in PHASE1_FILES:
                 src = config.EXAMPLE_RUN / name
@@ -103,6 +91,42 @@ class Run:
         run.save(status="created", stage="", created=_now(), reuse_phase1=reuse_phase1,
                  model=config.model(), effort=config.effort())
         return run
+
+    def _workspace(self) -> None:
+        template = config.PROJECT_TEMPLATE.resolve()
+        # Each run starts from Part A without its outputs/, which hold Part A's own finished run.
+        shutil.copytree(template, self.dir, ignore=lambda d, names: (
+            [n for n in names if n in {".venv", "__pycache__"}]
+            + (["outputs"] if Path(d).resolve() == template else [])))
+        self.outputs.mkdir(exist_ok=True)
+        # The agent files call `.venv/bin/python`; point it at this interpreter.
+        venv_bin = self.dir / ".venv" / "bin"
+        venv_bin.mkdir(parents=True, exist_ok=True)
+        for name in ("python", "python3"):
+            p = venv_bin / name
+            p.write_text(f'#!/bin/sh\nexec "{sys.executable}" "$@"\n')
+            p.chmod(0o755)
+
+    @classmethod
+    def restore_saved(cls) -> list[str]:
+        """Bring back runs committed to saved-runs/<id>/ (outputs/, run.json, events.jsonl).
+        The free server loses /tmp on every restart; a run saved there survives, e.g. to be
+        signed off after the server slept while it waited at Gate 2."""
+        restored = []
+        if not config.SAVED_RUNS.is_dir():
+            return restored
+        for src in sorted(config.SAVED_RUNS.iterdir()):
+            run = cls(src.name)
+            if not (src / "run.json").exists() or run.dir.exists():
+                continue
+            run._workspace()
+            shutil.rmtree(run.outputs)
+            shutil.copytree(src / "outputs", run.outputs)
+            shutil.copy2(src / "events.jsonl", run.events_path)
+            shutil.copy2(src / "run.json", run.state_path)
+            run.log("harness", "status", "Restored from saved-runs/ after a server restart.")
+            restored.append(src.name)
+        return restored
 
     @classmethod
     def load(cls, run_id: str) -> "Run | None":

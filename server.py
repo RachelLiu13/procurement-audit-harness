@@ -21,6 +21,7 @@ from harness import config, gate
 from harness.pipeline import STATUS_TEXT, Run
 
 app = FastAPI(title="Procurement Audit Planner API")
+Run.restore_saved()  # runs committed to saved-runs/ come back after every restart
 app.add_middleware(CORSMiddleware, allow_origins=os.environ.get("CORS_ORIGINS", "*").split(","),
                    allow_methods=["*"], allow_headers=["*"])
 
