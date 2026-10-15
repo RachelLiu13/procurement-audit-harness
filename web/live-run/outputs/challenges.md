@@ -20,3 +20,9 @@ about the council, a service or a supplier.
 
 - #4 [scope] R--: decide whether to add a risk, or extend R-01, for general procurement payments clustering just below the £1,000 one-quote point [CPR-53]. The band below holds 323 payments against 219 in the comparator just above ($.tests.threshold_clustering.per_threshold[?threshold==1000]), 88 of them general procurement (gbp 84,148.45). This is the only threshold where the comparator signal holds; the value exposed is low.
 - #5 [rating] R-08: decide whether the Limited Assurance on Personal Budgets (Direct Payments) [history:AUD-12] is the same theme as placement procurement, which would raise R-08's likelihood by one point under the repeat-finding rule, or a different theme. The register cites AUD-12 as evidence without stating either way.
+
+## Auditor decisions at sign-off
+
+The challenges marked *for the auditor* were decided by Team 9 (Internal auditor) on 2026-10-15 (decision: Sign off). The decisions are in `review.md` → Auditor sign-off:
+
+> Approved for this coursework demonstration. For challenge #4, retain the approved scope and defer the £1,000 clustering issue for future consideration given its comparatively low financial exposure. For challenge #5, retain R-08’s current rating because the available evidence does not establish that AUD-12 concerns the same control theme; reassess if further evidence confirms a link.

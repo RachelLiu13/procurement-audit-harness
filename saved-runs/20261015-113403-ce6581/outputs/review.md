@@ -4,6 +4,8 @@ Pack version: v3 · Register revision: 1 (built 2026-10-15T11:56:28) · Reviewed
 
 ## Verdict: READY FOR SIGN-OFF
 
+**Status after sign-off:** signed off by Team 9 (Internal auditor) on 2026-10-15; see Auditor sign-off below. The verdict above is the QA verdict at review time.
+
 ## Check results (as printed by scripts/checks/run_checks.py)
 
 ```text
