@@ -1,0 +1,48 @@
+{
+  "supplied_by": "Auditor (Team 9), for the Procurement Legislation thresholds the Contract Procedure Rules refer to (clause 1.4, App B footnote ***) but do not state",
+  "effective_from": "2026-01-01",
+  "applies_to": "Spend window May-July 2026 (Over500_2026_P02-P04) and contracts awarded on or after 1 January 2026",
+  "authority_type": "sub-central government authority (a local authority is neither a central government authority nor a utility)",
+  "vat_basis": "The Act's thresholds include VAT (Procurement Act 2023, s.123; threshold guidance para 1: 'estimated value (including VAT)'). The Contract Procedure Rules and the spend data's Net amount are exclusive of VAT, so apply_thresholds.py converts each figure to its VAT-exclusive equivalent at the standard rate below.",
+  "vat_rate_assumed": 0.2,
+  "vat_rate_note": "Standard UK VAT rate. Care and education placements (light touch services) are often exempt from VAT, so for them the VAT-inclusive figure may be the closer comparison; the light-touch tier is reported with both figures.",
+  "sources": [
+    {
+      "id": "SI-2025",
+      "title": "The Procurement Act 2023 (Threshold Amounts) (Amendment) Regulations 2025 (amending Schedule 1 to the Procurement Act 2023)"
+    },
+    {
+      "id": "PPN-023",
+      "title": "Cabinet Office, PPN 023: 2026 Threshold Amounts (published 27 November 2025)",
+      "url": "https://www.gov.uk/government/publications/ppn-023-2026-threshold-amounts/ppn-023-2026-threshold-amounts-html"
+    },
+    {
+      "id": "PA23-GUIDANCE",
+      "title": "Cabinet Office, Procurement Act 2023 guidance: Thresholds (paras 1, 9, 12, 13)",
+      "url": "https://assets.publishing.service.gov.uk/media/6a549fdc1228eb26a4cab7e8/2025-10-09_-_PA23_Guidance_-_Thresholds.FINAL.Ver2.pdf_links.pdf"
+    }
+  ],
+  "parameters": {
+    "STATUTORY_THRESHOLD_GOODS_SERVICES": {
+      "value_incl_vat": 207720,
+      "source": "PPN-023 table row 12 (goods, services or works to a sub-central government authority); SI-2025",
+      "previous_value_incl_vat": 214904,
+      "previous_note": "In force to 31 December 2025"
+    },
+    "STATUTORY_THRESHOLD_WORKS_CONCESSION": {
+      "value_incl_vat": 5193000,
+      "source": "PPN-023 (works contracts; concession contracts row 9); SI-2025",
+      "previous_value_incl_vat": 5372609,
+      "previous_note": "In force to 31 December 2025"
+    },
+    "STATUTORY_THRESHOLD_LIGHT_TOUCH": {
+      "value_incl_vat": 663540,
+      "source": "PPN-023 row 8 (light touch contracts, other than utilities or concession); PA23-GUIDANCE para 12",
+      "previous_value_incl_vat": 663540,
+      "previous_note": "Unchanged on 1 January 2026"
+    }
+  },
+  "not_supplied": {
+    "STATUTORY_THRESHOLD_RELEVANT": "Not a separate figure: it means whichever of the three thresholds fits each contract's type. The spend data has no reliable contract-type field, so tests citing it stay skipped and are listed under 'skipped' with this reason."
+  }
+}

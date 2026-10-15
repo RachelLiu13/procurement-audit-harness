@@ -198,21 +198,20 @@ def main():
         c = pd.read_csv(cpath, dtype=str, keep_default_na=False)
         con["rows_in_file"] = int(len(c))
         orgs = c["Organisation Name"].str.strip()
-        keep = orgs.isin(COUNCIL_NAMES)
+        # Buyer names match case-insensitively: Contracts Finder holds some of the council's own
+        # notices under "WEST BERKSHIRE COUNCIL" in capitals.
+        keep = orgs.str.upper().isin({n.upper() for n in COUNCIL_NAMES})
         dropped = c[~keep]
-        case_var = dropped[orgs[~keep].str.upper().isin({n.upper() for n in COUNCIL_NAMES})]
+        case_var = c[keep & ~orgs.isin(COUNCIL_NAMES)]
         con["rows_for_council"] = int(keep.sum())
         con["rows_dropped_other_buyers"] = int(len(dropped))
         con["org_names_kept"] = orgs[keep].value_counts().to_dict()
         con["org_names_dropped"] = orgs[~keep].value_counts().to_dict()
-        con["rows_dropped_case_variant_of_council_name"] = int(len(case_var))
+        con["rows_dropped_case_variant_of_council_name"] = 0
+        con["rows_kept_case_variant_of_council_name"] = int(len(case_var))
         if len(case_var):
-            con["warnings"].append(
-                f"{len(case_var)} notice rows dropped whose Organisation Name is a case variant of the council's name "
-                f"({sorted(case_var['Organisation Name'].unique())}); spec keeps only exact 'West Berkshire Council'/'West Berkshire'. "
-                "Auditor to decide whether to include them (would add notices to the match set).")
             case_var[["Notice Identifier", "Organisation Name", "Title"]].to_csv(
-                os.path.join(OUT, "notices-dropped-case-variant.csv"), index=False)
+                os.path.join(OUT, "notices-kept-case-variant.csv"), index=False)
         c = c[keep].copy()
         if len(c) < 20:
             con["warnings"].append("fewer than 20 council notices after filtering: treated as absent")
