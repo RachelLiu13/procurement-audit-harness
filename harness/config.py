@@ -12,7 +12,7 @@ RUNS_DIR = Path(os.environ.get("RUNS_DIR", "/tmp/audit-planner-runs"))
 
 
 def _secret(name: str, default: str | None = None) -> str | None:
-    """Settings come from environment variables (on Render: the service's Environment tab)."""
+    """Settings come from environment variables (on Fly.io: `fly secrets set` or [env] in fly.toml)."""
     return os.environ.get(name) or default
 
 
