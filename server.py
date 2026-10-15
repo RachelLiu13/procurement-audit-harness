@@ -1,15 +1,11 @@
-"""HTTP API for the harness. The Vercel website (web/) calls it under /api.
+"""HTTP API for the harness, plus the website (web/) at /. Deployed on Fly.io.
 
 Runs take tens of minutes and wait on the auditor between stages, so they live
-here, on a long-running server (Render), not in Vercel's short serverless
-functions. Vercel serves the pages and forwards /api/* to this server.
+here, on a long-running server, not in short serverless functions.
 """
 from __future__ import annotations
 
 import os
-import threading
-import time
-import urllib.request
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, Header, HTTPException
@@ -196,38 +192,19 @@ def zip_outputs(run_id: str) -> Response:
                     headers={"Content-Disposition": f'attachment; filename="audit-pack-{run.id}.zip"'})
 
 
-# ------------------------------------------------------------------ local UI
-WEB = Path(__file__).parent / "web"
+# ------------------------------------------------------------------ website
+WEB = (Path(__file__).parent / "web").resolve()
 
 
 @app.get("/")
 def index() -> FileResponse:
-    """For local use; in production Vercel serves web/."""
     return FileResponse(WEB / "index.html")
 
 
-@app.get("/{name}")
-def static(name: str) -> FileResponse:
-    p = (WEB / name).resolve()
-    if p.parent != WEB.resolve() or not p.is_file():
+@app.get("/{path:path}")
+def static(path: str) -> FileResponse:
+    """Files under web/, including web/live-run/ for the read-only "Part B live run" page."""
+    p = (WEB / path).resolve()
+    if not p.is_relative_to(WEB) or not p.is_file():
         raise HTTPException(404)
     return FileResponse(p)
-
-
-# ------------------------------------------------------------------ keep-alive
-def _keep_awake() -> None:
-    """Render's free plan sleeps after 15 minutes without inbound requests, which would
-    kill a run waiting on a long agent turn. While a run is working, ping our own public URL."""
-    url = os.environ.get("RENDER_EXTERNAL_URL")
-    if not url:
-        return
-    while True:
-        time.sleep(240)
-        if Run.active_count():
-            try:
-                urllib.request.urlopen(url.rstrip("/") + "/api/health", timeout=30).read()
-            except OSError:
-                pass
-
-
-threading.Thread(target=_keep_awake, daemon=True).start()
