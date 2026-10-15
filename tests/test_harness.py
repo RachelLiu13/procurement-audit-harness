@@ -131,6 +131,54 @@ def test_team_messages_flow_and_stop_when_all_done():
     assert "CHALLENGE #1" in inbox and "QA v1: PASS" in inbox
 
 
+def test_done_sent_only_to_planner_and_lead_still_reaches_qa():
+    """The first live run stalled: the challenger sent CHALLENGER DONE to the planner and the lead
+    only (as its protocol says), and the qa-reviewer waited for it forever."""
+    run = new_run()
+    client = FakeClient({
+        "planner": [
+            resp(tool("p1", "SendMessage", to="challenger", message="PACK READY v1"),
+                 tool("p2", "SendMessage", to="qa-reviewer", message="PACK READY v1"), stop="tool_use"),
+            resp(text("announced")),
+            resp(tool("p3", "SendMessage", to="lead", message="PLANNER DONE v1"),
+                 tool("p4", "SendMessage", to="qa-reviewer", message="PLANNER DONE v1"), stop="tool_use"),
+            resp(text("done")),
+        ],
+        "challenger": [
+            resp(tool("c1", "SendMessage", to="planner", message="CHALLENGER DONE\nno challenges"),
+                 tool("c2", "SendMessage", to="lead", message="CHALLENGER DONE\nno challenges"), stop="tool_use"),
+            resp(text("sent")),
+            resp(text("noted PLANNER DONE")),  # woken by the broadcast of PLANNER DONE
+        ],
+        "QA reviewer": [
+            resp(tool("q1", "SendMessage", to="planner", message="QA v1: PASS"), stop="tool_use"),
+            resp(text("waiting for both done messages")),
+            # must be woken with CHALLENGER DONE as well as PLANNER DONE
+            resp(tool("q2", "SendMessage", to="lead", message="QA DONE v1: READY FOR SIGN-OFF"), stop="tool_use"),
+            resp(text("review written")),
+        ],
+    })
+    team = Team(run.dir, client, run.log, Usage(), threading.Event())
+    team.run("GATE OPEN")
+    assert team.done == {"PLANNER DONE", "CHALLENGER DONE", "QA DONE"}
+    qa_inboxes = " ".join(m["content"] for r in client.requests if "You are the QA reviewer" in r["system"][0]["text"]
+                          for m in r["messages"] if m["role"] == "user" and isinstance(m["content"], str))
+    assert "CHALLENGER DONE" in qa_inboxes and "PLANNER DONE" in qa_inboxes
+
+
+def test_quiet_team_gets_one_lead_nudge_then_stops():
+    run = new_run()
+    client = FakeClient({
+        "planner": [resp(text("built, forgot to announce")), resp(text("still nothing"))],
+        "challenger": [resp(text("waiting")), resp(text("waiting"))],
+        "QA reviewer": [resp(text("waiting")), resp(text("waiting"))],
+    })
+    team = Team(run.dir, client, run.log, Usage(), threading.Event())
+    team.run("GATE OPEN")  # must terminate: one nudge round, then stop
+    assert all(not v for v in client.scripts.values())
+    assert team.done == set()
+
+
 def test_gate_files_round_trip():
     run = new_run()
     (run.outputs / "auditor-comments.md").write_text(
