@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Procurement Audit Planner</title>
+  <meta name="description" content="An agent harness that plans an internal audit of West Berkshire Council's procurement from its public data.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="./">📋 Procurement Audit Planner</a>
+    <span class="sub">West Berkshire Council · agent harness</span>
+    <span id="server" class="pill">connecting…</span>
+  </header>
+
+  <div class="layout">
+    <aside class="side">
+      <section>
+        <h3>New run</h3>
+        <label class="check"><input type="checkbox" id="reuse"> Reuse Part A's Phase 1 outputs
+          <small>(start at the risk-assessor: faster and cheaper)</small></label>
+        <button id="new-run" class="primary" disabled>➕ New run</button>
+      </section>
+      <section>
+        <h3>Runs</h3>
+        <ul id="runs" class="runs"><li class="muted">No runs yet.</li></ul>
+      </section>
+      <section>
+        <a class="link" href="?run=example">Part A example run</a><br>
+        <a class="link" href="./">About</a>
+      </section>
+      <p id="model" class="muted small"></p>
+    </aside>
+
+    <main id="main"></main>
+  </div>
+
+  <dialog id="login">
+    <form method="dialog" id="login-form">
+      <h3>Access password</h3>
+      <p class="muted small">This site runs paid AI agents, so it is password protected.</p>
+      <input type="password" id="password" autocomplete="current-password" required>
+      <p id="login-error" class="error small"></p>
+      <button class="primary">Enter</button>
+    </form>
+  </dialog>
+
+  <template id="about-tpl">
+    <h1>Plan a procurement audit with agents</h1>
+    <p class="lead">This site plans an internal audit of <b>West Berkshire Council's procurement</b> from its
+      public data. It runs the skills and agents our team built in Claude Code (Part A) as an independent
+      web application on the Claude API. The council's rulebook becomes testable rules. Python analyses
+      every payment. Past audits are folded in, and risks are rated with citations.
+      <b>You</b> approve the register, then an agent team writes and cross-checks the audit planning pack
+      for your sign-off.</p>
+    <ul class="principles">
+      <li><b>The model reads and judges; Python computes every number.</b></li>
+      <li><b>Everything is traceable</b> to the source PDFs and data.</li>
+      <li><b>Indicators, not accusations.</b></li>
+    </ul>
+    <h2>Workflow</h2>
+    <ol id="about-stages" class="about-stages"></ol>
+    <p class="muted">Start a run from the left. A full run takes roughly 30–60 minutes of agent time.
+      You can close the page and come back with the run's link.</p>
+  </template>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

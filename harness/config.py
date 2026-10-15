@@ -1,4 +1,4 @@
-"""Settings for the harness, read from environment variables or Streamlit secrets."""
+"""Settings for the harness, read from environment variables."""
 from __future__ import annotations
 
 import os
@@ -11,16 +11,8 @@ RUNS_DIR = Path(os.environ.get("RUNS_DIR", "/tmp/audit-planner-runs"))
 
 
 def _secret(name: str, default: str | None = None) -> str | None:
-    """Environment first, then Streamlit secrets (st.secrets) when running under Streamlit."""
-    if os.environ.get(name):
-        return os.environ[name]
-    try:
-        import streamlit as st
-        if name in st.secrets:
-            return str(st.secrets[name])
-    except Exception:
-        pass
-    return default
+    """Settings come from environment variables (on Render: the service's Environment tab)."""
+    return os.environ.get(name) or default
 
 
 def api_key() -> str | None:

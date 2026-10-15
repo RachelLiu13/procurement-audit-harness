@@ -8,8 +8,19 @@ It only ran inside Claude Code on a team member's machine.
 This repository turns it into an **independently deployed web application**.
 A Python harness re-creates what Claude Code provided (the agent loop, the
 tools, sub-agents, skills, agent memory and agent-team messaging) on the Claude
-API, and a Streamlit UI gives the human auditor the two gates. It runs on
-Streamlit Community Cloud, without anyone's local environment.
+API, and a web front end gives the human auditor the two gates. Nothing runs
+on anyone's local machine:
+
+```
+browser ──► Vercel (web/: static site)  ──/api/*──►  Render (server.py: FastAPI + harness, Docker)
+                                                          │
+                                                          └──► Claude API (the agents)
+```
+
+Vercel serves the site and forwards `/api/*` to the agent server. The agent
+server runs on Render because a run lasts 30–60 minutes and waits on the
+auditor between stages, which is longer than Vercel's serverless functions
+allow. It also needs `pdftotext` (poppler) for the PDF quote checks.
 
 ## What runs, end to end
 
@@ -41,42 +52,43 @@ indicators, not accusations.
 | The auditor edits `auditor-comments.md` and `review.md` | `gate.py` writes the same cells from the web forms |
 | Local `.venv` | Each run gets a copy of the project in `RUNS_DIR/<id>`, with `.venv/bin/python` pointing at the server's Python. `pdftotext` and `jq` come from `packages.txt` |
 
-Runs execute in a background thread and record their state in `run.json` and an
-event log in `events.jsonl`. The browser can close and come back with
-`?run=<id>`, and the **Agent activity** tab shows every tool call, message and
-report as it happens.
+Runs execute in a background thread on the server and record their state in
+`run.json` and an event log in `events.jsonl`. The browser can close and come
+back with `?run=<id>`, and the **Agent activity** tab shows every tool call,
+message and report as it happens.
 
 ## Repository layout
 
 ```
-app.py                 Streamlit UI (workflow, gates, activity log, outputs browser)
+web/                   the Vercel site: index.html, app.js, style.css, vercel.json (/api rewrite)
+server.py              FastAPI API over the harness (runs, gates, events, files, zip)
 harness/
   agent.py             agent assembly and the tool-use loop
   tools.py             Bash, Read, Write, Edit, Glob, Grep, SendMessage
   team.py              agent-team scheduler and message bus
   pipeline.py          stages, runs, state, gates
   gate.py              reads and writes auditor-comments.md and the review.md sign-off
-  config.py            settings from environment / Streamlit secrets
+  config.py            settings from environment variables
 project/               the Part A project, copied for each run (CLAUDE.md, .claude/, scripts/, data/)
 example_run/outputs/   Part A's completed and signed-off run, viewable in the app
 tests/test_harness.py  offline tests with a scripted fake Claude client
-requirements.txt, packages.txt, .streamlit/   Streamlit Community Cloud deployment
+Dockerfile, render.yaml   the agent server on Render (Python 3.12, poppler-utils, jq)
 ```
 
 ## Running it
 
-Locally:
+Locally (the server also serves `web/` at http://localhost:8000):
 
 ```bash
 python -m venv .venv && .venv/bin/pip install -r requirements.txt   # Python 3.10+
 brew install poppler jq                                             # or apt install poppler-utils jq
 export ANTHROPIC_API_KEY=sk-ant-...
-.venv/bin/streamlit run app.py
+.venv/bin/uvicorn server:app --port 8000
 ```
 
 Tests (no API key needed): `.venv/bin/python tests/test_harness.py`
 
-To deploy, see [DEPLOY.md](DEPLOY.md). Settings (environment variables or Streamlit secrets):
+To deploy, see [DEPLOY.md](DEPLOY.md). Settings (environment variables on the Render service):
 
 | Name | Default | Meaning |
 | --- | --- | --- |
