@@ -1,7 +1,7 @@
 """Save one finished run from the deployed server into the repository, in both places
 it is kept, so the two copies always match:
 
-- web/live-run/  static files for the read-only "Part B live run" page
+- web/live-run/  static files for the read-only "Completed end-to-end run" page
                  (state.json, events.json, files.json, outputs/<text files>)
 - saved-runs/<id>/  what the agent server restores after a restart
                  (run.json, events.jsonl, outputs/)
