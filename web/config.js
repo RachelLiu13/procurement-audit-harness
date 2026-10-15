@@ -1,2 +1,2 @@
-// Where the API lives. Empty = same origin: on Vercel, vercel.json forwards /api/* to the Render server.
+// Where the API lives. Empty = same origin: server.py serves both the site and /api.
 window.API_BASE = "";
