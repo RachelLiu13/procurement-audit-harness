@@ -145,7 +145,7 @@ async function filesBrowser(el, id) {
   const groups = [["Audit planning pack", pack], ["Working files", rest.filter((f) => !f.includes("/"))]];
   for (const dir of [...new Set(rest.filter((f) => f.includes("/")).map((f) => f.slice(0, f.lastIndexOf("/"))))])
     groups.push([dir + "/", rest.filter((f) => f.slice(0, f.lastIndexOf("/")) === dir)]);
-  const keep = el.dataset.file && files.includes(el.dataset.file) ? el.dataset.file : files[0];
+  const keep = el.dataset.file && files.includes(el.dataset.file) ? el.dataset.file : (pack[0] || files[0]);
   el.innerHTML = `<div class="filebrowser"><nav class="filelist">${groups.filter(([, fs]) => fs.length).map(([g, fs]) =>
     `<h4>${esc(g)}</h4>${fs.map((f) => `<button type="button" data-f="${esc(f)}">${esc(f.split("/").pop())}</button>`).join("")}`).join("")}</nav>
     <div class="fileview"><div class="filebar"><b class="fname"></b><a class="dl small" target="_blank" rel="noopener">download</a></div>
