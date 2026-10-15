@@ -5,6 +5,13 @@ services:
     runtime: docker
     plan: free
     healthCheckPath: /api/health
+    # Redeploying wipes the runs stored on the free instance, so changes to the
+    # Vercel site, the docs or the tests do not redeploy the agent server.
+    buildFilter:
+      ignoredPaths:
+        - web/**
+        - tests/**
+        - "*.md"
     envVars:
       - key: ANTHROPIC_API_KEY
         sync: false
