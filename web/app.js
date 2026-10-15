@@ -140,13 +140,20 @@ const readFile = (id, f) => id === "live"
 async function filesBrowser(el, id) {
   let files = await listFiles(id);
   if (!files.length) { el.innerHTML = '<p class="muted">No outputs yet.</p>'; return; }
-  files = [...KEY_FILES.filter((f) => files.includes(f)), ...files.filter((f) => !KEY_FILES.includes(f))];
+  const pack = KEY_FILES.filter((f) => files.includes(f));
+  const rest = files.filter((f) => !KEY_FILES.includes(f));
+  const groups = [["Audit planning pack", pack], ["Working files", rest.filter((f) => !f.includes("/"))]];
+  for (const dir of [...new Set(rest.filter((f) => f.includes("/")).map((f) => f.slice(0, f.lastIndexOf("/"))))])
+    groups.push([dir + "/", rest.filter((f) => f.slice(0, f.lastIndexOf("/")) === dir)]);
   const keep = el.dataset.file && files.includes(el.dataset.file) ? el.dataset.file : files[0];
-  el.innerHTML = `<div class="filebar"><select>${files.map((f) =>
-    `<option ${f === keep ? "selected" : ""}>${esc(f)}</option>`).join("")}</select>
-    <a class="dl small" target="_blank" rel="noopener">open raw</a></div><div class="view card md"></div>`;
+  el.innerHTML = `<div class="filebrowser"><nav class="filelist">${groups.filter(([, fs]) => fs.length).map(([g, fs]) =>
+    `<h4>${esc(g)}</h4>${fs.map((f) => `<button type="button" data-f="${esc(f)}">${esc(f.split("/").pop())}</button>`).join("")}`).join("")}</nav>
+    <div class="fileview"><div class="filebar"><b class="fname"></b><a class="dl small" target="_blank" rel="noopener">download</a></div>
+    <div class="view card md"></div></div></div>`;
   const show = async (f) => {
     el.dataset.file = f;
+    el.querySelectorAll(".filelist button").forEach((b) => b.classList.toggle("on", b.dataset.f === f));
+    $(".fname", el).textContent = f;
     const text = await readFile(id, f);
     const view = $(".view", el);
     if (f.endsWith(".md")) view.innerHTML = md(text);
@@ -156,7 +163,7 @@ async function filesBrowser(el, id) {
     const blob = new Blob([text], { type: "text/plain" });
     const a = $(".dl", el); a.href = URL.createObjectURL(blob); a.download = f.split("/").pop();
   };
-  $("select", el).onchange = (e) => show(e.target.value);
+  el.querySelectorAll(".filelist button").forEach((b) => b.onclick = () => show(b.dataset.f));
   await show(keep);
 }
 

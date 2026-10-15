@@ -78,13 +78,26 @@ label.f { display: block; margin: 10px 0 4px; font-weight: 600; font-size: 14px;
 .md th, .md td { border: 1px solid var(--line); padding: 5px 8px; text-align: left; vertical-align: top; }
 .md th { background: var(--soft); }
 .filebar { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-.filebar select { width: auto; min-width: 260px; max-width: 100%; }
+.filebrowser { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 16px; align-items: start; }
+.filelist { position: sticky; top: 64px; max-height: calc(100vh - 80px); overflow: auto; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 10px; padding: 8px; }
+.filelist h4 { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 10px 6px 4px; }
+.filelist h4:first-child { margin-top: 2px; }
+.filelist button { display: block; width: 100%; text-align: left; border: 0; background: none; color: var(--ink);
+  font: inherit; font-size: 13.5px; padding: 5px 8px; border-radius: 6px; cursor: pointer; overflow-wrap: anywhere; }
+.filelist button:hover { background: var(--soft); }
+.filelist button.on { background: var(--accent); color: var(--accent-ink); }
+.fileview { min-width: 0; }
+.fileview .filebar { margin-bottom: 8px; }
+.fname { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13.5px; overflow-wrap: anywhere; }
 .csv { overflow: auto; max-height: 70vh; }
 .csv table { border-collapse: collapse; font-size: 12.5px; }
 .csv td, .csv th { border: 1px solid var(--line); padding: 3px 6px; white-space: nowrap; }
 dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); color: var(--ink); width: min(360px, 92vw); }
 dialog::backdrop { background: rgba(0, 0, 0, .4); }
 @media (max-width: 860px) {
+  .filebrowser { grid-template-columns: 1fr; }
+  .filelist { position: static; max-height: 220px; }
   .layout { grid-template-columns: 1fr; }
   .side { border-right: none; border-bottom: 1px solid var(--line); }
   main { padding: 16px; }
