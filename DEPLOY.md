@@ -1,30 +1,33 @@
 # Deployment guide (Part B)
 
-When you finish, you will have a URL like `https://<name>.streamlit.app` that you can submit for Part B.
-There are four steps: get an API key → push the code to GitHub → deploy on Streamlit Community Cloud → run the workflow once.
+When you finish, you will have a URL like `https://<name>.vercel.app` that you can submit for Part B.
+
+The app has two parts, deployed from the same GitHub repository:
+
+| Part | Where | Why |
+| --- | --- | --- |
+| Website (`web/`) | **Vercel** (free) | The link you submit. Serves the pages and forwards `/api/*` to the agent server |
+| Agent server (`server.py`) | **Render** (free) | Runs the agents. A run lasts 30–60 minutes, longer than Vercel's functions allow |
+
+There are six steps: get an API key → push to GitHub → deploy the agent server on Render → point the website at it → deploy on Vercel → run the workflow once.
 
 ---
 
 ## Step 1: Get an Anthropic API key
 
-The website calls Claude from the server, which needs an API key. A Claude.ai Pro or Max subscription does **not** include API usage. You have to set up the API separately.
+The agents call Claude from the server, which needs an API key. A Claude.ai Pro or Max subscription does **not** include API usage. You have to set up the API separately.
 
 1. Go to <https://platform.claude.com> (the Claude Console) and sign up or log in.
 2. Open **Billing**, add a card and buy prepaid credits (the minimum is about US$5).
-3. Recommended: under **Limits**, set a monthly spend limit such as $20, so you can't overspend by accident.
-4. Open **API Keys** → **Create Key**, give it a name (for example `audit-planner`), and copy the key. It starts with `sk-ant-`.
-   **The key is shown only once.** Save it in a password manager.
-5. The key goes only into the Streamlit Secrets in Step 3. Never paste it into code, commit it to GitHub or share it.
+3. Recommended: under **Limits**, set a monthly spend limit such as $20.
+4. Open **API Keys** → **Create Key**, name it (for example `audit-planner`), and copy the key. It starts with `sk-ant-`. **The key is shown only once**, so save it in a password manager.
+5. The key goes only into Render's environment settings in Step 3. Never put it in code, commit it to GitHub or share it.
 
-> **Cost.** The default model is `claude-opus-5-5`. A demo run with "Reuse Part A's Phase 1 outputs" ticked typically costs a few dollars. A full run costs more, depending on how many turns the agents take. To spend less, add `CLAUDE_MODEL = "claude-sonnet-5-5"` to the Secrets. The app shows live token usage for each run.
+> **Cost.** The default model is `claude-opus-5-5`. A demo run with "Reuse Part A's Phase 1 outputs" ticked typically costs a few dollars. A full run costs more, depending on how many turns the agents take. To spend less, set `CLAUDE_MODEL` to `claude-sonnet-5-5` on Render. The site shows live token usage for each run.
 
 ## Step 2: Push the code to GitHub
 
-1. On GitHub, click **+ → New repository**.
-   - Repository name: `procurement-audit-harness`
-   - Visibility: **Public**
-   - Do **not** add a README. Leave the repository empty.
-   - Click **Create repository**.
+1. On GitHub, click **+ → New repository**. Name it `procurement-audit-harness`, choose **Public**, do **not** add a README, and click **Create repository**.
 2. In a terminal opened in this project folder, run these commands. Replace `<your-username>` with your GitHub username:
 
 ```bash
@@ -35,46 +38,66 @@ git remote add origin https://github.com/<your-username>/procurement-audit-harne
 git push -u origin main
 ```
 
-   If Git asks you to log in, use your GitHub username. For the password, use a **Personal Access Token**, not your account password. To create one, go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token, and tick the `repo` scope.
+   If Git asks you to log in, enter your GitHub username. For the password, use a **Personal Access Token**: GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token, with the `repo` scope.
    Alternative: in GitHub Desktop, choose File → Add local repository, pick this folder and click **Publish repository**.
 
-## Step 3: Deploy on Streamlit Community Cloud (free)
+## Step 3: Deploy the agent server on Render
 
-1. Go to <https://share.streamlit.io>, click **Continue with GitHub**, and authorize access to your repositories.
-2. Click **Create app** → **Deploy a public app from GitHub**.
-3. Fill in:
-   - Repository: `<your-username>/procurement-audit-harness`
-   - Branch: `main`
-   - Main file path: `app.py`
-   - App URL: choose a name, for example `wbc-audit-planner`
-4. Open **Advanced settings**:
-   - Python version: **3.12**
-   - In **Secrets**, paste the following and put in your key from Step 1:
+1. Go to <https://render.com> and sign up with **GitHub**.
+2. Click **New +** → **Blueprint**, connect your GitHub account if asked, and select the `procurement-audit-harness` repository. Render reads `render.yaml` and proposes a free web service called `audit-planner-api`.
+3. Render asks for the values that are not in the file:
+   - `ANTHROPIC_API_KEY`: your key from Step 1
+   - `APP_PASSWORD`: an access password you choose. Visitors must enter it, so strangers can't spend your credits. Give it to your grader with the URL.
+4. Click **Apply**. The first build installs Python, `pdftotext` and the packages, and takes about 5–10 minutes.
+5. When the service shows **Live**, copy its URL from the top of the service page, for example `https://audit-planner-api-xxxx.onrender.com`.
+   Check it by opening `https://audit-planner-api-xxxx.onrender.com/api/health` in your browser. You should see `{"ok":true,"key_configured":true,...}`.
 
-```toml
-ANTHROPIC_API_KEY = "sk-ant-paste-your-key-here"
-APP_PASSWORD = "choose-an-access-password"
+To change a setting later, go to the service → **Environment**, edit it and save. Render redeploys automatically.
+
+## Step 4: Point the website at the agent server
+
+1. On GitHub, open your repository, then `web/vercel.json`, and click the pencil icon (Edit).
+2. Replace `https://REPLACE-WITH-YOUR-RENDER-URL.onrender.com` with your Render URL from Step 3. Keep `/api/:path*` at the end:
+
+```json
+{
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "https://audit-planner-api-xxxx.onrender.com/api/:path*" }
+  ]
+}
 ```
 
-   `APP_PASSWORD` is optional but recommended: only people who know it can use the site and spend your API credits. When you submit, give the grader both the URL and the password.
-5. Click **Deploy**. The first build takes about 3–5 minutes. It installs the Python packages in `requirements.txt` and `pdftotext` and `jq` from `packages.txt`.
+3. Click **Commit changes**.
 
-To change the key later, open the app's **Settings → Secrets**, edit and save. The app restarts automatically.
+## Step 5: Deploy the website on Vercel
 
-## Step 4: Check the full workflow
+1. Go to <https://vercel.com> and sign up or log in with **GitHub**.
+2. Click **Add New…** → **Project**, and **Import** `procurement-audit-harness`.
+3. In the configuration screen:
+   - **Root Directory**: click **Edit** and choose `web`
+   - **Framework Preset**: `Other`
+   - Leave the build and output settings empty. The site is plain HTML, CSS and JavaScript.
+4. Click **Deploy**. It takes under a minute. Your URL is shown on the success page, for example `https://procurement-audit-harness.vercel.app`. **This is the URL you submit.**
 
-1. Open `https://<your-name>.streamlit.app` and enter the access password.
-2. The sidebar shows the model name. If you see a red "ANTHROPIC_API_KEY is not set" message, the Secrets are wrong.
+Every later push to GitHub redeploys both Vercel and Render automatically.
+
+## Step 6: Check the full workflow
+
+1. Open your Vercel URL. The top-right badge says **server ready** once the Render server answers. On the free plan, the first visit after a quiet period can take up to a minute to wake the server; the badge shows "waking the server" until then.
+2. Enter the access password.
 3. For the first demonstration, tick **Reuse Part A's Phase 1 outputs**, then click **New run** → **Start the agents**.
-   - The **Agent activity** tab shows each agent's tool calls, messages and reports live.
-   - You can close the page and come back with the `?run=<id>` link. The run keeps going.
-4. At **Gate 1**, choose Approve, Amend or Reject for each risk and submit. The harness then runs the risk-assessor revision, the approval gate, the planner + challenger + qa-reviewer team and the lead report.
-5. At **Gate 2**, read the planning memo and review in the **Outputs** tab, then enter your name and sign off.
-6. Click **Download all outputs (.zip)** to get the complete audit planning pack.
-7. If time and budget allow, run the full pipeline once with Reuse unticked (rules → analytics/history → … → sign-off).
+   - **Agent activity** shows each agent's tool calls, messages and reports live.
+   - You can close the page and come back with the run's link (`?run=<id>`). The run keeps going.
+4. At **Gate 1**, choose Approve, Amend or Reject for each risk and submit. The server then runs the risk-assessor revision, the approval gate, the planner + challenger + qa-reviewer team and the lead report.
+5. At **Gate 2**, read the planning memo and review under **Outputs**, enter your name and sign off.
+6. Click **Download all outputs (.zip)** for the complete audit planning pack.
+7. If time and budget allow, also run the full pipeline once with Reuse unticked (rules → analytics/history → … → sign-off).
 
 ## Notes
 
-- Free Streamlit apps go to sleep after a few days without visitors. Opening the URL and clicking "Yes, get this app back up" wakes the app. Open it yourself shortly before you submit.
-- Each redeploy or restart clears the runs stored on the server (`/tmp`). Download the zip of anything you want to keep.
-- **Part A example run** in the sidebar shows Part A's complete, signed-off outputs. Viewing it needs no API key.
+- **Render free plan.** The server sleeps after 15 minutes without requests and wakes on the next visit. While a run is working, the server pings itself to stay awake. Restarts and redeploys clear the stored runs, so download the zip of anything you want to keep. For a guaranteed always-on server, upgrade the Render service to the Starter plan (about $7/month).
+- **Before you submit,** open the site once yourself so the server is awake when the grader visits.
+- **Part A example run** in the sidebar shows Part A's complete, signed-off outputs. Viewing it doesn't call Claude.
+- **Troubleshooting.**
+  - If the badge stays at "server unreachable", check the Render service is **Live** and that the URL in `web/vercel.json` is exactly right.
+  - If the badge says "server: no API key", set `ANTHROPIC_API_KEY` on Render.
