@@ -5,9 +5,7 @@
  "analytics-full/high_value_suppliers.csv",
  "analytics-full/near-matches.csv",
  "analytics-full/notices-clean.csv",
- "analytics-full/notices-dropped-case-variant.csv",
- "analytics-full/sensitivity-case-variant.json",
- "analytics-full/sensitivity-case-variant.md",
+ "analytics-full/notices-kept-case-variant.csv",
  "analytics-full/spend-clean.csv",
  "analytics-full/spend-excluded.csv",
  "analytics-full/spend_vs_award.csv",
@@ -32,7 +30,6 @@
  "lead-report-before-sign-off.md",
  "pack-figures.json",
  "planning-memo.md",
- "post-sign-off-notes.md",
  "review.md",
  "risk-control-matrix.md",
  "risk-ratings.json",
@@ -40,6 +37,7 @@
  "risk-register.state.json",
  "rules.json",
  "samples/T-01-1.csv",
+ "samples/T-02-1.csv",
  "samples/T-03-1.csv",
  "samples/T-03-2.csv",
  "samples/T-04-1.csv",
@@ -47,6 +45,5 @@
  "samples/T-05-1.csv",
  "samples/T-06-1.csv",
  "samples/T-07-1.csv",
- "samples/T-08-1.csv",
- "samples/T-08-2.csv"
+ "samples/T-10-1.csv"
 ]

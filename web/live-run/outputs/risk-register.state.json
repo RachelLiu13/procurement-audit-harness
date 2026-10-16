@@ -1,16 +1,16 @@
 {
  "revision": 1,
- "generated_at": "2026-10-15T11:56:28",
+ "generated_at": "2026-10-16T00:02:33",
  "risks": {
   "R-01": {
-   "title": "Payments within ten per cent below the {{$.tests.threshold_clustering.per_threshold[?threshold==25000].threshold|gbp}} quotation threshold",
+   "title": "Payments just below the {{$.tests.threshold_clustering.per_threshold[?threshold==25000].threshold|gbp}} competition threshold",
    "status": "proposed",
    "likelihood": 2,
    "uplift": null,
    "impact": 3,
    "dimension": "DIM-FIN",
    "scope": "in",
-   "focus": "For the general procurement payments in the band, check whether one quote was sought [rule:CPR-53] and whether related orders together reached {{$.tests.threshold_clustering.per_threshold[?threshold==25000].threshold|gbp}} without invitations to quote [rule:CPR-54]; test alongside the split-purchase windows (R-03) at the same threshold.",
+   "focus": "For the general procurement payments in the band, check whether quotations were sought as required [rule:CPR-54] and whether related orders for the same requirement together reached the competition threshold [rule:CPR-55].",
    "citations": [
     "history:AUD-01",
     "history:IMP-3-FIN",
@@ -18,95 +18,91 @@
     "metric:$.tests.threshold_clustering.per_threshold[?threshold==25000].band_by_tag.general_procurement.n",
     "metric:$.tests.threshold_clustering.per_threshold[?threshold==25000].band_count",
     "metric:$.tests.threshold_clustering.per_threshold[?threshold==25000].comparator_count",
-    "rule:CPR-19",
-    "rule:CPR-53",
     "rule:CPR-54",
-    "rule:CPR-55"
+    "rule:CPR-55",
+    "rule:CPR-56"
    ]
   },
   "R-02": {
-   "title": "Payments just below the {{$.tests.threshold_clustering.per_threshold[?threshold==500000].threshold|gbp}} tender and key-decision threshold",
-   "status": "proposed",
-   "likelihood": 1,
-   "uplift": null,
-   "impact": 4,
-   "dimension": "DIM-CMP",
-   "scope": "out",
-   "focus": "None from the clustering test; aggregation above {{$.tests.threshold_clustering.per_threshold[?threshold==500000].threshold|gbp}} is covered by the split-purchase windows in R-03 [rule:CPR-11].",
-   "citations": [
-    "history:IMP-4-CMP",
-    "metric:$.tests.threshold_clustering.per_threshold[?threshold==2500000].band_count",
-    "metric:$.tests.threshold_clustering.per_threshold[?threshold==500000].band_count",
-    "metric:$.tests.threshold_clustering.per_threshold[?threshold==500000].baseline_count",
-    "rule:CPR-04",
-    "rule:CPR-11",
-    "rule:CPR-50",
-    "rule:CPR-51",
-    "rule:CPR-52",
-    "rule:CPR-56"
-   ]
-  },
-  "R-03": {
-   "title": "Multiple payments to one supplier within a short window that together cross a competition threshold",
-   "status": "proposed",
-   "likelihood": 3,
-   "uplift": null,
-   "impact": 5,
-   "dimension": "DIM-FIN",
-   "scope": "in",
-   "focus": "For the top general procurement windows, establish whether the payments relate to one requirement and, if so, whether invitations to quote or a tender were run at the aggregate value [rule:CPR-54] [rule:CPR-56] or a contract covers them; record where the payments are instalments under an existing contract [rule:CPR-11].",
-   "citations": [
-    "history:IMP-5-FIN",
-    "metric:$.tests.split_purchases.note",
-    "metric:$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.gbp",
-    "metric:$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.windows",
-    "metric:$.tests.split_purchases.per_threshold[?threshold==500000].headline_general_procurement.gbp",
-    "metric:$.tests.split_purchases.per_threshold[?threshold==500000].headline_general_procurement.windows",
-    "rule:CPR-11",
-    "rule:CPR-54",
-    "rule:CPR-56"
-   ]
-  },
-  "R-04": {
-   "title": "High-value suppliers with no matching Contracts Finder notice",
-   "status": "proposed",
-   "likelihood": 3,
-   "uplift": null,
-   "impact": 5,
-   "dimension": "DIM-FIN",
-   "scope": "in",
-   "focus": "Request the council's contract register [rule:CPR-07] and, for the top suppliers by annualised estimate, the contract, the quotation or tender record [rule:CPR-54] [rule:CPR-55] or the approved exception [rule:CPR-20] [rule:CPR-21].",
-   "citations": [
-    "history:GAP-08",
-    "history:IMP-5-FIN",
-    "history:RT-05",
-    "metric:$.contracts.register_present",
-    "metric:$.tests.off_contract.headline_general_procurement_no_notice_found.annualised_estimate_gbp",
-    "metric:$.tests.off_contract.headline_general_procurement_no_notice_found.suppliers",
-    "metric:$.tests.off_contract.publication_note",
-    "rule:CPR-07",
-    "rule:CPR-20",
-    "rule:CPR-21",
-    "rule:CPR-54",
-    "rule:CPR-55",
-    "rule:CPR-57"
-   ]
-  },
-  "R-05": {
-   "title": "Repeated payments of the same amount to the same supplier within a week",
+   "title": "Payments just below the {{$.tests.threshold_clustering.per_threshold[?threshold==173100].threshold|gbp}} Procurement Act threshold for goods and services",
    "status": "proposed",
    "likelihood": 3,
    "uplift": null,
    "impact": 3,
    "dimension": "DIM-FIN",
    "scope": "in",
-   "focus": "For the top different-time groups, obtain the invoices and purchase evidence [rule:CPR-31] and confirm each payment relates to a distinct supply; note any credit or recovery.",
+   "focus": "For the general procurement payments in the band, establish the total contract value and whether the procurement route and notice met the statutory tier [rule:CPR-55] [rule:CPR-01] and the anti-splitting rule [rule:CPR-11].",
+   "citations": [
+    "history:IMP-3-FIN",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==173100].band_by_tag.general_procurement.gbp",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==173100].band_by_tag.general_procurement.n",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==173100].band_count",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==173100].comparator_count",
+    "rule:CPR-01",
+    "rule:CPR-11",
+    "rule:CPR-55"
+   ]
+  },
+  "R-03": {
+   "title": "Same-supplier payment windows that cross competition thresholds while each payment stays below",
+   "status": "proposed",
+   "likelihood": 4,
+   "uplift": null,
+   "impact": 5,
+   "dimension": "DIM-FIN",
+   "scope": "in",
+   "focus": "For the top general procurement windows, establish whether the payments relate to one requirement and, if so, whether the aggregated value was procured by the route its tier requires [rule:CPR-11] [rule:CPR-55] [rule:CPR-56]; separate call-offs under an awarded contract from unrelated orders.",
+   "citations": [
+    "history:AUD-11",
+    "history:IMP-5-FIN",
+    "metric:$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.gbp",
+    "metric:$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.windows",
+    "metric:$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.gbp",
+    "metric:$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.windows",
+    "metric:$.tests.split_purchases.per_threshold[?threshold==500000].headline_general_procurement.windows",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==173100].band_count",
+    "rule:CPR-11",
+    "rule:CPR-55",
+    "rule:CPR-56"
+   ]
+  },
+  "R-04": {
+   "title": "High-value general procurement suppliers with no Contracts Finder notice found",
+   "status": "proposed",
+   "likelihood": 3,
+   "uplift": null,
+   "impact": 5,
+   "dimension": "DIM-FIN",
+   "scope": "in",
+   "focus": "Request the council's contract register and the contract, framework call-off or exemption record for each statutory-tier supplier with no notice found [rule:CPR-55] [rule:CPR-01]; record which are explained by older contracts or Find a Tender notices.",
+   "citations": [
+    "history:IMP-5-FIN",
+    "history:RT-06",
+    "metric:$.contracts.register_present",
+    "metric:$.tests.off_contract.headline_general_procurement_no_notice_found.annualised_estimate_gbp",
+    "metric:$.tests.off_contract.headline_general_procurement_no_notice_found.suppliers",
+    "metric:$.tests.off_contract.statutory_tier.headline_general_procurement_no_notice_found.annualised_estimate_gbp",
+    "metric:$.tests.off_contract.statutory_tier.headline_general_procurement_no_notice_found.suppliers",
+    "rule:CPR-01",
+    "rule:CPR-55"
+   ]
+  },
+  "R-05": {
+   "title": "Repeated equal payments to the same supplier within {{$.tests.duplicates.parameters.max_gap_days|int}} days",
+   "status": "proposed",
+   "likelihood": 3,
+   "uplift": null,
+   "impact": 3,
+   "dimension": "DIM-FIN",
+   "scope": "in",
+   "focus": "For the largest general procurement groups, match each payment to a distinct invoice and goods-received record; confirm any duplicate was identified and recovered [history:AUD-11].",
    "citations": [
     "history:AUD-11",
     "history:IMP-3-FIN",
+    "history:RT-07",
     "metric:$.tests.duplicates.per_tier.different_time.by_tag.general_procurement.gbp_beyond_first",
     "metric:$.tests.duplicates.per_tier.different_time.by_tag.general_procurement.groups",
-    "rule:CPR-31"
+    "metric:$.tests.duplicates.per_tier.same_timestamp.by_tag.general_procurement.groups"
    ]
   },
   "R-06": {
@@ -114,17 +110,17 @@
    "status": "proposed",
    "likelihood": 2,
    "uplift": null,
-   "impact": 3,
+   "impact": 4,
    "dimension": "DIM-FIN",
    "scope": "in",
-   "focus": "For each listed supplier, request the current contract or the approved extension [rule:CPR-61].",
+   "focus": "For each supplier, obtain the current contract or the extension and its approval by the S151 Officer [rule:CPR-62].",
    "citations": [
-    "history:IMP-3-FIN",
+    "history:IMP-4-FIN",
+    "metric:$.contracts.register_present",
     "metric:$.tests.expired_notice_spend.annualised_estimate_gbp",
-    "metric:$.tests.expired_notice_spend.caveat",
     "metric:$.tests.expired_notice_spend.gbp_in_window",
     "metric:$.tests.expired_notice_spend.suppliers",
-    "rule:CPR-61"
+    "rule:CPR-62"
    ]
   },
   "R-07": {
@@ -135,50 +131,90 @@
    "impact": 5,
    "dimension": "DIM-FIN",
    "scope": "in",
-   "focus": "For the flagged suppliers, compare actual spend to the contract value and request any approved variation or extension report [rule:CPR-62] [rule:CPR-63].",
+   "focus": "For flagged suppliers, compare actual spend to the contract value and obtain any variation and its approval [rule:CPR-63] [rule:CPR-64].",
    "citations": [
     "history:IMP-5-FIN",
-    "metric:$.tests.spend_vs_award.caveat",
     "metric:$.tests.spend_vs_award.flagged",
     "metric:$.tests.spend_vs_award.flagged_annualised_estimate_gbp",
-    "metric:$.tests.spend_vs_award.suppliers_compared",
-    "rule:CPR-62",
-    "rule:CPR-63"
-   ]
-  },
-  "R-08": {
-   "title": "Placement spend patterns: aggregated windows and repeated equal payments",
-   "status": "proposed",
-   "likelihood": 2,
-   "uplift": null,
-   "impact": 5,
-   "dimension": "DIM-FIN",
-   "scope": "in",
-   "focus": "For a sample of the largest placement windows and equal-payment groups, confirm the reasons for the provider choice are on the case record [rule:CPR-64] and that repeated equal payments relate to distinct periods of care.",
-   "citations": [
-    "history:AUD-12",
-    "history:AUD-14",
-    "history:IMP-5-FIN",
-    "metric:$.tests.duplicates.per_tier.different_time.by_tag.care_or_education_placement.groups",
-    "metric:$.tests.split_purchases.per_threshold[?threshold==25000].care_or_education_placement.gbp",
-    "metric:$.tests.split_purchases.per_threshold[?threshold==25000].care_or_education_placement.windows",
+    "rule:CPR-63",
     "rule:CPR-64"
    ]
   },
+  "R-08": {
+   "title": "Recurring care and education placement payments crossing competition thresholds",
+   "status": "proposed",
+   "likelihood": 2,
+   "uplift": null,
+   "impact": 2,
+   "dimension": "DIM-CMP",
+   "scope": "out",
+   "focus": "For a sample of placement suppliers with windows crossing the threshold, confirm the reasons for the choice of provider are recorded on case notes [rule:CPR-65].",
+   "citations": [
+    "history:AUD-12",
+    "history:AUD-14",
+    "history:IMP-2-CMP",
+    "metric:$.tests.split_purchases.per_threshold[?threshold==25000].by_tag.care_or_education_placement.gbp",
+    "metric:$.tests.split_purchases.per_threshold[?threshold==25000].by_tag.care_or_education_placement.windows",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==25000].band_by_tag.care_or_education_placement.n",
+    "rule:CPR-65"
+   ]
+  },
   "R-09": {
-   "title": "No published action tracker to confirm follow-up of prior procurement audit actions",
+   "title": "Payments clustered just below the {{$.tests.threshold_clustering.per_threshold[?threshold==1000].threshold|gbp}} quotation threshold",
+   "status": "proposed",
+   "likelihood": 3,
+   "uplift": null,
+   "impact": 2,
+   "dimension": "DIM-FIN",
+   "scope": "out",
+   "focus": "For a sample of general procurement payments in the band, confirm a quote was obtained [rule:CPR-54].",
+   "citations": [
+    "history:IMP-2-FIN",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==1000].band_by_tag.general_procurement.gbp",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==1000].band_by_tag.general_procurement.n",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==1000].band_count",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==1000].comparator_count",
+    "rule:CPR-54"
+   ]
+  },
+  "R-10": {
+   "title": "Waivers, exceptions and award approvals not testable from the spend data",
+   "status": "proposed",
+   "likelihood": 1,
+   "uplift": null,
+   "impact": 3,
+   "dimension": "DIM-CMP",
+   "scope": "in",
+   "focus": "Walk through the waiver and exception log and award approvals; test approvals for the high-value suppliers drawn in R-04 and R-03 against the approval tiers [rule:CPR-21] [rule:CPR-22] [rule:CPR-23] [rule:CPR-50] [rule:CPR-51] [rule:CPR-52] [rule:CPR-53].",
+   "citations": [
+    "history:AUD-01",
+    "history:GAP-01",
+    "history:IMP-3-CMP",
+    "metric:$.tests.threshold_clustering.per_threshold[?threshold==500000].band_count",
+    "rule:CPR-18",
+    "rule:CPR-20",
+    "rule:CPR-21",
+    "rule:CPR-22",
+    "rule:CPR-23",
+    "rule:CPR-50",
+    "rule:CPR-51",
+    "rule:CPR-52",
+    "rule:CPR-53"
+   ]
+  },
+  "R-11": {
+   "title": "No published tracker of agreed audit actions to confirm prior procurement findings are closed",
    "status": "proposed",
    "likelihood": 1,
    "uplift": null,
    "impact": 2,
    "dimension": "DIM-CMP",
    "scope": "in",
-   "focus": "Request the internal audit action tracker for Contract Letting [history:AUD-01] and Accounts Payable [history:AUD-11] and confirm the status of agreed actions.",
+   "focus": "Request the action tracker for the Contract Letting and Accounts Payable audits and confirm the status of each agreed action [history:AUD-01] [history:AUD-11].",
    "citations": [
     "history:AUD-01",
     "history:AUD-11",
     "history:GAP-01",
-    "history:GAP-08",
     "history:IMP-2-CMP"
    ]
   }
@@ -190,8 +226,8 @@
    ""
   ],
   "R-02": [
-   "Approve",
-   ""
+   "Amend",
+   "Reduce likelihood from L4 to L3 (score 9, Amber). Clustering below £173,100 rests on only 3 payments vs 2 above, which is too thin for L4; keep in scope. Rely on R-03 for the split-window evidence so the two risks are not double-counted."
   ],
   "R-03": [
    "Approve",
@@ -220,10 +256,29 @@
   "R-09": [
    "Approve",
    ""
+  ],
+  "R-10": [
+   "Approve",
+   ""
+  ],
+  "R-11": [
+   "Approve",
+   ""
   ]
  },
- "revision_changes": {},
- "revision_overrides": {},
+ "revision_changes": {
+  "R-02": [
+   "likelihood 4 → 3",
+   "citations -metric:$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.windows"
+  ]
+ },
+ "revision_overrides": {
+  "R-02": {
+   "decision": "Amend",
+   "comment": "Reduce likelihood from L4 to L3 (score 9, Amber). Clustering below £173,100 rests on only 3 payments vs 2 above, which is too thin for L4; keep in scope. Rely on R-03 for the split-window evidence so the two risks are not double-counted.",
+   "risk": "Payments just below the £173,100 Procurement Act threshold for goods and services"
+  }
+ },
  "scores": {
   "R-01": {
    "L": 2,
@@ -238,22 +293,24 @@
    "status": "proposed"
   },
   "R-02": {
-   "L": 1,
-   "L_base": 1,
-   "I": 4,
-   "score": 4,
-   "matrix_label": "Moderate",
-   "band": "Moderate",
-   "band_id": "BAND-MODERATE",
-   "flags": [],
-   "scope": "out",
+   "L": 3,
+   "L_base": 3,
+   "I": 3,
+   "score": 9,
+   "matrix_label": "High",
+   "band": "Medium - High (Amber)",
+   "band_id": "BAND-MEDIUM-HIGH",
+   "flags": [
+    "‡"
+   ],
+   "scope": "in",
    "status": "proposed"
   },
   "R-03": {
-   "L": 3,
-   "L_base": 3,
+   "L": 4,
+   "L_base": 4,
    "I": 5,
-   "score": 15,
+   "score": 20,
    "matrix_label": "Extreme",
    "band": "Extreme (Red)",
    "band_id": "BAND-EXTREME",
@@ -290,11 +347,11 @@
   "R-06": {
    "L": 2,
    "L_base": 2,
-   "I": 3,
-   "score": 6,
-   "matrix_label": "Moderate",
-   "band": "Moderate",
-   "band_id": "BAND-MODERATE",
+   "I": 4,
+   "score": 8,
+   "matrix_label": "High",
+   "band": "Medium - High (Amber)",
+   "band_id": "BAND-MEDIUM-HIGH",
    "flags": [],
    "scope": "in",
    "status": "proposed"
@@ -316,18 +373,40 @@
   "R-08": {
    "L": 2,
    "L_base": 2,
-   "I": 5,
-   "score": 10,
-   "matrix_label": "High",
-   "band": "Medium - High (Amber)",
-   "band_id": "BAND-MEDIUM-HIGH",
-   "flags": [
-    "‡"
-   ],
-   "scope": "in",
+   "I": 2,
+   "score": 4,
+   "matrix_label": "Moderate",
+   "band": "Moderate",
+   "band_id": "BAND-MODERATE",
+   "flags": [],
+   "scope": "out",
    "status": "proposed"
   },
   "R-09": {
+   "L": 3,
+   "L_base": 3,
+   "I": 2,
+   "score": 6,
+   "matrix_label": "Moderate",
+   "band": "Moderate",
+   "band_id": "BAND-MODERATE",
+   "flags": [],
+   "scope": "out",
+   "status": "proposed"
+  },
+  "R-10": {
+   "L": 1,
+   "L_base": 1,
+   "I": 3,
+   "score": 3,
+   "matrix_label": "Low",
+   "band": "Low (Green)",
+   "band_id": "BAND-LOW",
+   "flags": [],
+   "scope": "in",
+   "status": "proposed"
+  },
+  "R-11": {
    "L": 1,
    "L_base": 1,
    "I": 2,
@@ -341,5 +420,5 @@
   }
  },
  "all_decided": true,
- "register_sha256": "7fd3e878345f29d60b1cf98e472ef8363eed31a8e13b46aa9acca9fe7c03e3fd"
+ "register_sha256": "2184eb953947e1668e09b4a3bc8c1909e2806dc8e7412d34cd1e388b2df54371"
 }

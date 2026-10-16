@@ -5,7 +5,7 @@ supplier_norm,supplier,total_gbp,annualised_estimate,dominant_tag,match_class,ma
 360 SECURITY AND SUPPORT SERVICES,360 Security & Support Services Ltd,11995.04,47980.16,general_procurement,none,,0.638
 6 PUMP COURT MISS NOEMI BYRD,6 PUMP COURT - MISS NOEMI BYRD,3000.0,12000.0,general_procurement,none,,0.392
 A AND E BUILDERS,A&E BUILDERS (BASINGSTOKE) LIMITED,62693.64,250774.56,general_procurement,none,,0.471
-A AND E FIRE AND SECURITY,A&E FIRE & SECURITY LIMITED,10714.72,42858.88,general_procurement,none,,0.444
+A AND E FIRE AND SECURITY,A&E FIRE & SECURITY LIMITED,10714.72,42858.88,general_procurement,none,,0.48
 A C EDUCATION,A C Education,4500.0,18000.0,general_procurement,none,,0.581
 A MONGER,A MONGER LTD,28751.97,115007.88,general_procurement,none,,0.414
 A PROJECT,THE A PROJECT,3633.33,14533.32,agency_staff,none,,0.435
@@ -13,7 +13,7 @@ A1 CARS,A1 CARS,3465.0,13860.0,general_procurement,exact,A1 CARS,1.0
 A1 RISK SOLUTIONS,A1 Risk Solutions Limited,3350.0,13400.0,general_procurement,none,,0.615
 A2 DOMINION,A2 Dominion,136612.06,546448.24,premises_non_procurement,none,,0.486
 A34 PCN,A34 PCN,6670.21,26680.84,general_procurement,none,,0.429
-ABACUS NURSERY,ABACUS NURSERY (KINGSCLERE NURSERIES),76985.49,307941.96,grant,none,,0.424
+ABACUS NURSERY,ABACUS NURSERY (KINGSCLERE NURSERIES),76985.49,307941.96,grant,none,,0.462
 ABBEYFIELD SOCIETY WINNERSH,The Abbeyfield Society - Winnersh,7469.380000000001,29877.520000000004,care_or_education_placement,none,,0.413
 ABC TRAVEL,ABC TRAVEL (WOKINGHAM) LIMITED T/A ABC TRAVEL,63141.0,252564.0,general_procurement,exact,ABC TRAVEL,1.0
 ABI SUPPORT,Abi-support Ltd,343415.58999999997,1373662.3599999999,care_or_education_placement,none,,0.519
@@ -54,10 +54,10 @@ ALEXANDER GREENWOOD,Alexander Greenwood,2662.5,10650.0,general_procurement,none,
 ALEXANDERS SUPPORTED LIVING,Alexander's Supported Living Ltd,7395.13,29580.52,care_or_education_placement,none,,0.524
 ALISON CONQUER,ALISON CONQUER,6676.56,26706.24,grant,none,,0.514
 ALL CARE,All-Care (GB) Ltd,156050.59,624202.36,care_or_education_placement,none,,0.737
-ALL SEASONS CARE SERVICES,All Seasons Care Services Limited,6343.67,25374.68,care_or_education_placement,none,,0.6
-ALLIANCE LEISURE SERVICES,Alliance Leisure Services Limited,9350.0,37400.0,general_procurement,none,,0.653
-ALLIED CARE SERVICES,Allied Care Services Limited T/A Ashamber Homes Ltd,8829.8,35319.2,care_or_education_placement,none,,0.638
-ALLIED PUBLICITY SERVICES,Allied Publicity Services (Manchester) Ltd,1215.44,4861.76,general_procurement,none,,0.538
+ALL SEASONS CARE SERVICES,All Seasons Care Services Limited,6343.67,25374.68,care_or_education_placement,none,,0.64
+ALLIANCE LEISURE SERVICES,Alliance Leisure Services Limited,9350.0,37400.0,general_procurement,exact,ALLIANCE LEISURE SERVICES,1.0
+ALLIED CARE SERVICES,Allied Care Services Limited T/A Ashamber Homes Ltd,8829.8,35319.2,care_or_education_placement,none,,0.756
+ALLIED PUBLICITY SERVICES,Allied Publicity Services (Manchester) Ltd,1215.44,4861.76,general_procurement,none,,0.64
 ALLPAY,Allpay,4290.88,17163.52,general_procurement,none,,0.471
 ALLSTAR BUSINESS SOLUTIONS,ALLSTAR BUSINESS SOLUTIONS LTD,22890.57,91562.28,general_procurement,none,,0.64
 ALMAAZ 59,ALMAAZ 59 LTD ( T/A SCHOOL TRAVEL),61536.1,246144.4,general_procurement,exact,ALMAAZ 59,1.0
@@ -65,13 +65,13 @@ ALPHA CARE AMBULANCE SERVICE,ALPHA CARE AMBULANCE SERVICE,650.0,2600.0,care_or_e
 ALPHA HEAT MECHANICAL,ALPHA HEAT MECHANICAL LTD,2304.77,9219.08,general_procurement,none,,0.524
 ALPHA XPERIENCE,THE ALPHA XPERIENCE,4365.0,17460.0,general_procurement,none,,0.462
 ALSICO LAUCUBA,ALSICO LAUCUBA LTD,702.62,2810.48,general_procurement,none,,0.483
-AM HOMECARE SERVICES,AM Homecare Services Ltd,25840.54,103362.16,care_or_education_placement,none,,0.591
+AM HOMECARE SERVICES,AM Homecare Services Ltd,25840.54,103362.16,care_or_education_placement,none,,0.622
 AMANDA COVENTRY,AMANDA COVENTRY,15151.460000000001,60605.840000000004,grant,none,,0.562
 AMBER ATHILL,Amber Athill (12CP Barristers),900.0,3600.0,general_procurement,none,,0.48
 AMBITION 24 HOURS,AMBITION 24 HOURS,1572.31,6289.24,agency_staff,none,,0.455
 AMEGREEN CHILDRENS SERVICES,Amegreen Childrens Services,750437.3300000001,3001749.3200000003,care_or_education_placement,none,,0.577
 AMICUS RESIDENTIAL CARE,Amicus Residential Care Ltd.,94200.0,376800.0,care_or_education_placement,none,,0.5
-AMMA CHILDCARE SERVICES,AMMA Childcare Services Ltd.,116000.0,464000.0,care_or_education_placement,none,,0.596
+AMMA CHILDCARE SERVICES,AMMA Childcare Services Ltd.,116000.0,464000.0,care_or_education_placement,none,,0.625
 AMR CONSULT,AMR CONSULT LTD,16149.82,64599.28,general_procurement,none,,0.583
 AMS CARE WILTSHIRE,AMS Care Wiltshire Ltd,42251.04,169004.16,care_or_education_placement,none,,0.545
 AMY HAINES,AMY HAINES,8650.720000000001,34602.880000000005,grant,none,,0.571
@@ -189,7 +189,7 @@ CACI,CACI Limited,12071.67,48286.68,general_procurement,none,,0.4
 CADLINE,CADLine Ltd.,4237.0,16948.0,general_procurement,none,,0.455
 CALL US,CALL US,7084.2,28336.8,care_or_education_placement,none,,0.556
 CAMBIAN ASPERGER SYNDROME SERVICES,Cambian Asperger Syndrome Services Ltd,63667.66,254670.64,care_or_education_placement,none,,0.59
-CAMBIAN AUTISM SERVICES,CAMBIAN AUTISM SERVICES LIMITED,310109.53,1240438.12,care_or_education_placement,none,,0.638
+CAMBIAN AUTISM SERVICES,CAMBIAN AUTISM SERVICES LIMITED,310109.53,1240438.12,care_or_education_placement,none,,0.667
 CAMBIAN SIGN POST,Cambian Sign Post Ltd,111739.04000000001,446956.16000000003,care_or_education_placement,none,,0.452
 CAMBURG COLLECTIVE,Camburg Collective Limited,7150.0,28600.0,general_procurement,none,,0.462
 CAMINO CARE,Camino Care,370095.54000000004,1480382.1600000001,care_or_education_placement,none,,0.667
@@ -206,13 +206,13 @@ CARE PARTNERS,CARE PARTNERS (NEWBURY) LTD,19312.93,77251.72,care_or_education_pl
 CARE SERVICES TO YOU,Care Services To You,335856.78,1343427.12,care_or_education_placement,none,,0.545
 CAREBUS VOLUNTEER GROUP,CAREBUS VOLUNTEER GROUP,7252.63,29010.52,general_procurement,none,,0.455
 CARELINE,CARELINE,8823.1,35292.4,care_or_education_placement,none,,0.522
-CARELINK HOMECARE SERVICES,Carelink Homecare Services Ltd,4648.7,18594.8,care_or_education_placement,none,,0.6
+CARELINK HOMECARE SERVICES,Carelink Homecare Services Ltd,4648.7,18594.8,care_or_education_placement,none,,0.667
 CAREMARK,Caremark (West Berkshire & Reading),63874.85,255499.4,care_or_education_placement,none,,0.5
 CAREMATCH,CareMatch Ltd,20156.16,80624.64,general_procurement,none,,0.48
 CARETECH COMMUNITY SERVICES L,CARETECH COMMUNITY SERVICES L,84154.62,336618.48,care_or_education_placement,none,,0.554
 CARNATION DAY CARE SERVICES,CARNATION DAY CARE SERVICES,11173.86,44695.44,care_or_education_placement,none,,0.588
 CAROLINE COLLINS,CAROLINE COLLINS,1820.8,7283.2,grant,none,,0.5
-CAROLINE ROSIER,CAROLINE ROSIER,4946.76,19787.04,grant,none,,0.483
+CAROLINE ROSIER,CAROLINE ROSIER,4946.76,19787.04,grant,none,,0.5
 CARTER JONAS,Carter Jonas (London),4137.0,16548.0,general_procurement,none,,0.48
 CASTLE WATER,CASTLE WATER LIMITED,31291.86,125167.44,premises_non_procurement,none,,0.485
 CATHEDRAL LEASING,CATHEDRAL LEASING LTD,1273.92,5095.68,general_procurement,none,,0.562
@@ -231,7 +231,7 @@ CHARTERED INSTITUTION OF WASTES MANAGEMENT,THE CHARTERED INSTITUTION OF WASTES M
 CHEDDINGTON COMBINED SCHOOL,CHEDDINGTON COMBINED SCHOOL,1490.16,5960.64,grant,none,,0.431
 CHERRYTREES CARE,Cherrytrees Care,22619.170000000002,90476.68000000001,care_or_education_placement,none,,0.444
 CHIEVELEY PRE SCHOOL PLAYGROU,CHIEVELEY PRE-SCHOOL PLAYGROU,19052.87,76211.48,grant,none,,0.419
-CHILDREY LITTLE DUCKS PRE SCHOOL,Childrey Little Ducks Pre-School,1000.0,4000.0,grant,none,,0.361
+CHILDREY LITTLE DUCKS PRE SCHOOL,Childrey Little Ducks Pre-School,1000.0,4000.0,grant,none,,0.386
 CHILMINGTON HOMES,Chilmington Homes Ltd,45914.6,183658.4,care_or_education_placement,none,,0.457
 CHILTERN WAY ACADEMY,CHILTERN WAY ACADEMY,46562.36,186249.44,care_or_education_placement,none,,0.5
 CHIPSIDE,Chipside Ltd,8063.76,32255.04,general_procurement,none,,0.455
@@ -250,7 +250,7 @@ CIPFA BUSINESS,CIPFA Business Ltd,2020.0,8080.0,general_procurement,none,,0.632
 CIRRUS RESEARCH,Cirrus Research PLC,951.0,3804.0,general_procurement,none,,0.467
 CITY OF LONDON,CITY OF LONDON (COUNCILS),14165.0,56660.0,general_procurement,none,,0.462
 CIVICA,CIVICA  UK LTD,48011.36,192045.44,general_procurement,exact,CIVICA,1.0
-CLAIRE EVANS,Claire Evans,1693.0,6772.0,general_procurement,none,,0.48
+CLAIRE EVANS,Claire Evans,1693.0,6772.0,general_procurement,none,,0.486
 CLEAPSS,CLEAPSS,5155.56,20622.24,general_procurement,none,,0.571
 CLEEVE LODGE,CLEEVE LODGE,39636.14,158544.56,care_or_education_placement,none,,0.424
 CLOSOMAT,Closomat Ltd,522.0,2088.0,general_procurement,none,,0.533
@@ -259,7 +259,7 @@ COATE WATER CARE CO,Coate Water Care Co Ltd,28201.75,112807.0,care_or_education_
 COCKLEBURY FARMHOUSE HOMES,Cocklebury Farmhouse Homes,32861.68,131446.72,care_or_education_placement,none,,0.429
 COLD ASH PRE SCHOOL,COLD ASH PRE SCHOOL,29486.39,117945.56,grant,none,,0.458
 COLLABORATIVE CARE SERVICES,Collaborative Care Services Ltd,12716.349999999999,50865.399999999994,care_or_education_placement,none,,0.627
-COLLEGE OF LAW SERVICES,College of Law Services Ltd,1110.0,4440.0,general_procurement,none,,0.553
+COLLEGE OF LAW SERVICES,College of Law Services Ltd,1110.0,4440.0,general_procurement,none,,0.583
 COLLEYCARE,COLLEYCARE LTD,28206.550000000003,112826.20000000001,care_or_education_placement,none,,0.667
 COLOUR IDEA,Colour Idea Ltd T/A Wild View Cameras,1071.6,4286.4,general_procurement,none,,0.444
 COMENSURA,Comensura Ltd,1275552.15,5102208.6,agency_staff,none,,0.48
@@ -347,7 +347,7 @@ EDUCATION SOFTWARE SOLUTIONS,Education Software Solutions Limited,110330.35,4413
 EE,EE Ltd,8312.11,33248.44,general_procurement,none,,0.5
 ELEANOR CHAPLIN,Eleanor Chaplin,3871.78,15487.12,grant,none,,0.5
 ELECTORAL REFORM SERVICES,Electoral Reform Services Ltd,16323.69,65294.76,general_procurement,none,,0.571
-ELEGANT CARE SERVICES,Elegant Care Services Ltd,8184.0,32736.0,care_or_education_placement,none,,0.578
+ELEGANT CARE SERVICES,Elegant Care Services Ltd,8184.0,32736.0,care_or_education_placement,none,,0.609
 ELIALI MPC,EliAli MPC Ltd,17428.92,69715.68,care_or_education_placement,none,,0.429
 ELIOR,Elior UK PLC,161415.59,645662.36,general_procurement,none,,0.462
 ELITE MINI COACHES,Elite Mini Coaches Ltd,10199.0,40796.0,general_procurement,exact,ELITE MINI COACHES,1.0
@@ -506,7 +506,7 @@ IAN GILLMAN SMITH,IAN GILLMAN-SMITH,3813.25,15253.0,general_procurement,none,,0.
 ICHOOSR,iChoosr Ltd,11124.5,44498.0,general_procurement,none,,0.5
 IDOX SOFTWARE,IDOX SOFTWARE LTD,51226.409999999996,204905.63999999998,general_procurement,exact,IDOX SOFTWARE,1.0
 IESE INNOVATION,iESE Innovation Ltd,64000.0,256000.0,general_procurement,none,,0.486
-ILLUMINANCE FOSTERING SERVICE,ILLUMINANCE FOSTERING SERVICE,35750.259999999995,143001.03999999998,care_or_education_placement,none,,0.567
+ILLUMINANCE FOSTERING SERVICE,ILLUMINANCE FOSTERING SERVICE,35750.259999999995,143001.03999999998,care_or_education_placement,none,,0.667
 IMAGE BOX CREATIVE,Image Box Creative,2006.6599999999999,8026.639999999999,general_procurement,none,,0.452
 IMPERIAL TREASURY SERVICES,IMPERIAL TREASURY SERVICES LTD,4786.85,19147.4,general_procurement,none,,0.706
 IN2CARE,IN2CARE LTD,9229.33,36917.32,grant,none,,0.471
@@ -563,7 +563,7 @@ KENVER HOUSE,Kenver House Ltd,6489.17,25956.68,care_or_education_placement,none,
 KEYSTREAM GROUP,KEYSTREAM GROUP LTD,17545.0,70180.0,general_procurement,none,,0.611
 KIND2U LIVING,Kind2U Living Ltd,95701.75,382807.0,care_or_education_placement,none,,0.462
 KINGDOM YOUTH SERVICES,Kingdom Youth Services Ltd,6555.71,26222.84,care_or_education_placement,none,,0.609
-KINGSCLERE NURSERIES,Kingsclere Nurseries,28655.35,114621.4,grant,none,,0.591
+KINGSCLERE NURSERIES,Kingsclere Nurseries,28655.35,114621.4,grant,none,,0.622
 KINTBURY PRESCHOOL PLAYGROUP,KINTBURY PRESCHOOL PLAYGROUP,19214.75,76859.0,grant,none,,0.449
 KINTBURY VOLUNTEER GROUP,KINTBURY VOLUNTEER GROUP,2043.14,8172.56,general_procurement,none,,0.444
 KIRSTIE LEWIN,Kirstie Lewin,4919.81,19679.24,grant,none,,0.5
@@ -596,14 +596,14 @@ LOCAL GOVERNMENT PROPERTY CONSULTANTS,LOCAL GOVERNMENT PROPERTY CONSULTANTS (LGP
 LOCATE ACCOMMODATION,Locate Accommodation Limited,6279.42,25117.68,care_or_education_placement,none,,0.474
 LORAINE BROWN,Loraine Brown,6638.35,26553.4,grant,none,,0.476
 LOUISE SPRULES,LOUISE SPRULES,12513.150000000001,50052.600000000006,grant,none,,0.488
-LOVE LANE PRE SCHOOL,LOVE LANE PRE SCHOOL,12691.380000000001,50765.520000000004,grant,none,,0.429
+LOVE LANE PRE SCHOOL,LOVE LANE PRE SCHOOL,12691.380000000001,50765.520000000004,grant,none,,0.444
 LOVEJOY STEVENS BERKSHIRE,Lovejoy Stevens Berkshire Limited,1778.85,7115.4,premises_non_procurement,none,,0.553
 LUCIE MILLON,LUCIE MILLON,8498.45,33993.8,grant,none,,0.467
 LUMIVERO,Lumivero (UK) Ltd,2571.45,10285.8,general_procurement,none,,0.429
 LVS OXFORD,LVS Oxford,41680.66,166722.64,care_or_education_placement,none,,0.417
 LYCETTE CARE,Lycette Care T/A The Warren,16083.359999999999,64333.439999999995,care_or_education_placement,none,,0.522
 LYORA HEALTHCARE SERVICES,Lyora Healthcare Services,55060.27,220241.08,care_or_education_placement,none,,0.612
-M ALLUM PLUMBING AND HEATING ENGINEERS,M.Allum Plumbing & Heating Engineers,4009.0,16036.0,general_procurement,none,,0.405
+M ALLUM PLUMBING AND HEATING ENGINEERS,M.Allum Plumbing & Heating Engineers,4009.0,16036.0,general_procurement,none,,0.413
 M AND R SERVICES,M&R Services,4305.0,17220.0,care_or_education_placement,none,,0.683
 M K TAYLOR,M K TAYLOR,850.0,3400.0,general_procurement,none,,0.526
 MAIDEN ERLEGH TRUST TA JOHN RANKIN SCHOOLS,Maiden Erlegh Trust TA John Rankin Schools,8046.87,32187.48,grant,none,,0.394
@@ -705,7 +705,7 @@ NEWBURY COMMUNITY RESOURCE CENTRE,THE NEWBURY COMMUNITY RESOURCE CENTRE LTD,8924
 NEWBURY NEWS,NEWBURY NEWS LTD,4794.1900000000005,19176.760000000002,general_procurement,none,,0.625
 NEWBURY SELF STORE,NEWBURY SELF STORE LTD,756.0,3024.0,care_or_education_placement,none,,0.632
 NEWSQUEST MEDIA GROUP,Newsquest Media Group,661.36,2645.44,general_procurement,none,,0.5
-NEXT STEP SERVICES,Next Step Services,151581.82,606327.28,care_or_education_placement,none,,0.619
+NEXT STEP SERVICES,Next Step Services,151581.82,606327.28,care_or_education_placement,none,,0.651
 NEXUS FOSTERING,Nexus Fostering Ltd,47755.840000000004,191023.36000000002,care_or_education_placement,none,,0.588
 NICK BRADSHAW,Nick Bradshaw,1420.0,5680.0,general_procurement,none,,0.421
 NICOLA MCEVOY,NICOLA McEVOY,4359.96,17439.84,grant,none,,0.452
@@ -748,7 +748,7 @@ PARADISE HOUSE,PARADISE HOUSE,28166.97,112667.88,care_or_education_placement,non
 PARKCARE HOMES,Parkcare Homes (No 2) Limited t/a White House,26231.5,104926.0,care_or_education_placement,none,,0.48
 PARKVIEW CARE,Parkview Care (Broadstairs) Limited,164912.12,659648.48,care_or_education_placement,none,,0.64
 PASKAY,PASKAY LIMITED,140375.08000000002,561500.3200000001,grant,none,,0.421
-PASSIONATE SUPPORT SERVICES,Passionate Support Services Ltd,20488.52,81954.08,care_or_education_placement,none,,0.615
+PASSIONATE SUPPORT SERVICES,Passionate Support Services Ltd,20488.52,81954.08,care_or_education_placement,none,,0.654
 PATROL,Patrol,515.25,2061.0,general_procurement,none,,0.526
 PATROLSTORE,Patrolstore,1397.47,5589.88,general_procurement,none,,0.519
 PAUL TWYNING,PAUL TWYNING,590.52,2362.08,general_procurement,none,,0.4
@@ -788,7 +788,7 @@ PRECIOUS HOMES,Precious Homes Ltd,52614.770000000004,210459.08000000002,care_or_
 PRECISION RESOURCE GROUP,Precision Resource Group Ltd,4580.0,18320.0,general_procurement,none,,0.417
 PREMIER CARS,Premier Cars,23097.5,92390.0,general_procurement,exact,PREMIER CARS,1.0
 PREMIER INN BUSINESS ACCOUNT,PREMIER INN BUSINESS ACCOUNT,4095.04,16380.16,premises_non_procurement,none,,0.5
-PREPAID FINANCIAL SERVICES,PREPAID FINANCIAL SERVICES,8010.0,32040.0,general_procurement,none,,0.56
+PREPAID FINANCIAL SERVICES,PREPAID FINANCIAL SERVICES,8010.0,32040.0,general_procurement,none,,0.588
 PRESTIGE NETWORK,PRESTIGE NETWORK,11179.73,44718.92,general_procurement,none,,0.519
 PRIMANAGE,PRIMANAGE LTD,2559.3599999999997,10237.439999999999,premises_non_procurement,none,,0.48
 PRIORITY SERVICES4U,Priority Services4u Ltd,55013.16,220052.64,care_or_education_placement,none,,0.636
@@ -813,7 +813,7 @@ R AND G SMITH,R & G SMITH (SOUTHERN) LTD,6565.0,26260.0,general_procurement,none
 RACKLINE,Rackline Limited,25510.0,102040.0,general_procurement,none,,0.5
 RADIANT CARE HOMES,Radiant Care Homes Ltd.,135372.14,541488.56,care_or_education_placement,none,,0.581
 RAIL SETTLEMENT,Rail Settlement,6607.0,26428.0,general_procurement,none,,0.414
-RAINBOW NURSERY,THE RAINBOW NURSERY,38804.6,155218.4,grant,none,,0.429
+RAINBOW NURSERY,THE RAINBOW NURSERY,38804.6,155218.4,grant,none,,0.45
 RAMORA GLOBAL,Ramora Global Ltd,504.84,2019.36,general_procurement,none,,0.414
 RBPG,RBPG Limited (Robinson Brown Property Group Limited),20583.37,82333.48,care_or_education_placement,none,,0.286
 REACTED,Reacted,550.0,2200.0,general_procurement,none,,0.476
@@ -916,7 +916,7 @@ SOUTHERN PRINT FINISHING SERVICES,Southern Print Finishing Services Ltd,1645.0,6
 SOVEREIGN HOUSING GROUP,SOVEREIGN HOUSING GROUP,33283.63,133134.52,premises_non_procurement,none,,0.52
 SPARE CRIB GLOBAL,Spare Crib Global Limited,13915.0,55660.0,premises_non_procurement,none,,0.467
 SPIRE RIDGE BOARDING KENNELS AND CATTERY,SPIRE RIDGE BOARDING KENNELS AND CATTERY,1674.0,6696.0,general_procurement,none,,0.433
-SPORTS AND LEISURE MANAGEMENT,SPORTS & LEISURE MANAGEMENT LTD,39139.47,156557.88,general_procurement,none,,0.478
+SPORTS AND LEISURE MANAGEMENT,SPORTS & LEISURE MANAGEMENT LTD,39139.47,156557.88,general_procurement,none,,0.481
 SPRING VALLEY CHILDRENS CARE HOMES,Spring Valley Children's Care Homes ltd,293202.85,1172811.4,care_or_education_placement,none,,0.489
 SPRINGBURN CHILDCARE,SPRINGBURN CHILDCARE LTD,131272.82,525091.28,grant,none,,0.5
 SSE ENERGY SOLUTIONS,SSE ENERGY SOLUTIONS,8646.32,34585.28,general_procurement,none,,0.619
@@ -951,7 +951,7 @@ SUNLIGHT HOMECARE SERVICES,Sunlight Homecare Services Ltd,78087.82,312351.28,car
 SUPERCARE RESIDENTIAL,Supercare Residential Ltd,217857.14,871428.56,care_or_education_placement,none,,0.444
 SUSAN TANNER,Susan Tanner,2925.0,11700.0,general_procurement,none,,0.485
 SUZANNA MARIA COLLETT,Suzanna Maria Collett,5484.1,21936.4,grant,none,,0.421
-SWAAY CHILD AND ADOLESCENT SERVICESS,SWAAY CHILD AND ADOLESCENT SERVICESS LTD,540.0,2160.0,care_or_education_placement,none,,0.528
+SWAAY CHILD AND ADOLESCENT SERVICESS,SWAAY CHILD AND ADOLESCENT SERVICESS LTD,540.0,2160.0,care_or_education_placement,none,,0.59
 SWAN ADVOCACY,Swan Advocacy,51216.0,204864.0,care_or_education_placement,near_contain,SWAN ADVOCACY NETWORK,0.765
 SWARCO SMART CHARGING,SWARCO SMART CHARGING LTD,42032.880000000005,168131.52000000002,general_procurement,exact,SWARCO SMART CHARGING,1.0
 SWEGON,SWEGON LIMITED,1218.0,4872.0,general_procurement,none,,0.357
@@ -1021,7 +1021,7 @@ VIKKI WILLIAMS,VIKKI WILLIAMS,11700.6,46802.4,grant,none,,0.4
 VOCALA,VOCALA LTD,55823.3,223293.2,general_procurement,none,,0.5
 VODAFONE CORPORATE,VODAFONE CORPORATE LTD,5808.34,23233.36,general_procurement,none,,0.471
 VOLKERHIGHWAYS,VolkerHighways Ltd,7377922.21,29511688.84,general_procurement,none,,0.4
-VOLKSWAGEN FINANCIAL SERVICES,VOLKSWAGEN FINANCIAL SERVICES (UK) LTD,837.11,3348.44,general_procurement,none,,0.528
+VOLKSWAGEN FINANCIAL SERVICES,VOLKSWAGEN FINANCIAL SERVICES (UK) LTD,837.11,3348.44,general_procurement,none,,0.556
 VOLUNTEER CENTRE WEST BERKSHIRE,VOLUNTEER CENTRE WEST BERKSHIRE,17171.61,68686.44,general_procurement,none,,0.596
 VOYAGE CARE,VOYAGE CARE,554678.88,2218715.52,care_or_education_placement,none,,0.556
 WARM HEARTS SERVICES,Warm Hearts Services Ltd,4123.47,16493.88,care_or_education_placement,none,,0.667
@@ -1053,7 +1053,7 @@ WHITELANDS PARK PRIMARY SCHOOL,Whitelands Park Primary School,696.0,2784.0,grant
 WILKIN CHAPMAN,WILKIN CHAPMAN LLP,1217.5,4870.0,general_procurement,none,,0.562
 WINCHMORE TUTORS,WINCHMORE TUTORS LTD,1040.0,4160.0,care_or_education_placement,none,,0.5
 WINCKWORTH SHERWOOD,WINCKWORTH SHERWOOD,2822.0,11288.0,general_procurement,none,,0.409
-WINDSOR CLINICAL AND HOME CARE SERVICES GROUP,Windsor Clinical and Home Care Services Group Ltd,13787.45,55149.8,care_or_education_placement,none,,0.464
+WINDSOR CLINICAL AND HOME CARE SERVICES GROUP,Windsor Clinical and Home Care Services Group Ltd,13787.45,55149.8,care_or_education_placement,none,,0.486
 WINDSOR FOREST COLLEGES GROUP,THE WINDSOR FOREST COLLEGES GROUP,14717.92,58871.68,care_or_education_placement,none,,0.4
 WINGS AND WELLIES PRE SCHOOL,WINGS & WELLIES PRE-SCHOOL (ST GEORGE'S PRE-SCHOOL),25492.93,101971.72,grant,none,,0.453
 WITHERSLACK GROUP OF SCHOOLS CHILWORTH HOUSE SCHOOL,Witherslack Group of Schools - Chilworth House School,97431.43,389725.72,care_or_education_placement,none,,0.362

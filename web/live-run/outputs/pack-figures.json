@@ -1,16 +1,16 @@
 {
- "generated_at": "2026-10-15T12:07:37",
+ "generated_at": "2026-10-16T00:10:24",
  "computed": [
   {
    "name": "risks_in_scope",
-   "value": 8,
+   "value": 9,
    "where": [
     "planning-memo.md"
    ]
   },
   {
    "name": "risks_out_of_scope",
-   "value": 1,
+   "value": 2,
    "where": [
     "planning-memo.md"
    ]
@@ -56,6 +56,46 @@
    ]
   },
   {
+   "name": "sample.T-02-1.size_for_score",
+   "value": 15,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.population",
+   "value": 2,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.units_drawn",
+   "value": 2,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.transactions",
+   "value": 2,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.gbp",
+   "value": 318885.53,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
    "name": "sample.T-03-1.size_for_score",
    "value": 25,
    "where": [
@@ -81,7 +121,7 @@
   },
   {
    "name": "sample.T-03-1.transactions",
-   "value": 309,
+   "value": 138,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -89,7 +129,7 @@
   },
   {
    "name": "sample.T-03-1.gbp",
-   "value": 1795137.81,
+   "value": 1182808.12,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -105,7 +145,7 @@
   },
   {
    "name": "sample.T-03-2.population",
-   "value": 2,
+   "value": 8,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -113,7 +153,7 @@
   },
   {
    "name": "sample.T-03-2.units_drawn",
-   "value": 2,
+   "value": 8,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -121,7 +161,7 @@
   },
   {
    "name": "sample.T-03-2.transactions",
-   "value": 58,
+   "value": 128,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -129,7 +169,7 @@
   },
   {
    "name": "sample.T-03-2.gbp",
-   "value": 3509528.75,
+   "value": 5404533.12,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -145,7 +185,7 @@
   },
   {
    "name": "sample.T-04-1.population",
-   "value": 186,
+   "value": 42,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -185,7 +225,7 @@
   },
   {
    "name": "sample.T-04-2.population",
-   "value": 7,
+   "value": 6,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -193,7 +233,7 @@
   },
   {
    "name": "sample.T-04-2.units_drawn",
-   "value": 7,
+   "value": 6,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -201,7 +241,7 @@
   },
   {
    "name": "sample.T-04-2.transactions",
-   "value": 21,
+   "value": 18,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -209,7 +249,7 @@
   },
   {
    "name": "sample.T-04-2.gbp",
-   "value": 260879.03,
+   "value": 239360.31,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -257,7 +297,7 @@
   },
   {
    "name": "sample.T-06-1.size_for_score",
-   "value": 10,
+   "value": 15,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -289,7 +329,7 @@
   },
   {
    "name": "sample.T-06-1.gbp",
-   "value": 188394.86,
+   "value": 191349.42,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -336,80 +376,40 @@
    ]
   },
   {
-   "name": "sample.T-08-1.size_for_score",
-   "value": 15,
+   "name": "sample.T-10-1.size_for_score",
+   "value": 5,
    "where": [
     "planning-memo.md",
     "audit-program.md"
    ]
   },
   {
-   "name": "sample.T-08-1.population",
-   "value": 307,
+   "name": "sample.T-10-1.population",
+   "value": 18,
    "where": [
     "planning-memo.md",
     "audit-program.md"
    ]
   },
   {
-   "name": "sample.T-08-1.units_drawn",
-   "value": 15,
+   "name": "sample.T-10-1.units_drawn",
+   "value": 5,
    "where": [
     "planning-memo.md",
     "audit-program.md"
    ]
   },
   {
-   "name": "sample.T-08-1.transactions",
-   "value": 45,
+   "name": "sample.T-10-1.transactions",
+   "value": 13,
    "where": [
     "planning-memo.md",
     "audit-program.md"
    ]
   },
   {
-   "name": "sample.T-08-1.gbp",
-   "value": 1655037.59,
-   "where": [
-    "planning-memo.md",
-    "audit-program.md"
-   ]
-  },
-  {
-   "name": "sample.T-08-2.size_for_score",
-   "value": 15,
-   "where": [
-    "planning-memo.md",
-    "audit-program.md"
-   ]
-  },
-  {
-   "name": "sample.T-08-2.population",
-   "value": 204,
-   "where": [
-    "planning-memo.md",
-    "audit-program.md"
-   ]
-  },
-  {
-   "name": "sample.T-08-2.units_drawn",
-   "value": 15,
-   "where": [
-    "planning-memo.md",
-    "audit-program.md"
-   ]
-  },
-  {
-   "name": "sample.T-08-2.transactions",
-   "value": 101,
-   "where": [
-    "planning-memo.md",
-    "audit-program.md"
-   ]
-  },
-  {
-   "name": "sample.T-08-2.gbp",
-   "value": 2110700.78,
+   "name": "sample.T-10-1.gbp",
+   "value": 916841.43,
    "where": [
     "planning-memo.md",
     "audit-program.md"
@@ -417,35 +417,42 @@
   },
   {
    "name": "sample.transactions_total",
-   "value": 686,
+   "value": 451,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.unique_transactions",
+   "value": 377,
    "where": [
     "planning-memo.md"
    ]
   },
   {
    "name": "pbc_items",
-   "value": 22,
+   "value": 21,
    "where": [
     "audit-program.md"
    ]
   },
   {
    "name": "rules_total",
-   "value": 65,
+   "value": 66,
    "where": [
     "risk-control-matrix.md"
    ]
   },
   {
    "name": "rules_cited",
-   "value": 54,
+   "value": 53,
    "where": [
     "risk-control-matrix.md"
    ]
   },
   {
    "name": "rules_not_tested",
-   "value": 11,
+   "value": 13,
    "where": [
     "risk-control-matrix.md"
    ]
@@ -486,15 +493,22 @@
    ]
   },
   {
+   "name": "sample.R-02.transactions",
+   "value": 2,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
    "name": "sample.R-03.transactions",
-   "value": 367,
+   "value": 266,
    "where": [
     "planning-memo.md"
    ]
   },
   {
    "name": "sample.R-04.transactions",
-   "value": 83,
+   "value": 80,
    "where": [
     "planning-memo.md"
    ]
@@ -521,22 +535,15 @@
    ]
   },
   {
-   "name": "sample.R-08.transactions",
-   "value": 146,
+   "name": "sample.R-10.transactions",
+   "value": 13,
    "where": [
     "planning-memo.md"
    ]
   },
   {
-   "name": "sample.R-09.transactions",
+   "name": "sample.R-11.transactions",
    "value": 0,
-   "where": [
-    "planning-memo.md"
-   ]
-  },
-  {
-   "name": "sample.unique_transactions",
-   "value": 612,
    "where": [
     "planning-memo.md"
    ]
@@ -559,8 +566,23 @@
    "source": "risk-register.state.json"
   },
   {
-   "name": "R-03.L",
+   "name": "R-02.L",
    "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-02.I",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-02.score",
+   "value": 9,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-03.L",
+   "value": 4,
    "source": "risk-register.state.json"
   },
   {
@@ -570,7 +592,7 @@
   },
   {
    "name": "R-03.score",
-   "value": 15,
+   "value": 20,
    "source": "risk-register.state.json"
   },
   {
@@ -610,12 +632,12 @@
   },
   {
    "name": "R-06.I",
-   "value": 3,
+   "value": 4,
    "source": "risk-register.state.json"
   },
   {
    "name": "R-06.score",
-   "value": 6,
+   "value": 8,
    "source": "risk-register.state.json"
   },
   {
@@ -634,23 +656,53 @@
    "source": "risk-register.state.json"
   },
   {
+   "name": "R-10.L",
+   "value": 1,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-10.I",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-10.score",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-11.L",
+   "value": 1,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-11.I",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-11.score",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
    "name": "R-08.L",
    "value": 2,
    "source": "risk-register.state.json"
   },
   {
    "name": "R-08.I",
-   "value": 5,
+   "value": 2,
    "source": "risk-register.state.json"
   },
   {
    "name": "R-08.score",
-   "value": 10,
+   "value": 4,
    "source": "risk-register.state.json"
   },
   {
    "name": "R-09.L",
-   "value": 1,
+   "value": 3,
    "source": "risk-register.state.json"
   },
   {
@@ -660,22 +712,7 @@
   },
   {
    "name": "R-09.score",
-   "value": 2,
-   "source": "risk-register.state.json"
-  },
-  {
-   "name": "R-02.L",
-   "value": 1,
-   "source": "risk-register.state.json"
-  },
-  {
-   "name": "R-02.I",
-   "value": 4,
-   "source": "risk-register.state.json"
-  },
-  {
-   "name": "R-02.score",
-   "value": 4,
+   "value": 6,
    "source": "risk-register.state.json"
   }
  ],
@@ -683,6 +720,10 @@
   {
    "path": "$.contracts.register_present",
    "value": false
+  },
+  {
+   "path": "$.population.annualisation_factor",
+   "value": 4.0
   },
   {
    "path": "$.population.date_max",
@@ -696,6 +737,20 @@
    "value": "2026-05-01",
    "rendered": [
     "2026-05-01"
+   ]
+  },
+  {
+   "path": "$.population.excluded.redacted_supplier.rows",
+   "value": 2015,
+   "rendered": [
+    "2,015"
+   ]
+  },
+  {
+   "path": "$.population.months_covered",
+   "value": 3,
+   "rendered": [
+    "3"
    ]
   },
   {
@@ -713,12 +768,15 @@
    ]
   },
   {
-   "path": "$.skipped[3].reason",
-   "value": "STATUTORY_THRESHOLD_RELEVANT is null in rules.json parameters"
+   "path": "$.skipped[0].reason",
+   "value": "STATUTORY_THRESHOLD_RELEVANT is null in rules.json parameters: Not a separate figure: it means whichever of the three thresholds fits each contract's type. The spend data has no reliable contract-type field, so tests citing it stay skipped and are listed under 'skipped' with this reason."
   },
   {
-   "path": "$.tests.duplicates.per_tier.different_time.by_tag.care_or_education_placement.groups",
-   "value": 204
+   "path": "$.tests.duplicates.parameters.max_gap_days",
+   "value": 7,
+   "rendered": [
+    "7"
+   ]
   },
   {
    "path": "$.tests.duplicates.per_tier.different_time.by_tag.general_procurement.groups",
@@ -729,8 +787,11 @@
    "value": 8
   },
   {
-   "path": "$.tests.high_value_suppliers.by_dominant_tag.care_or_education_placement.suppliers",
-   "value": 307
+   "path": "$.tests.high_value_suppliers.statutory_tier.parameters.threshold",
+   "value": 173100,
+   "rendered": [
+    "£173,100"
+   ]
   },
   {
    "path": "$.tests.off_contract.by_match_class.near_contain.suppliers",
@@ -741,16 +802,19 @@
    "value": 2
   },
   {
-   "path": "$.tests.off_contract.headline_general_procurement_no_notice_found.suppliers",
-   "value": 186
+   "path": "$.tests.off_contract.parameters.threshold",
+   "value": 25000,
+   "rendered": [
+    "£25,000"
+   ]
   },
   {
-   "path": "$.tests.off_contract.publication_note",
-   "value": "Contracts Finder does not carry smaller awards; only suppliers at or above the publication threshold are classed, and results must never be used to question smaller suppliers."
+   "path": "$.tests.off_contract.statutory_tier.by_match_class.exact.suppliers",
+   "value": 19
   },
   {
-   "path": "$.tests.spend_vs_award.caveat",
-   "value": "Indicator of spend beyond the award without an approved variation; award values may be estimates or maxima, and the annualised estimate extrapolates three months."
+   "path": "$.tests.off_contract.statutory_tier.headline_general_procurement_no_notice_found.suppliers",
+   "value": 42
   },
   {
    "path": "$.tests.spend_vs_award.flagged",
@@ -758,23 +822,54 @@
   },
   {
    "path": "$.tests.spend_vs_award.parameters.flag_at",
-   "value": 1.25
+   "value": 1.25,
+   "rendered": [
+    "1.25"
+   ]
   },
   {
-   "path": "$.tests.split_purchases.note",
-   "value": "population is expenditure over £500 only, so results are a lower bound; placement windows reported separately because periodic care fees legitimately recur"
+   "path": "$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.windows",
+   "value": 6
   },
   {
-   "path": "$.tests.split_purchases.per_threshold[?threshold==25000].care_or_education_placement.windows",
-   "value": 126
+   "path": "$.tests.split_purchases.per_threshold[?threshold==173100].threshold",
+   "value": 173100,
+   "rendered": [
+    "£173,100"
+   ]
   },
   {
    "path": "$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.windows",
    "value": 39
   },
   {
+   "path": "$.tests.split_purchases.per_threshold[?threshold==25000].threshold",
+   "value": 25000,
+   "rendered": [
+    "£25,000"
+   ]
+  },
+  {
    "path": "$.tests.split_purchases.per_threshold[?threshold==500000].headline_general_procurement.windows",
    "value": 2
+  },
+  {
+   "path": "$.tests.split_purchases.per_threshold[?threshold==500000].threshold",
+   "value": 500000,
+   "rendered": [
+    "£500,000"
+   ]
+  },
+  {
+   "path": "$.tests.threshold_clustering.per_threshold[?threshold==173100].band_by_tag.general_procurement.n",
+   "value": 2
+  },
+  {
+   "path": "$.tests.threshold_clustering.per_threshold[?threshold==173100].threshold",
+   "value": 173100,
+   "rendered": [
+    "£173,100"
+   ]
   },
   {
    "path": "$.tests.threshold_clustering.per_threshold[?threshold==25000].band_by_tag.general_procurement.n",
