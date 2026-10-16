@@ -189,9 +189,6 @@ Field rules:
 
 - `parameters` values are always `null` at extraction. Do not fill them from
   memory or the web; the figure must come from the auditor with a citation.
-  After the quotes verify, `scripts/apply_thresholds.py` copies the
-  auditor's figures and sources from `data/statutory-thresholds.json` into
-  `parameters` (VAT-exclusive `value`, plus `value_incl_vat` and `source`).
 - `notes` is for things the auditor should know but that are not rules: e.g.
   two clauses that disagree on whether contract value includes VAT, or
   placeholders like `Part []` left in the text. Cite the clauses.

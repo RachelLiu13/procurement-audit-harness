@@ -42,7 +42,8 @@ also installs `pdftotext` (poppler) for the PDF quote checks.
 
 Every file the agents read and write is the same as in Part A, so Part A's
 Python builders and its four QA checks run as they are (apart from the
-analysis changes listed below). The principles carry over: the
+analysis changes listed below, which live in `part-a-changes/` and are copied
+over Part A's files in each run; `../part-a/` itself stays as Part A was completed). The principles carry over: the
 model reads and judges, Python computes every number; everything is traceable;
 indicators, not accusations.
 
@@ -50,9 +51,9 @@ indicators, not accusations.
 
 | Change | Where | Effect |
 | --- | --- | --- |
-| Sample count reported as rows *and* unique transactions | `part-a/.claude/skills/audit-program/build_pack.py` | The memo states both figures, because a transaction drawn by more than one test is counted once per test |
-| Buyer name matched case-insensitively | `part-a/scripts/clean.py`, CLAUDE.md, spend-analyst | 141 council notices instead of 135 |
-| Statutory thresholds supplied | `part-a/data/statutory-thresholds.json`, `part-a/scripts/apply_thresholds.py`, `part-a/scripts/analyse.py` | Goods and services £207,720 incl. VAT (£173,100 excl.), works/concessions £5,193,000, light touch £663,540, in force from 1 Jan 2026 (PPN 023; Threshold Amounts (Amendment) Regulations 2025). Adds a clustering tier below £173,100 (CPR-54), and statutory tiers in `high_value_suppliers` and `off_contract`. "The relevant Threshold" stays skipped with a stated reason: the spend data has no contract-type field to choose between the three figures |
+| Sample count reported as rows *and* unique transactions | `part-a-changes/.claude/skills/audit-program/build_pack.py` | The memo states both figures, because a transaction drawn by more than one test is counted once per test |
+| Buyer name matched case-insensitively | `part-a-changes/scripts/clean.py`, `CLAUDE.md`, `.claude/agents/spend-analyst.md` | 141 council notices instead of 135 |
+| Statutory thresholds supplied | `part-a-changes/data/statutory-thresholds.json`, `scripts/apply_thresholds.py`, `scripts/analyse.py`, `.claude/skills/extract-rules/SKILL.md` | Goods and services £207,720 incl. VAT (£173,100 excl.), works/concessions £5,193,000, light touch £663,540, in force from 1 Jan 2026 (PPN 023; Threshold Amounts (Amendment) Regulations 2025). Adds a clustering tier below £173,100 (CPR-54), and statutory tiers in `high_value_suppliers` and `off_contract`. "The relevant Threshold" stays skipped with a stated reason: the spend data has no contract-type field to choose between the three figures |
 
 The completed run in `saved-runs/` and `web/live-run/` (signed off 2026-10-16) was run with these changes, as a full pipeline run (Phase 1 not reused).
 
@@ -66,7 +67,7 @@ The completed run in `saved-runs/` and `web/live-run/` (signed off 2026-10-16) w
 | `/extract-rules` typed by the human | Stage 1 runs the skill in a main-session agent |
 | Experimental agent teams + `SendMessage` | `team.py`: one persistent conversation per teammate. `SendMessage` drops a message in the recipient's inbox, and a scheduler wakes whichever teammate has mail. The lead never relays; it collects `PLANNER DONE`, `CHALLENGER DONE`, `QA DONE` and stops the team |
 | The auditor edits `auditor-comments.md` and `review.md` | `gate.py` writes the same cells from the web forms |
-| Local `.venv` | Each run gets a fresh copy of `../part-a/` (without its outputs) in `RUNS_DIR/<id>`, with `.venv/bin/python` pointing at the server's Python. `pdftotext` and `jq` are installed by the `Dockerfile` |
+| Local `.venv` | Each run gets a fresh copy of `../part-a/` (without its outputs), with `part-a-changes/` copied over it, in `RUNS_DIR/<id>`, with `.venv/bin/python` pointing at the server's Python. `pdftotext` and `jq` are installed by the `Dockerfile` |
 
 Runs execute in a background thread on the server and record their state in
 `run.json` and an event log in `events.jsonl`. The browser can close and come
@@ -85,6 +86,8 @@ harness/
   pipeline.py          stages, runs, state, gates
   gate.py              reads and writes auditor-comments.md and the review.md sign-off
   config.py            settings from environment variables
+part-a-changes/        Part B's analysis changes: the Part A files they amend, copied over Part A
+                       in each run (see "Analysis changes after review")
 saved-runs/            completed Part B runs the server restores after every restart
 web/live-run/          the same run as static files, for the read-only "Completed end-to-end run" page
                        (update both copies together with `python save_live_run.py <run-id>`)

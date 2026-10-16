@@ -55,12 +55,6 @@ def r2(x):
 
 
 # ---------------------------------------------------------------- thresholds
-def param_value(rules, name):
-    p = (rules.get("parameters") or {}).get(name) or {}
-    v = p.get("value")
-    return v if isinstance(v, (int, float)) else None
-
-
 def derive_thresholds(rules):
     by_val = defaultdict(lambda: {"rule_ids": [], "low_incl": [], "high_incl": [], "actions": []})
     for r in rules["rules"]:
@@ -68,8 +62,6 @@ def derive_thresholds(rules):
             continue
         for side in ("low", "high"):
             v = r.get(f"threshold_{side}")
-            if v is None and r.get(f"threshold_{side}_ref"):
-                v = param_value(rules, r[f"threshold_{side}_ref"])  # statutory figure supplied by the auditor
             if isinstance(v, (int, float)) and v is not None:
                 d = by_val[int(v)]
                 d["rule_ids"].append(r["rule_id"])
@@ -195,15 +187,9 @@ def main():
             refs = sorted({r["rule_id"] for r in rules["rules"]
                            if name in (r.get("threshold_low_ref"), r.get("threshold_high_ref"))})
             skipped.append({"test": "all threshold tests", "tier": name, "rule_ids": refs,
-                            "reason": f"{name} is null in rules.json parameters"
-                                      + (f": {p['note']}" if p.get("note") else "")})
-    T_STAT = param_value(rules, "STATUTORY_THRESHOLD_GOODS_SERVICES")
-    T_LT = param_value(rules, "STATUTORY_THRESHOLD_LIGHT_TOUCH")
-    stat_rule_ids = sorted({r["rule_id"] for r in rules["rules"]
-                            if "STATUTORY_THRESHOLD_GOODS_SERVICES" in (r.get("threshold_low_ref"), r.get("threshold_high_ref"))})
-    if T_STAT is None:
-        skipped.append({"test": "high_value_suppliers / off_contract", "tier": "statutory",
-                        "reason": "STATUTORY_THRESHOLD_GOODS_SERVICES is null"})
+                            "reason": f"{name} is null in rules.json parameters"})
+    skipped.append({"test": "high_value_suppliers / off_contract", "tier": "statutory",
+                    "reason": "STATUTORY_THRESHOLD_GOODS_SERVICES is null"})
 
     tests = {}
 
@@ -322,7 +308,6 @@ def main():
                           "annualisation": f"total x 12/{months} (annualised estimate)", "months_covered": months},
            "rule_ids": T_low["competition_rule_ids"],
            "statutory_tier": {"skipped": True, "reason": "STATUTORY_THRESHOLD_GOODS_SERVICES is null"},
-           "light_touch_tier": {"skipped": True, "reason": "STATUTORY_THRESHOLD_LIGHT_TOUCH is null"},
            "suppliers": int(len(hv)), "total_gbp_in_window": r2(hv["total_gbp"].sum()),
            "annualised_estimate_gbp": r2(hv["annualised_estimate"].sum()),
            "by_dominant_tag": {k: {"suppliers": int(len(v)), "gbp_in_window": r2(v["total_gbp"].sum()),
@@ -334,34 +319,6 @@ def main():
     hvs["headline_general_procurement"] = {"suppliers": int((hv["dominant_tag"] == "general_procurement").sum()),
                                            "top20": hv_table(hv[hv["dominant_tag"] == "general_procurement"])}
     hvs["other_groups_top20"] = {k: hv_table(v) for k, v in hv.groupby("dominant_tag") if k != "general_procurement"}
-    gs_param = (rules.get("parameters") or {}).get("STATUTORY_THRESHOLD_GOODS_SERVICES") or {}
-    if T_STAT is not None:
-        st = hv[hv["annualised_estimate"] >= T_STAT]
-        gp_st = st[st["dominant_tag"] == "general_procurement"]
-        hvs["statutory_tier"] = {
-            "parameters": {"threshold": T_STAT, "threshold_incl_vat": gs_param.get("value_incl_vat"),
-                           "vat_basis": gs_param.get("vat_basis"), "source": gs_param.get("source"),
-                           "comparison": "annualised estimate >= threshold (VAT-exclusive)"},
-            "rule_ids": stat_rule_ids,
-            "suppliers": int(len(st)), "total_gbp_in_window": r2(st["total_gbp"].sum()),
-            "annualised_estimate_gbp": r2(st["annualised_estimate"].sum()),
-            "by_dominant_tag": {k: {"suppliers": int(len(v)), "annualised_estimate_gbp": r2(v["annualised_estimate"].sum())}
-                                for k, v in st.groupby("dominant_tag")},
-            "headline_general_procurement": {"suppliers": int(len(gp_st)), "top20": hv_table(gp_st)},
-            "note": "suppliers whose annualised estimate reaches the Procurement Act threshold for goods and services: "
-                    "a contract above it would need a regulated procurement (CPR-54 covers only values below it). "
-                    "Annualised spend is not contract value; an indicator for fieldwork, not a finding."}
-    if T_LT is not None:
-        lt_param = (rules.get("parameters") or {}).get("STATUTORY_THRESHOLD_LIGHT_TOUCH") or {}
-        pl = hv[hv["dominant_tag"] == "care_or_education_placement"]
-        hvs["light_touch_tier"] = {
-            "parameters": {"threshold": T_LT, "threshold_incl_vat": lt_param.get("value_incl_vat"),
-                           "source": lt_param.get("source"), "population": "high_value_suppliers whose dominant tag is care_or_education_placement",
-                           "vat_note": "placements are often VAT-exempt, so both the VAT-exclusive and the published figure are reported"},
-            "suppliers_at_or_over_vat_exclusive": int((pl["annualised_estimate"] >= T_LT).sum()),
-            "suppliers_at_or_over_published_figure": int((pl["annualised_estimate"] >= lt_param.get("value_incl_vat", T_LT)).sum()),
-            "annualised_estimate_gbp_at_or_over_vat_exclusive": r2(pl.loc[pl["annualised_estimate"] >= T_LT, "annualised_estimate"].sum()),
-            "note": "individually chosen placements may be exempt under App C row F; reported for scoping only"}
     tests["high_value_suppliers"] = hvs
 
     # ------------------------------------------------ matching + off_contract
@@ -412,21 +369,6 @@ def main():
                                                              "top20": hv_table(gp_un)},
             "placement_note": "care/education placements may be exempt from competition under App C row F (individually chosen placements); reported separately",
             "full_list": "outputs/analytics-full/high_value_suppliers.csv (match_class column)"}
-        if T_STAT is not None:
-            st2 = hv2[hv2["annualised_estimate"] >= T_STAT]
-            st_gp_none = st2[(st2["match_class"] == "none") & (st2["dominant_tag"] == "general_procurement")].sort_values(
-                "annualised_estimate", ascending=False)
-            tests["off_contract"]["statutory_tier"] = {
-                "parameters": {"threshold": T_STAT, "threshold_incl_vat": gs_param.get("value_incl_vat"),
-                               "source": gs_param.get("source")},
-                "rule_ids": stat_rule_ids,
-                "by_match_class": {k: {"suppliers": int(len(v)), "annualised_estimate_gbp": r2(v["annualised_estimate"].sum())}
-                                   for k, v in st2.groupby("match_class")},
-                "headline_general_procurement_no_notice_found": {"suppliers": int(len(st_gp_none)),
-                                                                 "annualised_estimate_gbp": r2(st_gp_none["annualised_estimate"].sum()),
-                                                                 "top20": hv_table(st_gp_none)},
-                "note": "above the Procurement Act threshold a regulated procurement must be published (Find a Tender / Contracts Finder), "
-                        "so a missing notice here is a stronger indicator than below it; still an indicator only"}
 
         # -------------------------------------------- 5 expired_notice_spend
         name_to_notices = defaultdict(list)
@@ -573,7 +515,7 @@ def main():
                                   "inter_authority supplier regex (COUNTY) also matches some non-public bodies with 'County' in the name; see spend-excluded.csv"],
                   "grants_note": "grants and transfer payments are kept and tagged, not excluded (clause 1.6.2, cited by clause number)"}
     contracts_block = {k: con.get(k) for k in ["contracts_present", "rows_in_file", "rows_for_council", "rows_dropped_other_buyers",
-                                               "rows_dropped_case_variant_of_council_name", "rows_kept_case_variant_of_council_name", "org_names_kept", "notices",
+                                               "rows_dropped_case_variant_of_council_name", "org_names_kept", "notices",
                                                "notice_supplier_pairs", "distinct_suppliers", "active_in_window",
                                                "ended_before_window", "active_notice_supplier_pairs", "zero_value_awards",
                                                "rows_per_year", "published_range", "window_start_used", "warnings"]}
