@@ -70,7 +70,7 @@ To change a setting later, edit `[env]` in `fly.toml` and run `fly deploy`, or f
 
 ## Notes
 
-- **Saving a finished run into the repository.** `python save_live_run.py <run-id> https://procurement-audit-harness.fly.dev` writes it to `saved-runs/` (restored on every start) and `web/live-run/` (the read-only "Part B live run" page). Commit both, then `fly deploy`.
+- **Saving a finished run into the repository.** `python save_live_run.py <run-id> https://procurement-audit-harness.fly.dev` writes it to `saved-runs/` (restored on every start) and `web/live-run/` (the read-only "Completed end-to-end run" page). Commit both, then `fly deploy`.
 - **Part A example run** in the sidebar shows Part A's complete, signed-off outputs. Viewing it doesn't call Claude.
 - **Logs:** `fly logs`. **Status:** `fly status`.
 - **Troubleshooting.**
