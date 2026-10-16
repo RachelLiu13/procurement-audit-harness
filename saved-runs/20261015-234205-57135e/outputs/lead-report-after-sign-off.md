@@ -6,8 +6,8 @@
 
 ## Decisions on the challenges marked *for the auditor*
 
-- **#4 (rules CPR-09, -12, -28, -47 and -58 not tested):** "the contract-type scope limitation applies to the analytics only; at fieldwork, extend T-10-1 to test CPR-09, -12, -28, -47 and -58 on the contracts already requested."
-- **#6 (R-06 likelihood):** "accepted. All 8 flagged suppliers are tagged general_procurement, so R-06 likelihood should be L3 (score 12, Amber); scope and sample are unchanged…" The memo still shows R-06 at L2, score 8. The auditor says the new rating is "recorded here and carried into the next register revision."
+- **#4 (rules CPR-09, -12, -28, -47 and -58 not tested):** "the contract-type scope limitation applies to the analytics only; at fieldwork, extend T-10-1 to test CPR-09, -12, -28, -47 and -58 on the contracts already requested." Applied after sign-off: T-10-1 now tests these five rules, and the memo limits the scope limitation to the analytics.
+- **#6 (R-06 likelihood):** "accepted. All 8 flagged suppliers are tagged general_procurement, so R-06 likelihood should be L3 (score 12, Amber); scope and sample are unchanged…" Applied after sign-off: the register (revision 2), memo, risk-control matrix and audit program now rate R-06 at L3, score 12; scope and sample are unchanged.
 - **#7 (impact scale, DISC-01):** "Table 1 (Medium = 3) is confirmed as the basis for R-01, R-02, R-05 and R-10; no score changes. The 'not resolved' flag in the register header is a builder limitation and is noted in the memo's Limitations."
 
 ## What the pack contains (from `planning-memo.md`)
@@ -20,6 +20,6 @@
 
 The samples are risk indicators to investigate, not findings of wrongdoing by the council, a service or a supplier.
 
-## Post-sign-off notes
+## After sign-off
 
-There is no `outputs/post-sign-off-notes.md`, so nothing has been clarified since sign-off.
+The final pack was updated after sign-off to implement the decisions above. QA checks were rerun and passed (quotes 91, numbers 56, trace 107, samples 451); samples unchanged. Confirmed by Team 9 (Internal auditor), 2026-10-16.
