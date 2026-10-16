@@ -1,135 +1,105 @@
-# Procurement Audit Planner: independent agent harness (Part B)
+# Procurement Audit Planner: Part A + Part B (Team 9)
 
-- **Website (Part B submission):** https://procurement-audit-harness.fly.dev
+An agent system that plans an internal audit of West Berkshire Council's
+procurement from its public data: it reads the purchasing rulebook, analyses
+every payment, folds in past audit history, produces a risk register for a human
+auditor to approve, and turns the approved risks into a checked audit plan.
+
+| | **Part A**: rebuild using Skills & Agents | **Part B**: independent harness |
+| --- | --- | --- |
+| Where in this repository | [`part-a/`](part-a/) (details in [`part-a/README.md`](part-a/README.md)) | [`part-b/`](part-b/) (details in [`part-b/README.md`](part-b/README.md)) |
+| Runs on | Claude Code, on a team member's machine | Fly.io, in the browser: **https://procurement-audit-harness.fly.dev** |
+| Signed-off result | [`part-a/outputs/`](part-a/outputs/) | **https://procurement-audit-harness.fly.dev/?run=live** |
+
+Part B runs Part A's skills and agents unchanged in architecture: every run on
+the website starts from a fresh copy of `part-a/`.
+
+---
+
+## Part A: Skills and Agents
+
+We completed all 27 steps of the
+[Procurement Audit Planner guide](https://procurement-audit-planner.vercel.app/).
+The full specification is in [`part-a/CLAUDE.md`](part-a/CLAUDE.md), and
+[`part-a/README.md`](part-a/README.md) documents each component in detail.
+
+**Skills** (`part-a/.claude/skills/`)
+
+| Skill | What it does |
+| --- | --- |
+| `extract-rules` | Turns the Contract Procedure Rules PDF into `rules.json`: every testable rule with clause, thresholds, approver and a verbatim quote that `verify_quotes.py` checks against the PDF |
+| `risk-assessment` | The method for rating risks on the council's likelihood × impact scale. The agent writes cited judgments; `build_register.py` resolves every citation, computes scores and bands, and renders the risk register and the auditor's decision sheet |
+| `audit-program` | Turns the approved risks into controls, test steps, samples and a PBC list; `build_pack.py` checks the approval gate, draws and verifies every sample, and renders the planning memo, risk-control matrix and audit program |
+
+**Agents** (`part-a/.claude/agents/`)
+
+| Agent | Type | What it does |
+| --- | --- | --- |
+| `spend-analyst` | sub-agent | Writes and runs Python that cleans the spend and Contracts Finder data and runs the risk tests → `analytics.json` |
+| `findings-analyst` | sub-agent | Extracts past audits, opinions, actions and the council's risk-scoring method from committee papers → `history.json` |
+| `risk-assessor` | sub-agent | Rates risks with citations using the `risk-assessment` skill → `risk-register.md`; re-issues it after the auditor's decisions |
+| `planner` | agent team | Builds the planning pack with the `audit-program` skill |
+| `challenger` | agent team | Challenges weak spots in the pack and messages the planner directly |
+| `qa-reviewer` | agent team | Runs the four QA scripts (quotes, numbers, trace, samples) and writes `review.md` |
+
+**How they work together**
+
+```
+contract-rules.pdf ─(1) extract-rules skill─▶ rules.json
+        ├─(2a) spend-analyst ──────▶ analytics.json ─┐
+        └─(2b) findings-analyst ───▶ history.json ───┤
+                     (3) risk-assessor + risk-assessment skill ─▶ risk-register.md
+                     (4) HUMAN GATE 1: auditor approves / amends / rejects each risk
+                     (5) agent team: planner ⇄ challenger, planner ⇄ qa-reviewer
+                         ─▶ planning memo, risk-control matrix, audit program, review.md
+                     (6) HUMAN GATE 2: auditor signs off
+```
+
+Throughout, the model reads and judges while Python computes every number;
+every quote, figure and rating is traceable to its source; and outputs describe
+risk indicators to investigate, never wrongdoing.
+
+Part A exactly as completed is commit
+[`b7f510c`](https://github.com/RachelLiu13/procurement-audit-harness/tree/b7f510c/part-a)
+(identical to the team's Part A repository). Three analysis improvements were
+made afterwards for Part B; see [Analysis changes after review](part-b/README.md#analysis-changes-after-review).
+
+---
+
+## Part B: Independent harness
+
+Part B turns Part A into an **independently deployed web application**. A
+Python harness re-creates what Claude Code provided (the agent loop, tools,
+sub-agents, skills, agent memory and agent-team messaging) on the Claude API,
+and a web front end gives the human auditor the two gates. Nothing runs on
+anyone's local machine.
+
+- **Website:** https://procurement-audit-harness.fly.dev
 - **Completed end-to-end run, signed off:** https://procurement-audit-harness.fly.dev/?run=live
-  (every agent's tool calls and messages, both auditor gates, the final pack, and the lead's reports
-  before and after sign-off; the zip of all outputs downloads from that page)
-- **Part A repository:** https://github.com/crystaljingjiang/procurement-audit-planner
+- **Details:** [`part-b/README.md`](part-b/README.md) (architecture, how the harness replaces
+  Claude Code, analysis changes after review, running and deploying)
 
-Part A built a procurement audit planner for West Berkshire Council as a
-Claude Code project: 3 skills, 6 agents and an agent team
-([Part A repository](https://github.com/crystaljingjiang/procurement-audit-planner)).
-It only ran inside Claude Code on a team member's machine.
-
-| Folder | What it is |
-| --- | --- |
-| [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs. The architecture (skills, agents, prompts, scripts, checks) is kept as it was. Three analysis changes after review: `build_pack.py` reports sample rows *and* unique transactions; buyer names in the Contracts Finder export match case-insensitively (six notices filed as "WEST BERKSHIRE COUNCIL" were previously left out); and the Procurement Act 2023 thresholds, which the rules cite but do not state, are supplied with sources in `data/statutory-thresholds.json` so the statutory tiers are tested (see [Analysis changes](#analysis-changes-after-review)) |
-| [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (run `20261015-234205-57135e`, signed off 2026-10-16): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Two copies, each with a job: `saved-runs/` is what the agent server restores after a restart, `web/live-run/` is the read-only **Completed end-to-end run** page. Update them only together, with `python save_live_run.py <run-id>`, which writes both and checks they are identical |
-| everything else | **Part B**, the deployed harness described below |
-
-This repository turns it into an **independently deployed web application**.
-A Python harness re-creates what Claude Code provided (the agent loop, the
-tools, sub-agents, skills, agent memory and agent-team messaging) on the Claude
-API, and a web front end gives the human auditor the two gates. Nothing runs
-on anyone's local machine:
-
-```
-browser ──► Fly.io (server.py: FastAPI + harness, Docker)
-                 ├─ /       the website (web/)
-                 └─ /api/*  runs, gates, events, files
-                                                          │
-                                                          └──► Claude API (the agents)
-```
-
-One Fly.io app serves both the website and the agent API from the same Docker
-image, so there is a single URL. The agents need a long-lived server: a run
-lasts 30–60 minutes and waits on the auditor between stages, longer than
-serverless functions allow. The machine never auto-stops, and runs are kept on
-a Fly volume (`/data`), so a run waiting at a gate survives a restart. The image
-also installs `pdftotext` (poppler) for the PDF quote checks.
-
-## What runs, end to end
-
-| Stage | Component (from Part A) | Output |
-| --- | --- | --- |
-| 1 | `extract-rules` skill, run in the main session | `rules.json`, quotes checked by `verify_quotes.py` |
-| 2 | `spend-analyst` and `findings-analyst` sub-agents, in parallel | `analytics.json`, `history.json` |
-| 3 | `risk-assessor` sub-agent + `risk-assessment` skill (`build_register.py`) | `risk-register.md`, `auditor-comments.md` |
-| **Gate 1** | **The auditor approves, amends or rejects each risk in the web UI** | `auditor-comments.md` filled in |
-| 4 | `risk-assessor` issues the revision; the harness runs `build_pack.py --gate` | register revision, gate open |
-| 5 | Agent team: `planner` (+ `audit-program` skill), `challenger`, `qa-reviewer` | planning memo, risk-control matrix, audit program, samples, `challenges.md`, `review.md` |
-| 6 | Lead report | summary for the auditor |
-| **Gate 2** | **The auditor signs off (or returns) the pack in the web UI** | `review.md` signed |
-
-Every file the agents read and write is the same as in Part A, so Part A's
-Python builders and its four QA checks run as they are (apart from the
-analysis changes listed below). The principles carry over: the
-model reads and judges, Python computes every number; everything is traceable;
-indicators, not accusations.
-
-## Analysis changes after review
-
-| Change | Where | Effect |
-| --- | --- | --- |
-| Buyer name matched case-insensitively | `part-a/scripts/clean.py`, CLAUDE.md, spend-analyst | 141 council notices instead of 135 |
-| Statutory thresholds supplied | `part-a/data/statutory-thresholds.json`, `part-a/scripts/apply_thresholds.py`, `part-a/scripts/analyse.py` | Goods and services £207,720 incl. VAT (£173,100 excl.), works/concessions £5,193,000, light touch £663,540, in force from 1 Jan 2026 (PPN 023; Threshold Amounts (Amendment) Regulations 2025). Adds a clustering tier below £173,100 (CPR-54), and statutory tiers in `high_value_suppliers` and `off_contract`. "The relevant Threshold" stays skipped with a stated reason: the spend data has no contract-type field to choose between the three figures |
-
-The completed run in `saved-runs/` and `web/live-run/` (signed off 2026-10-16) was run with these changes, as a full pipeline run (Phase 1 not reused).
-
-## How the harness replaces Claude Code
-
-| Claude Code (Part A) | This harness (`harness/`) |
-| --- | --- |
-| Agent file `.claude/agents/<name>.md` (frontmatter `tools`, `skills`) | `agent.py` parses the frontmatter. The system prompt is CLAUDE.md + the agent body + each preloaded `SKILL.md` + the agent's `MEMORY.md` |
-| Built-in tools Bash, Read, Write, Edit, Glob, Grep | `tools.py` implements tools with the same names and arguments, confined to the run's workspace. Each agent gets only the tools its frontmatter lists |
-| Sub-agent launched by the main session | `pipeline.py` runs each agent as its own Claude conversation (manual tool-use loop, streaming, adaptive thinking, prompt caching, refusal fallback) |
-| `/extract-rules` typed by the human | Stage 1 runs the skill in a main-session agent |
-| Experimental agent teams + `SendMessage` | `team.py`: one persistent conversation per teammate. `SendMessage` drops a message in the recipient's inbox, and a scheduler wakes whichever teammate has mail. The lead never relays; it collects `PLANNER DONE`, `CHALLENGER DONE`, `QA DONE` and stops the team |
-| The auditor edits `auditor-comments.md` and `review.md` | `gate.py` writes the same cells from the web forms |
-| Local `.venv` | Each run gets a fresh copy of `part-a/` (without its outputs) in `RUNS_DIR/<id>`, with `.venv/bin/python` pointing at the server's Python. `pdftotext` and `jq` are installed by the `Dockerfile` |
-
-Runs execute in a background thread on the server and record their state in
-`run.json` and an event log in `events.jsonl`. The browser can close and come
-back with `?run=<id>`, and the **Agent activity** tab shows every tool call,
-message and report as it happens.
+---
 
 ## Repository layout
 
 ```
-web/                   the website: index.html, app.js, style.css (served by server.py)
-server.py              FastAPI: the API over the harness (runs, gates, events, files, zip) and the website
-harness/
-  agent.py             agent assembly and the tool-use loop
-  tools.py             Bash, Read, Write, Edit, Glob, Grep, SendMessage
-  team.py              agent-team scheduler and message bus
-  pipeline.py          stages, runs, state, gates
-  gate.py              reads and writes auditor-comments.md and the review.md sign-off
-  config.py            settings from environment variables
-part-a/                Part A, with its original architecture: README, CLAUDE.md, .claude/
-                       (agents, skills, agent memory), scripts/, data/, outputs/ (Part A's signed-off
-                       run); see "Analysis changes after review"
-saved-runs/            completed Part B runs the server restores after every restart
-web/live-run/          the same run as static files, for the read-only "Completed end-to-end run" page
-tools/                 sensitivity_case_variant.py (sensitivity check of the six case-variant notices)
-tests/test_harness.py  offline tests with a scripted fake Claude client
-Dockerfile, fly.toml   the app on Fly.io (Python 3.12, poppler-utils, jq; volume at /data)
+README.md          this overview
+part-a/            Part A: the Claude Code project
+  README.md          skills, agents, how they work together
+  CLAUDE.md          full specification
+  .claude/           skills/, agents/, agent-memory/, settings.json
+  scripts/           analysis scripts and the four QA checks
+  data/              public inputs (rules PDF, spend, Contracts Finder, committee papers)
+  outputs/           Part A's signed-off run
+part-b/            Part B: the deployed harness
+  README.md          architecture and how to run it
+  server.py          FastAPI: the API and the website
+  harness/           agent loop, tools, agent team, pipeline, gates
+  web/               the website; web/live-run/ is the completed run, read-only
+  saved-runs/        the completed run, restored by the server after a restart
+  tests/, tools/     offline tests; a sensitivity check
+  Dockerfile         the image (holds part-a/ and part-b/)
+  DEPLOY.md          deployment guide
+fly.toml           Fly.io app config (at the root because the image is built from here)
 ```
-
-## Running it
-
-Locally (the server also serves `web/` at http://localhost:8000):
-
-```bash
-python -m venv .venv && .venv/bin/pip install -r requirements.txt   # Python 3.10+
-brew install poppler jq                                             # or apt install poppler-utils jq
-export ANTHROPIC_API_KEY=sk-ant-...
-.venv/bin/uvicorn server:app --port 8000
-```
-
-Tests (no API key needed): `.venv/bin/python tests/test_harness.py`
-
-To deploy, see [DEPLOY.md](DEPLOY.md). Settings (Fly.io secrets, or `[env]` in `fly.toml`):
-
-| Name | Default | Meaning |
-| --- | --- | --- |
-| `ANTHROPIC_API_KEY` | required | Claude API key, server side only |
-| `APP_PASSWORD` | none | If set, visitors must enter it |
-| `CLAUDE_MODEL` | `claude-opus-5-5` | Model for every agent |
-| `CLAUDE_EFFORT` | `medium` | `low` … `max` |
-| `MAX_TURNS` / `MAX_TEAM_TURNS` | 60 / 30 | Safety caps per agent and per team |
-| `MAX_ACTIVE_RUNS` | 1 | Concurrent runs per server |
-
-The checkbox **Reuse Part A's Phase 1 outputs** starts a run at the
-risk-assessor, using Part A's `rules.json`, `analytics.json` and `history.json`.
-It is faster and cheaper for a demonstration. Leave it off for the full
-pipeline.

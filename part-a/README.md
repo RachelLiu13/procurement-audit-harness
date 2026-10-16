@@ -174,3 +174,16 @@ Tests (plain Python scripts, no test runner needed):
 approved by the auditor; the planning memo, risk-control matrix and audit
 program with 8 sample files; and a QA verdict of **READY FOR SIGN-OFF** in
 `outputs/review.md`.
+
+## After Part A
+
+This folder is also the agent project that Part B runs (see the
+[repository README](../README.md)). After Part A was completed, three analysis
+improvements were made for Part B: sample counts reported as rows and unique
+transactions (`build_pack.py`), buyer names matched case-insensitively
+(`scripts/clean.py`), and the Procurement Act 2023 thresholds supplied in
+`data/statutory-thresholds.json` (`scripts/apply_thresholds.py`,
+`scripts/analyse.py`). The skills, agents and architecture are unchanged.
+`outputs/` is still Part A's signed-off run, made before these changes. Part A
+exactly as completed is commit
+[`b7f510c`](https://github.com/RachelLiu13/procurement-audit-harness/tree/b7f510c/part-a).

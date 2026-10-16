@@ -29,7 +29,7 @@ import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PART_A = ROOT / "part-a"
+PART_A = ROOT.parent / "part-a"
 CONTRACT_TESTS = ["off_contract", "expired_notice_spend", "spend_vs_award"]
 CONTRACT_FILES = ["supplier-match.csv", "near-matches.csv", "expired_notice_spend.csv",
                   "spend_vs_award.csv", "notices-clean.csv"]
