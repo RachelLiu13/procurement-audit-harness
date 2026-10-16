@@ -203,7 +203,7 @@ def index() -> FileResponse:
 
 @app.get("/{path:path}")
 def static(path: str) -> FileResponse:
-    """Files under web/, including web/live-run/ for the read-only "Part B live run" page."""
+    """Files under web/, including web/live-run/ for the read-only "Completed end-to-end run" page."""
     p = (WEB / path).resolve()
     if not p.is_relative_to(WEB) or not p.is_file():
         raise HTTPException(404)
