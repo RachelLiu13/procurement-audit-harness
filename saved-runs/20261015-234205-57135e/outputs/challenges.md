@@ -26,12 +26,3 @@ about the council, a service or a supplier.
 The challenges marked *for the auditor* were decided by Team 9 (Internal auditor) on 2026-10-16 (decision: Sign off). The decisions are in `review.md` → Auditor sign-off:
 
 > Approved for this coursework demonstration. #4: the contract-type scope limitation applies to the analytics only; at fieldwork, extend T-10-1 to test CPR-09, -12, -28, -47 and -58 on the contracts already requested. #6: accepted. All 8 flagged suppliers are tagged general_procurement, so R-06 likelihood should be L3 (score 12, Amber); scope and sample are unchanged because R-06 is already in scope and T-06-1 takes all 8 suppliers, so the re-rating is recorded here and carried into the next register revision. #7: Table 1 (Medium = 3) is confirmed as the basis for R-01, R-02, R-05 and R-10; no score changes. The 'not resolved' flag in the register header is a builder limitation and is noted in the memo's Limitations.
-
-## Actioned after sign-off (pack v3)
-
-- **#4:** applied. T-10-1 now tests CPR-09, -12, -28, -47 and -58 on the contracts obtained, and the memo limits the scope limitation to the analytics.
-- **#6:** applied. Register revision 2 rates R-06 at L3 × I4 = 12; scope and sample unchanged.
-- **#7:** recorded. The memo notes the auditor's confirmation of the impact-scale basis; no score changes.
-
-See `review.md` → "Revision after sign-off" and `post-sign-off-notes.md`.
-
