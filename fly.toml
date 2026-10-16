@@ -7,7 +7,7 @@ app = 'procurement-audit-harness'
 primary_region = 'lax'
 
 [build]
-  dockerfile = 'Dockerfile'
+  dockerfile = 'part-b/Dockerfile'
 
 [env]
   CLAUDE_EFFORT = 'medium'

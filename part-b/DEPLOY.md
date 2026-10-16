@@ -2,7 +2,7 @@
 
 When you finish, you will have one URL like `https://procurement-audit-harness.fly.dev` that you submit for Part B.
 
-The whole app runs on **Fly.io** as one service built from the `Dockerfile`: `server.py` serves the website (`web/`) at `/` and the agent API at `/api`. There is no separate front-end host.
+The whole app runs on **Fly.io** as one service built from `part-b/Dockerfile`: `server.py` serves the website (`web/`) at `/` and the agent API at `/api`. There is no separate front-end host.
 
 Why Fly.io: a run lasts 30–60 minutes and waits on the auditor at two gates, so it needs a server that stays on. `fly.toml` keeps one machine running (`auto_stop_machines = "off"`), gives it 2 GB of memory, and stores runs on a volume at `/data`, so runs survive restarts and redeploys.
 
@@ -33,7 +33,7 @@ fly auth login               # opens the browser; sign up or log in
 
 ## Step 3: Create the app
 
-In a terminal opened in this project folder:
+In a terminal opened in the repository root (where `fly.toml` is; the image is built from there so it holds `part-a/` and `part-b/`). Run every `fly` command below from the root:
 
 ```bash
 fly launch --no-deploy
@@ -70,7 +70,7 @@ To change a setting later, edit `[env]` in `fly.toml` and run `fly deploy`, or f
 
 ## Notes
 
-- **Saving a finished run into the repository.** `python save_live_run.py <run-id> https://procurement-audit-harness.fly.dev` writes it to `saved-runs/` (restored on every start) and `web/live-run/` (the read-only "Completed end-to-end run" page). Commit both, then `fly deploy`.
+- **Saving a finished run into the repository.** `python part-b/save_live_run.py <run-id> https://procurement-audit-harness.fly.dev` writes it to `part-b/saved-runs/` (restored on every start) and `part-b/web/live-run/` (the read-only "Completed end-to-end run" page). Commit both, then `fly deploy` from the root.
 - **Part A example run** in the sidebar shows Part A's complete, signed-off outputs. Viewing it doesn't call Claude.
 - **Logs:** `fly logs`. **Status:** `fly status`.
 - **Troubleshooting.**
