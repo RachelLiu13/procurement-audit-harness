@@ -64,7 +64,7 @@ indicators, not accusations.
 | Buyer name matched case-insensitively | `part-a/scripts/clean.py`, CLAUDE.md, spend-analyst | 141 council notices instead of 135. In the sensitivity check of the earlier run this changed no rating or scope and redrew 3 of 13 transactions in T-06-1 (R-06) |
 | Statutory thresholds supplied | `part-a/data/statutory-thresholds.json`, `part-a/scripts/apply_thresholds.py`, `part-a/scripts/analyse.py` | Goods and services £207,720 incl. VAT (£173,100 excl.), works/concessions £5,193,000, light touch £663,540, in force from 1 Jan 2026 (PPN 023; Threshold Amounts (Amendment) Regulations 2025). Adds a clustering tier below £173,100 (CPR-54), and statutory tiers in `high_value_suppliers` and `off_contract`. "The relevant Threshold" stays skipped with a stated reason: the spend data has no contract-type field to choose between the three figures |
 
-The completed run in `saved-runs/` and `web/live-run/` (signed off 2026-10-16) was run with these changes, as a full pipeline run (Phase 1 not reused). It replaces the earlier run `20261015-113403-ce6581`, which predates them.
+The completed run in `saved-runs/` and `web/live-run/` (signed off 2026-10-16) was run with these changes, as a full pipeline run (Phase 1 not reused).
 
 ## How the harness replaces Claude Code
 
