@@ -1,6 +1,6 @@
 # QA review: procurement audit planning pack
 
-Pack version: v2 · Register revision: 1 (built 2026-10-16T00:02:33) · Reviewed: 2026-10-16 00:12 UTC
+Pack version: v3 · Register revision: 2 (built 2026-10-16T00:40:54) · Checks rerun on v3 after sign-off, 2026-10-16 (v2 reviewed 2026-10-16 00:12 UTC)
 
 ## Verdict: READY FOR SIGN-OFF
 
@@ -8,13 +8,13 @@ Pack version: v2 · Register revision: 1 (built 2026-10-16T00:02:33) · Reviewed
 
 Final pack updated to implement the auditor's sign-off decisions. QA checks rerun and passed; samples unchanged. Confirmed by Team 9 (Internal auditor), 2026-10-16.
 
-## Check results (as printed by scripts/checks/run_checks.py)
+## Check results (pack v3, as printed by scripts/checks/run_checks.py --verbose)
 
 ```text
 | Check   | Result | Detail
 |---------|--------|--------
 | quotes  | PASS   | 91 checked
-| numbers | PASS   | 59 checked
+| numbers | PASS   | 56 checked
 | trace   | PASS   | 107 checked
 | samples | PASS   | 451 checked
 
@@ -22,7 +22,7 @@ VERDICT: READY FOR SIGN-OFF
 
 INFO  quotes: extract-rules verifier: ALL CHECKS PASSED (66 rules, 98 excluded, 3 warning(s))
 INFO  quotes: register rule excerpts checked: 25
-INFO  numbers: figures checked: 59; source values: 1041
+INFO  numbers: figures checked: 56; source values: 1041
 INFO  trace: High risks (score >= 8): R-02 in, R-03 in, R-04 in, R-05 in, R-06 in, R-07 in
 INFO  trace: challenges: 7
 INFO  samples: sample rows: 451 in 10 file(s); row IDs in audit-program.md: 0
@@ -35,6 +35,7 @@ INFO  samples: sample rows: 451 in 10 file(s); row IDs in audit-program.md: 0
 | v1 | PASS | PASS | FAIL (challenges #1–#7 not closed, status 'open') | PASS | challenger: QA v1: FAIL trace; planner: QA v1: PASS |
 | v2 | PASS | PASS | PASS | PASS | planner: QA v2: PASS |
 | v2 (final, after PLANNER DONE v2 and CHALLENGER DONE) | PASS | PASS | PASS | PASS | lead, planner, challenger: QA DONE v2: READY FOR SIGN-OFF |
+| v3 (after sign-off, register revision 2) | PASS | PASS | PASS | PASS | checks rerun after the auditor's sign-off decisions were applied |
 
 ## Challenges for the auditor
 
