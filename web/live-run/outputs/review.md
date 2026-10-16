@@ -6,7 +6,7 @@ Pack version: v2 · Register revision: 1 (built 2026-10-16T00:02:33) · Reviewed
 
 **Status after sign-off:** signed off by Team 9 (Internal auditor) on 2026-10-16; see Auditor sign-off below. The verdict above is the QA verdict at review time.
 
-Final pack updated to implement the auditor's sign-off decisions. QA checks rerun and passed; samples unchanged.
+Final pack updated to implement the auditor's sign-off decisions. QA checks rerun and passed; samples unchanged. Confirmed by Team 9 (Internal auditor), 2026-10-16.
 
 ## Check results (as printed by scripts/checks/run_checks.py)
 
