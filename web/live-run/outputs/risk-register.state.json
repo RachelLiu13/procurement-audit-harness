@@ -1,6 +1,6 @@
 {
- "revision": 1,
- "generated_at": "2026-10-16T00:02:33",
+ "revision": 2,
+ "generated_at": "2026-10-16T00:40:54",
  "risks": {
   "R-01": {
    "title": "Payments just below the {{$.tests.threshold_clustering.per_threshold[?threshold==25000].threshold|gbp}} competition threshold",
@@ -108,7 +108,7 @@
   "R-06": {
    "title": "Spend with suppliers whose every matching notice ended before the spend window",
    "status": "proposed",
-   "likelihood": 2,
+   "likelihood": 3,
    "uplift": null,
    "impact": 4,
    "dimension": "DIM-FIN",
@@ -120,6 +120,14 @@
     "metric:$.tests.expired_notice_spend.annualised_estimate_gbp",
     "metric:$.tests.expired_notice_spend.gbp_in_window",
     "metric:$.tests.expired_notice_spend.suppliers",
+    "metric:$.tests.expired_notice_spend.top20[0].dominant_tag",
+    "metric:$.tests.expired_notice_spend.top20[1].dominant_tag",
+    "metric:$.tests.expired_notice_spend.top20[2].dominant_tag",
+    "metric:$.tests.expired_notice_spend.top20[3].dominant_tag",
+    "metric:$.tests.expired_notice_spend.top20[4].dominant_tag",
+    "metric:$.tests.expired_notice_spend.top20[5].dominant_tag",
+    "metric:$.tests.expired_notice_spend.top20[6].dominant_tag",
+    "metric:$.tests.expired_notice_spend.top20[7].dominant_tag",
     "rule:CPR-62"
    ]
   },
@@ -242,8 +250,8 @@
    ""
   ],
   "R-06": [
-   "Approve",
-   ""
+   "Amend",
+   "Raise likelihood from L2 to L3 (score 12, Amber), as decided at sign-off on challenge #6: all 8 flagged suppliers carry dominant_tag general_procurement in analytics.json, so the L3 condition is shown. Keep in scope; no other change."
   ],
   "R-07": [
    "Approve",
@@ -267,16 +275,16 @@
   ]
  },
  "revision_changes": {
-  "R-02": [
-   "likelihood 4 → 3",
-   "citations -metric:$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.windows"
+  "R-06": [
+   "likelihood 2 → 3",
+   "citations +metric:$.tests.expired_notice_spend.top20[0].dominant_tag, +metric:$.tests.expired_notice_spend.top20[1].dominant_tag, +metric:$.tests.expired_notice_spend.top20[2].dominant_tag, +metric:$.tests.expired_notice_spend.top20[3].dominant_tag, +metric:$.tests.expired_notice_spend.top20[4].dominant_tag, +metric:$.tests.expired_notice_spend.top20[5].dominant_tag, +metric:$.tests.expired_notice_spend.top20[6].dominant_tag, +metric:$.tests.expired_notice_spend.top20[7].dominant_tag"
   ]
  },
  "revision_overrides": {
-  "R-02": {
+  "R-06": {
    "decision": "Amend",
-   "comment": "Reduce likelihood from L4 to L3 (score 9, Amber). Clustering below £173,100 rests on only 3 payments vs 2 above, which is too thin for L4; keep in scope. Rely on R-03 for the split-window evidence so the two risks are not double-counted.",
-   "risk": "Payments just below the £173,100 Procurement Act threshold for goods and services"
+   "comment": "Raise likelihood from L2 to L3 (score 12, Amber), as decided at sign-off on challenge #6: all 8 flagged suppliers carry dominant_tag general_procurement in analytics.json, so the L3 condition is shown. Keep in scope; no other change.",
+   "risk": "Spend with suppliers whose every matching notice ended before the spend window"
   }
  },
  "scores": {
@@ -345,14 +353,16 @@
    "status": "proposed"
   },
   "R-06": {
-   "L": 2,
-   "L_base": 2,
+   "L": 3,
+   "L_base": 3,
    "I": 4,
-   "score": 8,
+   "score": 12,
    "matrix_label": "High",
    "band": "Medium - High (Amber)",
    "band_id": "BAND-MEDIUM-HIGH",
-   "flags": [],
+   "flags": [
+    "‡"
+   ],
    "scope": "in",
    "status": "proposed"
   },
@@ -420,5 +430,5 @@
   }
  },
  "all_decided": true,
- "register_sha256": "2184eb953947e1668e09b4a3bc8c1909e2806dc8e7412d34cd1e388b2df54371"
+ "register_sha256": "62019a0355fd5542bfea756c240e578c161732ec4f3032f826f3f984e887ea22"
 }

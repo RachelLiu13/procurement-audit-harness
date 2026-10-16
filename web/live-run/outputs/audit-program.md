@@ -1,6 +1,6 @@
 # Audit program: procurement, West Berkshire Council
 
-Basis: risk register revision 1 (built 2026-10-16T00:02:33), auditor decisions in `outputs/auditor-comments.md`, plan `outputs/audit-plan.json`. Built 2026-10-16T00:10:24 by `.claude/skills/audit-program/build_pack.py`.
+Basis: risk register revision 2 (built 2026-10-16T00:40:54), auditor decisions in `outputs/auditor-comments.md`, plan `outputs/audit-plan.json`. Built 2026-10-16T00:40:56 by `.claude/skills/audit-program/build_pack.py`.
 
 These are **risk indicators to investigate**, not findings of wrongdoing by the council, a service or a supplier. A sampled transaction is selected because it carries an indicator, not because anything is assumed to be wrong with it.
 
@@ -82,7 +82,7 @@ For each sampled general procurement group of equal payments to one supplier at 
 
 ## R-06: Spend with suppliers whose every matching notice ended before the spend window
 
-Score 8 (Medium - High (Amber)); controls: C-06-1 Extensions of existing contracts are approved by the S151 Officer before the original term ends [CPR-62], and awards and extensions are notified for the Council Contract Register with current end dates [CPR-34].
+Score 12 (Medium - High (Amber)); controls: C-06-1 Extensions of existing contracts are approved by the S151 Officer before the original term ends [CPR-62], and awards and extensions are notified for the Council Contract Register with current end dates [CPR-34].
 
 ### T-06-1 (tests C-06-1)
 
@@ -108,10 +108,10 @@ Score 3 (Low (Green)); controls: C-10-1 Awards are approved at the tier their to
 
 ### T-10-1 (tests C-10-1, C-10-2)
 
-For each sampled general procurement supplier above £173,100 with an exact notice match [A17] (that metric counts every spend type; the sample takes general procurement only, so its population is smaller), obtain the award decision and confirm it was approved at the tier for the total contract value [CPR-50] [CPR-51] [CPR-52] [CPR-53], as a Key Decision where required [CPR-03]. Where the award was tendered, inspect the portal record for secure handling and opening [CPR-13] [CPR-15] and any late tender [CPR-14], and confirm evaluation against notified criteria [CPR-16], best value award [CPR-17], CDP notice approval [CPR-10] and the suitability check [CPR-08]. Suppliers with no notice found are covered under R-04.
+For each sampled general procurement supplier above £173,100 with an exact notice match [A17] (that metric counts every spend type; the sample takes general procurement only, so its population is smaller), obtain the award decision and confirm it was approved at the tier for the total contract value [CPR-50] [CPR-51] [CPR-52] [CPR-53], as a Key Decision where required [CPR-03]. Where the award was tendered, inspect the portal record for secure handling and opening [CPR-13] [CPR-15] and any late tender [CPR-14], and confirm evaluation against notified criteria [CPR-16], best value award [CPR-17], CDP notice approval [CPR-10] and the suitability check [CPR-08]. Suppliers with no notice found are covered under R-04. From the award records, establish each sampled contract's type and the threshold that applies to it. Where the total value is above that threshold, confirm the opportunity was first advertised on the CDP [CPR-09], tenders were invited and received electronically through the Procurement Portal [CPR-12], the full statutory procedure was applied [CPR-58], a written procurement report was produced [CPR-28] and the contract was sealed [CPR-47]. This part of the step was added after sign-off at the auditor's sign-off decision on the coverage challenge: the contract type is absent from the spend data but shown on the contract itself.
 
 - **Sample:** `analytics-full/high_value_suppliers.csv`; filter: dominant_tag = general_procurement; match_class = exact; annualised estimate {">=": "$.tests.high_value_suppliers.statutory_tier.parameters.threshold"}; sort: annualised estimate descending; first 5 suppliers (largest 3 payments each). Population 18; drawn 5; 13 transactions, £916,841.43. File: `outputs/samples/T-10-1.csv`.
-- **PBC:** Award reports and approval records for each sampled contract; Procurement Portal tender opening and audit records for each sampled contract
+- **PBC:** Award reports and approval records for each sampled contract; Procurement Portal tender opening and audit records for each sampled contract; CDP notice, written procurement report and sealed contract for each sampled contract above the threshold for its type
 
 ### T-10-2 (tests C-10-3, C-10-4)
 
@@ -176,5 +176,6 @@ Documents and information to request from the council before fieldwork.
 | 17 | Monthly contract reports to the relevant board for the spend window | T-07-1 |
 | 18 | Award reports and approval records for each sampled contract | T-10-1 |
 | 19 | Procurement Portal tender opening and audit records for each sampled contract | T-10-1 |
-| 20 | The register of exceptions, waivers and Appendix C exemptions for the spend window, with approvals and exception reports | T-10-2 |
-| 21 | The internal audit action tracker for the Contract Letting and Accounts Payable audits, with status, owners, due dates and closure evidence | T-11-1 |
+| 20 | CDP notice, written procurement report and sealed contract for each sampled contract above the threshold for its type | T-10-1 |
+| 21 | The register of exceptions, waivers and Appendix C exemptions for the spend window, with approvals and exception reports | T-10-2 |
+| 22 | The internal audit action tracker for the Contract Letting and Accounts Payable audits, with status, owners, due dates and closure evidence | T-11-1 |

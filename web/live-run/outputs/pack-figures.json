@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-16T00:10:24",
+ "generated_at": "2026-10-16T00:40:56",
  "computed": [
   {
    "name": "risks_in_scope",
@@ -431,7 +431,7 @@
   },
   {
    "name": "pbc_items",
-   "value": 21,
+   "value": 22,
    "where": [
     "audit-program.md"
    ]
@@ -445,14 +445,14 @@
   },
   {
    "name": "rules_cited",
-   "value": 53,
+   "value": 58,
    "where": [
     "risk-control-matrix.md"
    ]
   },
   {
    "name": "rules_not_tested",
-   "value": 13,
+   "value": 8,
    "where": [
     "risk-control-matrix.md"
    ]
@@ -627,7 +627,7 @@
   },
   {
    "name": "R-06.L",
-   "value": 2,
+   "value": 3,
    "source": "risk-register.state.json"
   },
   {
@@ -637,7 +637,7 @@
   },
   {
    "name": "R-06.score",
-   "value": 8,
+   "value": 12,
    "source": "risk-register.state.json"
   },
   {

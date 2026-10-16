@@ -1,10 +1,10 @@
 {
-  "pack_version": 2,
+  "pack_version": 3,
   "generated_at": "2026-10-16T09:00:00",
   "memo": {
     "objective": "To conclude whether the council's controls over procurement route, aggregation of requirements, contract cover, extensions, variations, exceptions and award approvals operated as the Contract Procedure Rules require, for the approved risk indicators in the register: competition by value tier [rule:CPR-54] [rule:CPR-55] [rule:CPR-56], the anti-splitting rule [rule:CPR-11], extension and variation approvals [rule:CPR-62] [rule:CPR-63] [rule:CPR-64], exceptions [rule:CPR-20] and award approval tiers [rule:CPR-50]. The audit also confirms the status of agreed actions from the Contract Letting and Accounts Payable audits [history:AUD-01] [history:AUD-11]. Results are risk indicators to investigate.",
     "approach": "Targeted testing over the full population of expenditure the council publishes under the transparency rule [rule:CPR-04] for the spend window starting {{$.population.date_min}} and ending {{$.population.date_max}}: {{$.population.rows_after_exclusions|int}} payments after exclusions, worth {{$.population.total_gbp|gbp}} [metric:$.population.rows_after_exclusions]. Samples are drawn by the builder from the analytics outputs, sorted by the strength of each indicator (value, ratio or count), highest first, not at random: payments just below competition thresholds [metric:$.tests.threshold_clustering.per_threshold[?threshold==25000].band_by_tag.general_procurement.n], same-supplier payment windows crossing a threshold [metric:$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.windows], high-value suppliers with no Contracts Finder notice found [metric:$.tests.off_contract.statutory_tier.headline_general_procurement_no_notice_found.suppliers], repeated equal payments [metric:$.tests.duplicates.per_tier.different_time.by_tag.general_procurement.groups], spend after notice expiry [metric:$.tests.expired_notice_spend.suppliers] and spend above the award rate [metric:$.tests.spend_vs_award.flagged]. Placement and grant payments are excluded from the samples unless a test is about them, because they may be exempt from competition. Approval, exception and action-tracking controls that leave no trace in the payment data are tested by walkthrough and document request.",
-    "limitations": "The spend data covers only the payments the council publishes under the transparency threshold [rule:CPR-04] for {{$.population.months_covered|int}} months, so supplier totals are annualised estimates and split and duplicate results are a lower bound [metric:$.population.annualisation_factor]. Rows with a redacted supplier ({{$.population.excluded.redacted_supplier.rows|int}} rows) are excluded from every supplier-level test [metric:$.population.excluded.redacted_supplier.rows]. The notices file holds published Contracts Finder notices, not the council's contract register [metric:$.contracts.register_present]: a notice not found is an indicator to check against the council's register, never evidence of off-contract spend, and suppliers below the publication threshold are never questioned on that basis. Scope limitation, recorded at the auditor's instruction: the tests that depend on 'the relevant Threshold' (the full statutory procedure [rule:CPR-58], first advertising on the CDP [rule:CPR-09], electronic tendering above the threshold [rule:CPR-12], the written procurement report [rule:CPR-28] and sealing [rule:CPR-47]) could not be run because the spend data has no contract-type field to choose the threshold [metric:$.skipped[0].reason]; the goods and services threshold is used only where a rule names it. Care and education placements and the quotation threshold below competition were approved as out of scope (R-08, R-09), so the placement exemption rule is not tested [rule:CPR-65]. No action tracker is published [history:GAP-01] and the Strategic Risk Register is exempt and not public [history:GAP-06]. The auditor asked for the impact-scale conflict to be resolved and stated in the register header [history:DISC-01]; revision one still records it as unresolved, so the impact levels of R-01, R-02, R-05 and R-10 rest on the register as issued, pending the auditor's confirmation."
+    "limitations": "The spend data covers only the payments the council publishes under the transparency threshold [rule:CPR-04] for {{$.population.months_covered|int}} months, so supplier totals are annualised estimates and split and duplicate results are a lower bound [metric:$.population.annualisation_factor]. Rows with a redacted supplier ({{$.population.excluded.redacted_supplier.rows|int}} rows) are excluded from every supplier-level test [metric:$.population.excluded.redacted_supplier.rows]. The notices file holds published Contracts Finder notices, not the council's contract register [metric:$.contracts.register_present]: a notice not found is an indicator to check against the council's register, never evidence of off-contract spend, and suppliers below the publication threshold are never questioned on that basis. Scope limitation, recorded at the auditor's instruction: the analytics tests that depend on 'the relevant Threshold' (the full statutory procedure [rule:CPR-58], first advertising on the CDP [rule:CPR-09], electronic tendering above the threshold [rule:CPR-12], the written procurement report [rule:CPR-28] and sealing [rule:CPR-47]) could not be run because the spend data has no contract-type field to choose the threshold [metric:$.skipped[0].reason]; the goods and services threshold is used only where a rule names it. At the auditor's sign-off decision on the coverage challenge the limitation applies to the analytics only: fieldwork tests these rules in T-10-1 on the contracts obtained, where the contract type is known. Care and education placements and the quotation threshold below competition were approved as out of scope (R-08, R-09), so the placement exemption rule is not tested [rule:CPR-65]. No action tracker is published [history:GAP-01] and the Strategic Risk Register is exempt and not public [history:GAP-06]. On the impact-scale conflict [history:DISC-01], the auditor confirmed at sign-off that the impact table's Medium level is the basis for R-01, R-02, R-05 and R-10, which changes no score. The register header still lists the conflict as unresolved because the builder marks it from history.json, which records it only as a discrepancy."
   },
   "risks": [
     {
@@ -421,7 +421,7 @@
             "C-10-1",
             "C-10-2"
           ],
-          "step": "For each sampled general procurement supplier above {{$.tests.high_value_suppliers.statutory_tier.parameters.threshold|gbp}} with an exact notice match [metric:$.tests.off_contract.statutory_tier.by_match_class.exact.suppliers] (that metric counts every spend type; the sample takes general procurement only, so its population is smaller), obtain the award decision and confirm it was approved at the tier for the total contract value [rule:CPR-50] [rule:CPR-51] [rule:CPR-52] [rule:CPR-53], as a Key Decision where required [rule:CPR-03]. Where the award was tendered, inspect the portal record for secure handling and opening [rule:CPR-13] [rule:CPR-15] and any late tender [rule:CPR-14], and confirm evaluation against notified criteria [rule:CPR-16], best value award [rule:CPR-17], CDP notice approval [rule:CPR-10] and the suitability check [rule:CPR-08]. Suppliers with no notice found are covered under R-04.",
+          "step": "For each sampled general procurement supplier above {{$.tests.high_value_suppliers.statutory_tier.parameters.threshold|gbp}} with an exact notice match [metric:$.tests.off_contract.statutory_tier.by_match_class.exact.suppliers] (that metric counts every spend type; the sample takes general procurement only, so its population is smaller), obtain the award decision and confirm it was approved at the tier for the total contract value [rule:CPR-50] [rule:CPR-51] [rule:CPR-52] [rule:CPR-53], as a Key Decision where required [rule:CPR-03]. Where the award was tendered, inspect the portal record for secure handling and opening [rule:CPR-13] [rule:CPR-15] and any late tender [rule:CPR-14], and confirm evaluation against notified criteria [rule:CPR-16], best value award [rule:CPR-17], CDP notice approval [rule:CPR-10] and the suitability check [rule:CPR-08]. Suppliers with no notice found are covered under R-04. From the award records, establish each sampled contract's type and the threshold that applies to it. Where the total value is above that threshold, confirm the opportunity was first advertised on the CDP [rule:CPR-09], tenders were invited and received electronically through the Procurement Portal [rule:CPR-12], the full statutory procedure was applied [rule:CPR-58], a written procurement report was produced [rule:CPR-28] and the contract was sealed [rule:CPR-47]. This part of the step was added after sign-off at the auditor's sign-off decision on the coverage challenge: the contract type is absent from the spend data but shown on the contract itself.",
           "sample": {
             "source": "high_value_suppliers.csv",
             "unit": "supplier",
@@ -442,7 +442,8 @@
           },
           "pbc": [
             "Award reports and approval records for each sampled contract",
-            "Procurement Portal tender opening and audit records for each sampled contract"
+            "Procurement Portal tender opening and audit records for each sampled contract",
+            "CDP notice, written procurement report and sealed contract for each sampled contract above the threshold for its type"
           ]
         },
         {
@@ -486,18 +487,6 @@
   ],
   "rules_not_tested": [
     {
-      "rule_id": "CPR-09",
-      "reason": "Applies above 'the relevant Threshold', which depends on contract type; the spend data has no contract-type field, so the analytics test was skipped [metric:$.skipped[0].reason]. Recorded as a scope limitation at the auditor's instruction."
-    },
-    {
-      "rule_id": "CPR-12",
-      "reason": "Applies above 'the appropriate Threshold', which depends on contract type; the spend data has no contract-type field, so the analytics test was skipped [metric:$.skipped[0].reason]. Recorded as a scope limitation at the auditor's instruction; portal handling of tenders is still tested under the rules for any electronic tender."
-    },
-    {
-      "rule_id": "CPR-28",
-      "reason": "The written procurement report is required above the relevant Threshold, which depends on contract type absent from the spend data; the test was skipped [metric:$.skipped[0].reason]. Recorded as a scope limitation at the auditor's instruction."
-    },
-    {
       "rule_id": "CPR-29",
       "reason": "Retention of the report required by CPR-28, which is not tested for the same contract-type limitation [metric:$.skipped[0].reason]; general retention of procurement files is tested under CPR-30."
     },
@@ -518,20 +507,12 @@
       "reason": "The sealing register is a Legal Services record of executions; it depends on sealing above the relevant Threshold, which is not tested [metric:$.skipped[0].reason]."
     },
     {
-      "rule_id": "CPR-47",
-      "reason": "Sealing is required above 'Threshold', which depends on contract type absent from the spend data; the test was skipped [metric:$.skipped[0].reason]. Recorded as a scope limitation at the auditor's instruction."
-    },
-    {
       "rule_id": "CPR-48",
       "reason": "Signing and registering documents not under seal is a Legal Services execution control covering all council documents, not specific to procurement; outside this audit."
     },
     {
       "rule_id": "CPR-49",
       "reason": "Selection and instruction of Counsel concerns legal advice, not the procurement of goods, services or works; outside this audit."
-    },
-    {
-      "rule_id": "CPR-58",
-      "reason": "The full statutory procedure applies above 'Threshold' for the contract's type, which the spend data cannot show; the test was skipped [metric:$.skipped[0].reason]. Recorded as a scope limitation at the auditor's instruction."
     },
     {
       "rule_id": "CPR-65",

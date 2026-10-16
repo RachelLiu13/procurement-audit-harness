@@ -1,14 +1,14 @@
 # Procurement risk register: West Berkshire Council
 
-**Revision 1: applies the auditor's decisions.** Built 2026-10-16T00:02:33.
+**Revision 2: applies the auditor's decisions.** Built 2026-10-16T00:40:54.
 
-Auditor decisions applied: R-02 amended (likelihood L4 to L3, split-window evidence left to R-03); all other risks approved unchanged.
+Auditor decision at sign-off applied: R-06 amended (likelihood L2 to L3); all other risks unchanged.
 
 Changed in this revision:
 
-- R-02: likelihood 4 → 3; citations -metric:$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.windows (auditor: Amend, "Reduce likelihood from L4 to L3 (score 9, Amber). Clustering below £173,100 rests on only 3 payments vs 2 above, which is too thin for L4; keep in scope. Rely on R-03 for the split-window evidence so the two risks are not double-counted.")
+- R-06: likelihood 2 → 3; citations +metric:$.tests.expired_notice_spend.top20[0].dominant_tag, +metric:$.tests.expired_notice_spend.top20[1].dominant_tag, +metric:$.tests.expired_notice_spend.top20[2].dominant_tag, +metric:$.tests.expired_notice_spend.top20[3].dominant_tag, +metric:$.tests.expired_notice_spend.top20[4].dominant_tag, +metric:$.tests.expired_notice_spend.top20[5].dominant_tag, +metric:$.tests.expired_notice_spend.top20[6].dominant_tag, +metric:$.tests.expired_notice_spend.top20[7].dominant_tag (auditor: Amend, "Raise likelihood from L2 to L3 (score 12, Amber), as decided at sign-off on challenge #6: all 8 flagged suppliers carry dominant_tag general_procurement in analytics.json, so the L3 condition is shown. Keep in scope; no other change.")
 
-Inputs: `outputs/risk-ratings.json` sha256 7b756c16307c · `outputs/analytics.json` sha256 2f9ef0af85de · `outputs/history.json` sha256 258043779bfe · `outputs/rules.json` sha256 0cdaf851e5cc
+Inputs: `outputs/risk-ratings.json` sha256 ccc32cac2f2b · `outputs/analytics.json` sha256 2f9ef0af85de · `outputs/history.json` sha256 258043779bfe · `outputs/rules.json` sha256 0cdaf851e5cc
 
 These are **risk indicators to investigate**, not findings of wrongdoing by the council, a service or a supplier.
 
@@ -35,7 +35,7 @@ These are **risk indicators to investigate**, not findings of wrongdoing by the 
 | R-03 | Same-supplier payment windows that cross competition thresholds while each payment stays below | 4 | 5 | 20 | Extreme | Extreme (Red) | in |
 | R-04 | High-value general procurement suppliers with no Contracts Finder notice found | 3 | 5 | 15 | Extreme | Extreme (Red) | in |
 | R-05 | Repeated equal payments to the same supplier within 7 days | 3 | 3 | 9 ‡ | High | Medium - High (Amber) | in |
-| R-06 | Spend with suppliers whose every matching notice ended before the spend window | 2 | 4 | 8 | High | Medium - High (Amber) | in |
+| R-06 | Spend with suppliers whose every matching notice ended before the spend window | 3 | 4 | 12 ‡ | High | Medium - High (Amber) | in |
 | R-07 | Annualised spend above the published award value for single-supplier notices | 2 | 5 | 10 ‡ | High | Medium - High (Amber) | in |
 | R-08 | Recurring care and education placement payments crossing competition thresholds | 2 | 2 | 4 | Moderate | Moderate | out |
 | R-09 | Payments clustered just below the £1,000 quotation threshold | 3 | 2 | 6 | Moderate | Moderate | out |
@@ -67,8 +67,6 @@ These are **risk indicators to investigate**, not findings of wrongdoing by the 
 - **Proposed scope:** in. Low cost to test alongside split purchases (R-03); traces the quotation and competition rules [CPR-54] [CPR-55] [CPR-56]; Contract Letting received Reasonable Assurance [AUD-01].
 
 ## R-02: Payments just below the £173,100 Procurement Act threshold for goods and services
-
-> **Auditor override (revision 1):** Amend: "Reduce likelihood from L4 to L3 (score 9, Amber). Clustering below £173,100 rests on only 3 payments vs 2 above, which is too thin for L4; keep in scope. Rely on R-03 for the split-window evidence so the two risks are not double-counted.". Changed: likelihood 4 → 3; citations -metric:$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.windows.
 
 The band just below the statutory goods and services threshold holds more payments than the band just above it [M1]. Counts are small; an indicator to investigate [CPR-55]. Split-purchase windows at this threshold are rated under R-03, not here.
 
@@ -156,20 +154,30 @@ Payments of the same amount to the same supplier at different times within 7 day
 
 ## R-06: Spend with suppliers whose every matching notice ended before the spend window
 
+> **Auditor override (revision 2):** Amend: "Raise likelihood from L2 to L3 (score 12, Amber), as decided at sign-off on challenge #6: all 8 flagged suppliers carry dominant_tag general_procurement in analytics.json, so the L3 condition is shown. Keep in scope; no other change.". Changed: likelihood 2 → 3; citations +metric:$.tests.expired_notice_spend.top20[0].dominant_tag, +metric:$.tests.expired_notice_spend.top20[1].dominant_tag, +metric:$.tests.expired_notice_spend.top20[2].dominant_tag, +metric:$.tests.expired_notice_spend.top20[3].dominant_tag, +metric:$.tests.expired_notice_spend.top20[4].dominant_tag, +metric:$.tests.expired_notice_spend.top20[5].dominant_tag, +metric:$.tests.expired_notice_spend.top20[6].dominant_tag, +metric:$.tests.expired_notice_spend.top20[7].dominant_tag.
+
 8 suppliers were paid in the window although every matching notice had ended before it [M1]. A newer contract or approved extension may exist with no notice; an indicator to check against extension approvals [CPR-62].
 
-- **Likelihood 2 – Unlikely.** The indicator is present [M1], but the analytics give no general procurement breakdown for this test, so the L3 condition cannot be shown; the notices file is not a contract register [M2].
+- **Likelihood 3 – Likely.** The indicator is present [M1] and every flagged supplier's dominant spend tag is general procurement [M2] [M3] [M4] [M5] [M6] [M7] [M8] [M9], so the indicator sits on the general procurement population. The rating stays at L3, not higher, because the notices file is not a contract register [M10].
   - Signals: ✓ $.tests.expired_notice_spend.suppliers > 0 → 8 > 0
-- **Impact 4 – Major.** Value exposed (not a loss) is the annualised estimate of spend with these suppliers, £973,458 [M3], in the council's Major financial band [IMP-4-FIN].
-  - £ basis £973,458 [M3] → council £ band level 4
-- **Score 8**: matrix label High; band Medium - High (Amber).
+- **Impact 4 – Major.** Value exposed (not a loss) is the annualised estimate of spend with these suppliers, £973,458 [M11], in the council's Major financial band [IMP-4-FIN].
+  - £ basis £973,458 [M11] → council £ band level 4
+- **Score 12**: matrix label High; band Medium - High (Amber); ‡ CRR-level under ESC-CRR.
 - **Evidence:**
   - M1 `$.tests.expired_notice_spend.suppliers` = 8
   - CPR-62 (clause App C row D): extension of an existing contract that provides for extension
-  - M2 `$.contracts.register_present` = False
-  - M3 `$.tests.expired_notice_spend.annualised_estimate_gbp` = 973,457.68
+  - M2 `$.tests.expired_notice_spend.top20[0].dominant_tag` = general_procurement
+  - M3 `$.tests.expired_notice_spend.top20[1].dominant_tag` = general_procurement
+  - M4 `$.tests.expired_notice_spend.top20[2].dominant_tag` = general_procurement
+  - M5 `$.tests.expired_notice_spend.top20[3].dominant_tag` = general_procurement
+  - M6 `$.tests.expired_notice_spend.top20[4].dominant_tag` = general_procurement
+  - M7 `$.tests.expired_notice_spend.top20[5].dominant_tag` = general_procurement
+  - M8 `$.tests.expired_notice_spend.top20[6].dominant_tag` = general_procurement
+  - M9 `$.tests.expired_notice_spend.top20[7].dominant_tag` = general_procurement
+  - M10 `$.contracts.register_present` = False
+  - M11 `$.tests.expired_notice_spend.annualised_estimate_gbp` = 973,457.68
   - IMP-4-FIN: 4 Major – Financial loss to Council: 0.25% - 1% annual WBC budget £500k £2M
-  - M4 `$.tests.expired_notice_spend.gbp_in_window` = 243,364.42
+  - M12 `$.tests.expired_notice_spend.gbp_in_window` = 243,364.42
 - **Proposed focus:** For each supplier, obtain the current contract or the extension and its approval by the S151 Officer [CPR-62].
 - **Proposed scope:** in. Small, fully listed population [M1]; only test tracing the extension approval rule [CPR-62].
 
@@ -272,6 +280,10 @@ The committee papers publish no action tracker, due dates or statuses [GAP-01], 
 
 None.
 
+## Build notes
+
+- R-06: auditor override departs from the rubric: L3 needs a signal on the general_procurement population
+
 ## Auditor decisions
 
 Record a decision for every risk in `outputs/auditor-comments.md` (Approve, Amend or Reject, with a comment for Amend and Reject), then ask for the risk-assessor to be re-run. It re-issues this register as the next revision, applying exactly what you asked and nothing else. The audit program is not built until every risk is decided and applied.
@@ -283,7 +295,7 @@ Record a decision for every risk in `outputs/auditor-comments.md` (Approve, Amen
 | R-03 | Approve |  |
 | R-04 | Approve |  |
 | R-05 | Approve |  |
-| R-06 | Approve |  |
+| R-06 | Amend | Raise likelihood from L2 to L3 (score 12, Amber), as decided at sign-off on challenge #6: all 8 flagged suppliers carry dominant_tag general_procurement in analytics.json, so the L3 condition is shown. Keep in scope; no other change. |
 | R-07 | Approve |  |
 | R-08 | Approve |  |
 | R-09 | Approve |  |

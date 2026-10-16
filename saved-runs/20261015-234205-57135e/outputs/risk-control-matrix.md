@@ -1,6 +1,6 @@
 # Risk-control matrix: procurement, West Berkshire Council
 
-Basis: risk register revision 1 (built 2026-10-16T00:02:33), auditor decisions in `outputs/auditor-comments.md`, plan `outputs/audit-plan.json`. Built 2026-10-16T00:10:24 by `.claude/skills/audit-program/build_pack.py`.
+Basis: risk register revision 2 (built 2026-10-16T00:40:54), auditor decisions in `outputs/auditor-comments.md`, plan `outputs/audit-plan.json`. Built 2026-10-16T00:40:56 by `.claude/skills/audit-program/build_pack.py`.
 
 These are **risk indicators to investigate**, not findings of wrongdoing by the council, a service or a supplier. A sampled transaction is selected because it carries an indicator, not because anything is assumed to be wrong with it.
 
@@ -19,7 +19,7 @@ These are **risk indicators to investigate**, not findings of wrongdoing by the 
 | R-04 | 15 (Extreme (Red)) | C-04-2: Contracts are let by the competitive route for their value [CPR-55] [CPR-56], covered by budget provision [CPR-02], awarded only to suppliers checked for suitability and financial standing [CPR-08], with social value considered for service contracts above the goods and services threshold [CPR-01]. | CPR-01, CPR-02, CPR-08, CPR-55, CPR-56 | T-04-1 |
 | R-04 | 15 (Extreme (Red)) | C-04-3: Contracts carry the standard clauses [CPR-35], with amended forms approved [CPR-36], the minimum clauses [CPR-37], a Data Protection Impact Assessment [CPR-38] and specifications [CPR-39]; indemnities are relaxed only with written authority [CPR-40], bonds use the approved form [CPR-41] or the risk assessment is approved where none is taken [CPR-42], and insurance levels are set and verified [CPR-43]. | CPR-35, CPR-36, CPR-37, CPR-38, CPR-39, CPR-40, CPR-41, CPR-42, CPR-43 | T-04-3 |
 | R-05 | 9 (Medium - High (Amber)) | C-05-1: Each payment is supported by a distinct invoice and written evidence of the purchase and its receipt, so a repeated invoice is identified before payment, and any duplicate paid is identified and recovered [CPR-31]. | CPR-31 | T-05-1 |
-| R-06 | 8 (Medium - High (Amber)) | C-06-1: Extensions of existing contracts are approved by the S151 Officer before the original term ends [CPR-62], and awards and extensions are notified for the Council Contract Register with current end dates [CPR-34]. | CPR-34, CPR-62 | T-06-1 |
+| R-06 | 12 (Medium - High (Amber)) | C-06-1: Extensions of existing contracts are approved by the S151 Officer before the original term ends [CPR-62], and awards and extensions are notified for the Council Contract Register with current end dates [CPR-34]. | CPR-34, CPR-62 | T-06-1 |
 | R-07 | 10 (Medium - High (Amber)) | C-07-1: Variations of scope have prior written Monitoring Officer and S151 Officer approval below the threshold [CPR-63], or relevant-board approval on their recommendation above it [CPR-64]. | CPR-63, CPR-64 | T-07-1 |
 | R-07 | 10 (Medium - High (Amber)) | C-07-2: Contract information, including spend against contract value, is reported to the relevant board monthly so that spend beyond the award is seen [CPR-07]. | CPR-07 | T-07-1 |
 | R-10 | 3 (Low (Green)) | C-10-1: Awards are approved at the tier their total value requires: Service Director up to the threshold [CPR-50], with reports and board approval above it [CPR-51], as a Key Decision [CPR-52] [CPR-03], and by the Executive at the top tier [CPR-53]. | CPR-03, CPR-50, CPR-51, CPR-52, CPR-53 | T-10-1 |
@@ -30,22 +30,17 @@ These are **risk indicators to investigate**, not findings of wrongdoing by the 
 
 ## Rule coverage
 
-Every rule in `outputs/rules.json` is accounted for: 53 cited by an in-scope risk, a control or a test; 13 not tested, with the reason below.
+Every rule in `outputs/rules.json` is accounted for: 58 cited by an in-scope risk, a control or a test; 8 not tested, with the reason below.
 
 | Rule | Clause | Reason not tested |
 |---|---|---|
-| CPR-09 | 6.10 | Applies above 'the relevant Threshold', which depends on contract type; the spend data has no contract-type field, so the analytics test was skipped [A11]. Recorded as a scope limitation at the auditor's instruction. |
-| CPR-12 | 6.19 | Applies above 'the appropriate Threshold', which depends on contract type; the spend data has no contract-type field, so the analytics test was skipped [A11]. Recorded as a scope limitation at the auditor's instruction; portal handling of tenders is still tested under the rules for any electronic tender. |
-| CPR-28 | 9.1 | The written procurement report is required above the relevant Threshold, which depends on contract type absent from the spend data; the test was skipped [A11]. Recorded as a scope limitation at the auditor's instruction. |
 | CPR-29 | 9.2 | Retention of the report required by CPR-28, which is not tested for the same contract-type limitation [A11]; general retention of procurement files is tested under CPR-30. |
 | CPR-33 | 10.3 | Retention of sealed documents by Legal Services follows from sealing above the relevant Threshold (CPR-47), which is not tested for the contract-type limitation [A11]. |
 | CPR-44 | 11.6 | Custody of the Common Seal is a Legal Services safekeeping arrangement with no link to payments or procurement routes; outside this procurement compliance audit. |
 | CPR-45 | 11.8 | Attestation of each sealing is a Legal Services execution formality that leaves no trace in payment data and depends on sealing above the relevant Threshold, which is not tested [A11]. |
 | CPR-46 | 11.9 | The sealing register is a Legal Services record of executions; it depends on sealing above the relevant Threshold, which is not tested [A11]. |
-| CPR-47 | 11.11 | Sealing is required above 'Threshold', which depends on contract type absent from the spend data; the test was skipped [A11]. Recorded as a scope limitation at the auditor's instruction. |
 | CPR-48 | 11.13 | Signing and registering documents not under seal is a Legal Services execution control covering all council documents, not specific to procurement; outside this audit. |
 | CPR-49 | 11.14 | Selection and instruction of Counsel concerns legal advice, not the procurement of goods, services or works; outside this audit. |
-| CPR-58 | App B row D | The full statutory procedure applies above 'Threshold' for the contract's type, which the spend data cannot show; the test was skipped [A11]. Recorded as a scope limitation at the auditor's instruction. |
 | CPR-65 | App C row F | Recording reasons for placement providers concerns the care and education placement population, approved by the auditor as out of scope (R-08). |
 
 ## Sources
