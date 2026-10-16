@@ -1,153 +1,155 @@
 # Audit program: procurement, West Berkshire Council
 
-Basis: risk register revision 1 (built 2026-10-15T11:56:28), auditor decisions in `outputs/auditor-comments.md`, plan `outputs/audit-plan.json`. Built 2026-10-15T12:07:37 by `.claude/skills/audit-program/build_pack.py`.
+Basis: risk register revision 1 (built 2026-10-16T00:02:33), auditor decisions in `outputs/auditor-comments.md`, plan `outputs/audit-plan.json`. Built 2026-10-16T00:10:24 by `.claude/skills/audit-program/build_pack.py`.
 
 These are **risk indicators to investigate**, not findings of wrongdoing by the council, a service or a supplier. A sampled transaction is selected because it carries an indicator, not because anything is assumed to be wrong with it.
 
-## R-01: Payments within ten per cent below the £25,000 quotation threshold
+## R-01: Payments just below the £25,000 competition threshold
 
-Score 6 (Moderate); controls: C-01-1 Purchases below the quotation threshold are supported by at least one quote from an appropriate source [CPR-53] and are ordered under the delegated authority of the relevant Service Director or a nominated officer [CPR-49].; C-01-2 Where related orders for one requirement together reach the quotation threshold, invitations to quote are sent via the Procurement Portal to at least three appropriate sources [CPR-54] [CPR-55]; any discretionary exception is recorded in writing with reasons [CPR-19] and fully documented [CPR-24].
+Score 6 (Moderate); controls: C-01-1 Purchases are routed by total value: at least one quote below the competition threshold [CPR-54], and invitations to quote via the Procurement Portal to at least three sources from the competition threshold upward for goods and services [CPR-55] and for works, concession or light touch contracts [CPR-56], with invitations to tender published [CPR-05].; C-01-2 Quotes are evaluated against criteria notified in advance [CPR-16], awarded on best value rather than lowest price alone [CPR-17], and every purchase and procurement step is evidenced in writing and retained [CPR-31] [CPR-30].; C-01-3 Related orders for the same requirement are aggregated before the route is chosen, so no requirement is split to stay below a threshold [CPR-11].
 
-### T-01-1 (tests C-01-1, C-01-2)
+### T-01-1 (tests C-01-1, C-01-2, C-01-3)
 
-For each sampled general procurement payment in the band just below the quotation threshold [A3], obtain the order and invoice; establish the order value exclusive of VAT, confirm at least one quote was sought [CPR-53] and that the order was raised under delegated authority [CPR-49]. Trace other orders with the same supplier for the same requirement: where together they reach the quotation threshold, confirm invitations to quote were issued via the Procurement Portal [CPR-54] [CPR-55] or that a written exception with reasons exists [CPR-19] [CPR-24]. Read the result together with the split-purchase windows in R-03.
+For each sampled general procurement payment in the band just below £25,000 [A2], trace the payment to its purchase order and establish the total value of the requirement, including other orders for the same requirement [CPR-11]. Confirm the route matched that value: at least one quote below the threshold [CPR-54], or portal invitations to at least three sources at or above it [CPR-55] [CPR-56] with the invitation published [CPR-05]. Confirm the quotes were evaluated against notified criteria [CPR-16] and the award made on best value [CPR-17], and that the purchase and procurement file are evidenced and retained [CPR-31] [CPR-30].
 
 - **Sample:** `analytics-full/threshold_clustering.csv`; filter: threshold = $.tests.threshold_clustering.per_threshold[?threshold==25000].threshold; tag = general_procurement; sort: Net amount descending; first 10 transactions. Population 10; drawn 10; 10 transactions, £239,427.82. File: `outputs/samples/T-01-1.csv`.
-- **PBC:** Purchase orders and invoices for each sampled payment; Quotation records (quotes sought, received and evaluated) for each sampled purchase; Any written exception or waiver, with reasons and approvals, for the sampled purchases
+- **PBC:** Purchase orders and invoices for each sampled payment; Quotation or invitation-to-quote records, evaluation and award decision for each sampled purchase; Other orders raised with the same supplier for the same requirement
 
-## R-03: Multiple payments to one supplier within a short window that together cross a competition threshold
+## R-02: Payments just below the £173,100 Procurement Act threshold for goods and services
 
-Score 15 (Extreme (Red)); controls: C-03-1 Requirements are aggregated before the procurement route is chosen and are not split or disaggregated to avoid the Rules [CPR-11]; where a Purchasing Scheme is used, advice confirming entitlement and coverage is obtained first [CPR-27] and any direct award without further competition has prior written approval [CPR-60].; C-03-2 Aggregated requirements at or above the quotation threshold go to invitations to quote via the Procurement Portal [CPR-54] [CPR-55], evaluated against criteria notified in advance [CPR-16] and awarded on best value [CPR-17], with the progress of the procurement documented and kept [CPR-30].; C-03-3 Requirements above the Key Decision value are let by full competitive tender [CPR-56] or the Procurement Legislation route [CPR-57], advertised on the CDP first [CPR-09] with notices approved by the Service Lead for Procurement and Commissioning [CPR-10] and electronic tendering [CPR-12] in a specified format with tenders stored locked until opening [CPR-13], late tenders rejected unless the Monitoring Officer agrees [CPR-14] and opened electronically with an audit record [CPR-15], and awarded as a Key Decision [CPR-04] [CPR-51] or with Executive approval at the highest band [CPR-52].; C-03-4 High-value awards have a written award report [CPR-28] retained for three years [CPR-29], a record of social value consideration for service contracts above the Threshold [CPR-01], a sealed contract where above the Threshold [CPR-46] with the sealing attested and witnessed [CPR-44], and a performance bond in an approved form [CPR-40] or a written risk assessment approved where no bond is required [CPR-41].
+Score 9 (Medium - High (Amber)); controls: C-02-1 Goods and services requirements are valued in total before the route is chosen; below the goods and services threshold the portal quotation route applies [CPR-55], and requirements are not split to stay below the threshold [CPR-11].; C-02-2 For service contracts above the goods and services threshold, consideration of social value is recorded [CPR-01], and any notice published on the CDP is approved and issued by the Service Lead for Procurement and Commissioning or delegate [CPR-10].
 
-### T-03-1 (tests C-03-1, C-03-2)
+### T-02-1 (tests C-02-1, C-02-2)
 
-First, check each sampled supplier against the council's contract register [CPR-07] and record windows covered by a let contract as explained instalments; for those, confirm only that the payments fall within the contract. For windows with no covering contract, sampled from the thirty-day windows of general procurement payments that together cross the quotation threshold [A2], obtain the orders and invoices and establish whether the payments relate to one requirement [CPR-11]. If they do, confirm that invitations to quote were run at the aggregate value [CPR-54] [CPR-55], evaluated against pre-notified criteria [CPR-16] and awarded on best value [CPR-17], with a procurement record kept [CPR-30]; or that a Purchasing Scheme covers them, with the advice [CPR-27] and any direct-award approval [CPR-60].
+For each general procurement payment in the band just below £173,100 [A12], obtain the contract or order and establish its total value and whether other orders form part of the same requirement [CPR-11]. Where the total is below the threshold, confirm the portal quotation route was followed [CPR-55]; where it is above, confirm social value consideration was recorded [CPR-01] and that any CDP notice was approved by the Service Lead [CPR-10]. Split windows at this threshold are tested under R-03, as the auditor directed.
 
-- **Sample:** `analytics-full/split_purchases.csv`; filter: threshold = $.tests.split_purchases.per_threshold[?threshold==25000].threshold; tag = general_procurement; sort: total_gbp descending; first 25 groups (all payments in each). Population 39; drawn 25; 309 transactions, £1,795,137.81. File: `outputs/samples/T-03-1.csv`.
-- **PBC:** The council's contract register with values, start and end dates and suppliers; Purchase orders and invoices for each sampled window; Quotation records (quotes sought, received and evaluated) for each sampled purchase; The contract, framework call-off or Purchasing Scheme advice covering each sampled supplier
+- **Sample:** `analytics-full/threshold_clustering.csv`; filter: threshold = $.tests.threshold_clustering.per_threshold[?threshold==173100].threshold; tag = general_procurement; sort: Net amount descending; first 15 transactions. Population 2; drawn 2; 2 transactions, £318,885.53. File: `outputs/samples/T-02-1.csv`.
+- **PBC:** Purchase orders and invoices for each sampled payment; The contract or order, its total value and the procurement route record for each sampled purchase; CDP notices and their approval for each sampled contract; Other orders raised with the same supplier for the same requirement
 
-### T-03-2 (tests C-03-1, C-03-3)
+## R-03: Same-supplier payment windows that cross competition thresholds while each payment stays below
 
-For each general procurement window whose payments together cross the Key Decision value [A14], identify the contract the payments are made under and trace its award: confirm a full competitive tender [CPR-56] or the Procurement Legislation route where the value is above the statutory threshold [CPR-57], CDP advertising [CPR-09] with an approved notice [CPR-10] and electronic tendering [CPR-12]; from the e-tendering record confirm the tender format and locked storage [CPR-13], the handling of any late tender [CPR-14] and electronic opening with an audit record [CPR-15]; and award as a Key Decision [CPR-04] [CPR-51] or Executive approval where the contract value is in the highest band [CPR-52]. Where no single contract covers the window, establish whether the requirement was split [CPR-11].
+Score 20 (Extreme (Red)); controls: C-03-1 Requirements are aggregated across orders to one supplier and are not split or disaggregated to avoid a threshold [CPR-11].; C-03-2 The aggregated value determines the route: portal quotations for goods and services [CPR-55] and for works, concession or light touch contracts [CPR-56], and a full competitive tender for works above the upper tier [CPR-57].; C-03-3 Call-offs under a framework or other Purchasing Scheme are supported by recorded advice on entitlement and coverage [CPR-27], and direct awards under a scheme without further competition have prior written Monitoring Officer approval [CPR-61].; C-03-4 Awards are approved at the tier their aggregated value requires [CPR-51] [CPR-52] and procurement progress is documented and retained [CPR-30].
 
-- **Sample:** `analytics-full/split_purchases.csv`; filter: threshold = $.tests.split_purchases.per_threshold[?threshold==500000].threshold; tag = general_procurement; sort: total_gbp descending; first 25 groups (all payments in each). Population 2; drawn 2; 58 transactions, £3,509,528.75. File: `outputs/samples/T-03-2.csv`.
-- **PBC:** Purchase orders and invoices for each sampled window; Tender and award file for each contract identified (advert, CDP notices, tender evaluation, award decision); Key Decision or Executive decision record for each contract identified; E-tendering system audit record for each contract identified
+### T-03-1 (tests C-03-1, C-03-2, C-03-3, C-03-4)
 
-### T-03-3 (tests C-03-4)
+For each sampled general procurement window crossing £25,000 [A3], obtain the orders and invoices behind every payment and establish whether they relate to one requirement [CPR-11]. Where they are call-offs under an awarded contract or framework, trace them to the contract and confirm the scheme advice was recorded [CPR-27] and any direct award approved [CPR-61]. Where they are separate orders for one requirement, confirm the aggregated value was procured by the route its tier requires [CPR-55] [CPR-56] and that the procurement file is documented [CPR-30]. Recurring invoices under one contract are an expected cause of this indicator. Windows are drawn with the fewest payments first, then by highest total, so windows that only just cross the threshold with a few payments, the closest match to a split, come before long runs of recurring invoices.
 
-For each contract identified in T-03-2, confirm the written award report exists [CPR-28] and is retained [CPR-29], that social value was considered for a service contract above the Threshold [CPR-01], that the contract was sealed where above the Threshold [CPR-46] with the sealing attested and witnessed on the document [CPR-44], and that a performance bond in an approved form [CPR-40] or an approved written risk assessment [CPR-41] is on the contract file.
+- **Sample:** `analytics-full/split_purchases.csv`; filter: threshold = $.tests.split_purchases.per_threshold[?threshold==25000].threshold; tag = general_procurement; sort: n_payments ascending, total_gbp descending; first 25 groups (all payments in each). Population 39; drawn 25; 138 transactions, £1,182,808.12. File: `outputs/samples/T-03-1.csv`.
+- **PBC:** Purchase orders and invoices for each sampled window; The contract, framework call-off or Purchasing Scheme advice record for each sampled supplier; Quotation, tender and award approval records for each sampled supplier
 
-- **Sample:** none. Uses the contracts identified from the windows drawn for T-03-2; no further transactions are drawn.
-- **PBC:** Award report, sealed contract and performance bond or bond risk assessment for each contract identified
+### T-03-2 (tests C-03-1, C-03-2, C-03-3, C-03-4)
 
-## R-04: High-value suppliers with no matching Contracts Finder notice
+For each general procurement window crossing £173,100 [A13] or £500,000 [A14], establish whether the payments relate to one requirement [CPR-11] and, if so, confirm the contract was let by the route for its aggregated value, including a full tender for works above the upper tier [CPR-57], and approved at the award tier for that value [CPR-51] [CPR-52].  Where the payments are call-offs under an awarded contract or framework, trace them to it and confirm the scheme advice [CPR-27] and any direct-award approval [CPR-61]. A supplier may appear in both tests; record the result once and cross-refer.
 
-Score 15 (Extreme (Red)); controls: C-04-1 The council publishes and maintains a register of contracts in progress and awarded, with value, duration and supplier [CPR-07], each award is notified to the Service Lead for recording on it [CPR-34], contract information is reported to the relevant board monthly [CPR-08], and invitations to tender above the publication value are published [CPR-06].; C-04-2 Every contract is made by an authorised decision-maker [CPR-02] within approved budget [CPR-03], approved at the level for its total value [CPR-49] [CPR-50] [CPR-51] [CPR-52], let by the route for its value [CPR-54] [CPR-55] and put in writing in an approved form [CPR-32].; C-04-3 Exceptions to competition are used only in the listed circumstances [CPR-18], granted in advance by the Monitoring Officer and/or S151 Officer [CPR-20] [CPR-21], with an exception report approved at the level for the value [CPR-22] [CPR-23] [CPR-25], S151 approval recorded [CPR-26], and prior written approval for contracts excluded from competition [CPR-58].
+- **Sample:** `analytics-full/split_purchases.csv`; filter: threshold ["$.tests.split_purchases.per_threshold[?threshold==173100].threshold", "$.tests.split_purchases.per_threshold[?threshold==500000].threshold"]; tag = general_procurement; sort: total_gbp descending; first 25 groups (all payments in each). Population 8; drawn 8; 128 transactions, £5,404,533.12. File: `outputs/samples/T-03-2.csv`.
+- **PBC:** Purchase orders and invoices for each sampled window; The contract, framework call-off or Purchasing Scheme advice record for each sampled supplier; Quotation, tender and award approval records for each sampled supplier
 
-### T-04-1 (tests C-04-1, C-04-2, C-04-3)
+## R-04: High-value general procurement suppliers with no Contracts Finder notice found
 
-For each sampled general procurement supplier with an annualised estimate at or above the quotation threshold and no matching active notice [A4], trace the supplier to the council's contract register [CPR-07]; a notice gap is checked against that register and is not in itself an exception. Obtain the contract and confirm it was awarded by an authorised decision-maker [CPR-02] within budget [CPR-03], approved at the level for its value [CPR-49] [CPR-50] [CPR-51] [CPR-52], let after invitations to quote or tender [CPR-54] [CPR-55] and put in writing [CPR-32]; or obtain the approved exception, its report and S151 approval [CPR-18] [CPR-20] [CPR-21] [CPR-22] [CPR-23] [CPR-25] [CPR-26] [CPR-58]. Confirm the award was notified for the register [CPR-34].
+Score 15 (Extreme (Red)); controls: C-04-1 Every contract is put in writing in a form approved by the Monitoring Officer [CPR-32], notified for the Council Contract Register [CPR-34], and the register of contracts is published [CPR-06].; C-04-2 Contracts are let by the competitive route for their value [CPR-55] [CPR-56], covered by budget provision [CPR-02], awarded only to suppliers checked for suitability and financial standing [CPR-08], with social value considered for service contracts above the goods and services threshold [CPR-01].; C-04-3 Contracts carry the standard clauses [CPR-35], with amended forms approved [CPR-36], the minimum clauses [CPR-37], a Data Protection Impact Assessment [CPR-38] and specifications [CPR-39]; indemnities are relaxed only with written authority [CPR-40], bonds use the approved form [CPR-41] or the risk assessment is approved where none is taken [CPR-42], and insurance levels are set and verified [CPR-43].
 
-- **Sample:** `analytics-full/high_value_suppliers.csv`; filter: dominant_tag = general_procurement; match_class = none; annualised estimate {">=": "$.tests.off_contract.parameters.threshold"}; sort: annualised estimate descending; first 25 suppliers (largest 3 payments each). Population 186; drawn 25; 62 transactions, £14,865,447.37. File: `outputs/samples/T-04-1.csv`.
-- **PBC:** The council's contract register with values, start and end dates and suppliers; The contract and its award approval for each sampled supplier; Any written exception or waiver, with reasons and approvals, for the sampled purchases
+### T-04-1 (tests C-04-1, C-04-2)
+
+For each sampled general procurement supplier with an annualised estimate at or above £173,100 and no Contracts Finder notice found [A4], check the supplier against the council's contract register first: a notice gap is an indicator to check, not evidence of off-contract spend. Obtain the written contract, framework call-off or exemption record covering the sampled payments [CPR-32] and confirm it is on the register [CPR-34] [CPR-06], was let by the route for its value [CPR-55] [CPR-56], had budget provision [CPR-02] and a supplier suitability check [CPR-08], and, for services, recorded social value consideration [CPR-01]. Record which suppliers are explained by older contracts, Find a Tender notices or other buyers' frameworks.
+
+- **Sample:** `analytics-full/high_value_suppliers.csv`; filter: dominant_tag = general_procurement; match_class = none; annualised estimate {">=": "$.tests.high_value_suppliers.statutory_tier.parameters.threshold"}; sort: annualised estimate descending; first 25 suppliers (largest 3 payments each). Population 42; drawn 25; 62 transactions, £14,865,447.37. File: `outputs/samples/T-04-1.csv`.
+- **PBC:** The council's contract register with values and end dates; The contract, framework call-off or exemption record for each sampled supplier; Purchase orders and invoices for each sampled payment
 
 ### T-04-2 (tests C-04-1)
 
-For each near-match candidate at or above the quotation threshold [A15] [A16], confirm against the council's contract register [CPR-07] whether the candidate notice relates to the paid supplier; where it does not, treat the supplier as in T-04-1 and trace its contract and award route [CPR-54] [CPR-55].
+For each general procurement supplier at or above £25,000 whose name only nearly matches a notice [A15] [A16], confirm against the council's contract register whether the notice is the supplier's contract (same legal entity, Companies House number) [CPR-34]; where it is not, obtain the written contract covering the sampled payments [CPR-32]. The file holds all near matches at or above the threshold, so the drawn population can be smaller than the metrics.
 
-- **Sample:** `analytics-full/near-matches.csv`; filter: annualised_estimate {">=": "$.tests.off_contract.parameters.threshold"}; sort: annualised_estimate descending; first 25 suppliers (largest 3 payments each). Population 7; drawn 7; 21 transactions, £260,879.03. File: `outputs/samples/T-04-2.csv`.
-- **PBC:** The council's contract register with values, start and end dates and suppliers; The contract and its award approval for each sampled supplier
+- **Sample:** `analytics-full/near-matches.csv`; filter: dominant_tag = general_procurement; annualised_estimate {">=": "$.tests.off_contract.parameters.threshold"}; sort: annualised_estimate descending; first 25 suppliers (largest 3 payments each). Population 6; drawn 6; 18 transactions, £239,360.31. File: `outputs/samples/T-04-2.csv`.
+- **PBC:** The council's contract register with values and end dates; The contract, framework call-off or exemption record for each sampled supplier
 
-### T-04-3 (tests C-04-1)
+### T-04-3 (tests C-04-3)
 
-Obtain the published contract register and confirm it shows contracts in progress and awarded with value, duration and supplier [CPR-07]; obtain the monthly contract reports to the relevant board for the spend window [CPR-08] and confirm that invitations to tender above the publication value are published [CPR-06]. Note whether the register is complete enough to resolve the notice gaps reported in the analysis [A10].
+For each written contract obtained under T-04-1 and T-04-2, confirm it contains the standard clauses [CPR-35] and any amended form was approved [CPR-36], the minimum clauses [CPR-37], a Data Protection Impact Assessment [CPR-38] and the specification [CPR-39]; confirm any relaxed indemnity was authorised [CPR-40], any bond used the approved form [CPR-41] or, where none was taken on a contract within the bond rule, the risk assessment was approved [CPR-42], and insurance levels were set and verified [CPR-43].
 
-- **Sample:** none. A document test of the register, board reporting and tender publication; it does not depend on individual transactions.
-- **PBC:** The council's contract register with values, start and end dates and suppliers; Monthly contract information reports to the relevant board for the spend window; The published list of invitations to tender for the spend window
+- **Sample:** none. Performed on the contracts obtained for T-04-1 and T-04-2; no further transactions are drawn.
+- **PBC:** The contract, framework call-off or exemption record for each sampled supplier; Data Protection Impact Assessment, bond or bond risk assessment, and insurance evidence for each contract obtained
 
-## R-05: Repeated payments of the same amount to the same supplier within a week
+## R-05: Repeated equal payments to the same supplier within 7 days
 
-Score 9 (Medium - High (Amber)); controls: C-05-1 Written evidence is held for every purchase and each invoice is matched to it before payment, so that a supply is paid once [CPR-31].; C-05-2 Published expenditure over the publication floor reflects the payments actually made [CPR-05].
+Score 9 (Medium - High (Amber)); controls: C-05-1 Each payment is supported by a distinct invoice and written evidence of the purchase and its receipt, so a repeated invoice is identified before payment, and any duplicate paid is identified and recovered [CPR-31].
 
-### T-05-1 (tests C-05-1, C-05-2)
+### T-05-1 (tests C-05-1)
 
-For each sampled group of equal general procurement payments to one supplier at different times within a week [A5], obtain the invoices and purchase evidence [CPR-31] and confirm each payment relates to a distinct supply, invoice number and period. Trace each payment to the ledger to confirm the published lines are not repeat listings [CPR-05]. Where two payments relate to one supply, confirm a credit note or recovery is recorded.
+For each sampled general procurement group of equal payments to one supplier at different times within seven days [A5], match every payment to a distinct invoice, purchase order and goods-received record [CPR-31]. Where two payments relate to the same invoice, confirm the duplicate was identified and recovered, and record the recovery date. Instalments and recurring fees are expected causes of this indicator [AUD-11].
 
 - **Sample:** `analytics-full/duplicates.csv`; filter: tier = different_time; tag = general_procurement; sort: gbp_beyond_first descending; first 15 groups (all payments in each). Population 35; drawn 15; 39 transactions, £525,039.22. File: `outputs/samples/T-05-1.csv`.
-- **PBC:** Invoices and purchase evidence for each sampled payment; Accounts payable ledger extract for each sampled payment, with any credit notes or recoveries
+- **PBC:** Purchase orders and invoices for each sampled payment; Goods-received records for each sampled payment; Duplicate payment reports and recovery records for the spend window
 
 ## R-06: Spend with suppliers whose every matching notice ended before the spend window
 
-Score 6 (Moderate); controls: C-06-1 A contract is extended only where it provides for extension and with S151 Officer approval before expiry [CPR-61]; a replacement contract is recorded on the contract register [CPR-34].
+Score 8 (Medium - High (Amber)); controls: C-06-1 Extensions of existing contracts are approved by the S151 Officer before the original term ends [CPR-62], and awards and extensions are notified for the Council Contract Register with current end dates [CPR-34].
 
 ### T-06-1 (tests C-06-1)
 
-For each supplier paid in the window although every matching notice had ended before it [A6], trace the supplier to the council's contract register and obtain the current contract, or the extension and its S151 Officer approval [CPR-61]; confirm any replacement contract was notified for the register [CPR-34]. A newer contract may exist with no notice, so a notice gap is checked against the register before any conclusion. Where the sampled spend is a separate small purchase, confirm the quote rule was followed instead [CPR-53].
+For each supplier paid in the spend window whose every matching notice had ended before it [A6], check the council's contract register and obtain the current contract, or the extension and its S151 Officer approval [CPR-62]; confirm the register shows the current end date [CPR-34]. Where a newer contract exists with no notice, record its route and date; where a payment is a one-off purchase below the competition threshold, record that instead of seeking an extension.
 
-- **Sample:** `analytics-full/expired_notice_spend.csv`; filter: none; sort: total_gbp descending; first 10 suppliers (largest 3 payments each). Population 8; drawn 8; 13 transactions, £188,394.86. File: `outputs/samples/T-06-1.csv`.
-- **PBC:** The council's contract register with values, start and end dates and suppliers; Contract extension approvals (S151 Officer) for each sampled supplier; Purchase orders and invoices for each sampled payment
+- **Sample:** `analytics-full/expired_notice_spend.csv`; filter: none; sort: total_gbp descending; first 15 suppliers (largest 3 payments each). Population 8; drawn 8; 13 transactions, £191,349.42. File: `outputs/samples/T-06-1.csv`.
+- **PBC:** The council's contract register with values and end dates; Contract extensions and their S151 Officer approval for each sampled supplier; Purchase orders and invoices for each sampled payment
 
 ## R-07: Annualised spend above the published award value for single-supplier notices
 
-Score 10 (Medium - High (Amber)); controls: C-07-1 Variations of scope have prior written approval from the Monitoring Officer and S151 Officer below the Threshold [CPR-62] or relevant board approval following an extension report above it [CPR-63], and the contract register value is kept current [CPR-07].
+Score 10 (Medium - High (Amber)); controls: C-07-1 Variations of scope have prior written Monitoring Officer and S151 Officer approval below the threshold [CPR-63], or relevant-board approval on their recommendation above it [CPR-64].; C-07-2 Contract information, including spend against contract value, is reported to the relevant board monthly so that spend beyond the award is seen [CPR-07].
 
-### T-07-1 (tests C-07-1)
+### T-07-1 (tests C-07-1, C-07-2)
 
-First, confirm from the order or invoice that each sampled payment is made under the matched notice; where it is not, trace the payment's own contract and award route as in T-04-1 [CPR-54] [CPR-55]. Then, for each flagged supplier whose annualised estimate is at least the flag ratio times the annual award value [A7] [A17], obtain the contract and its current value from the council's contract register [CPR-07]; compare actual spend to date with the contract value and, where spend exceeds it, obtain the approved variation [CPR-62] or the board approval and extension report [CPR-63]. Award values may be estimates or maxima, so confirm the contract value before concluding.
+For each supplier whose annualised estimate is at least 1.25 times the annual award rate of its single active notice [A7], obtain the contract and its current value and compare it with actual spend to date; obtain any variation and confirm its approval at the right level [CPR-63] [CPR-64], and confirm the contract appears in the monthly contract report to the board [CPR-07]. Award values may be estimates or maxima and the annualised estimate extrapolates a short window; record where either explains the ratio.
 
 - **Sample:** `analytics-full/spend_vs_award.csv`; filter: flag = True; sort: ratio descending; first 15 suppliers (largest 3 payments each). Population 12; drawn 12; 28 transactions, £795,139.63. File: `outputs/samples/T-07-1.csv`.
-- **PBC:** Purchase orders and invoices for each sampled payment; The council's contract register with values, start and end dates and suppliers; The contract and any variation approvals or extension reports for each sampled supplier; Spend to date against each sampled contract from the finance system
+- **PBC:** The contract and any variations with their approvals for each sampled supplier; Spend to date against contract value for each sampled supplier; Monthly contract reports to the relevant board for the spend window
 
-## R-08: Placement spend patterns: aggregated windows and repeated equal payments
+## R-10: Waivers, exceptions and award approvals not testable from the spend data
 
-Score 10 (Medium - High (Amber)); controls: C-08-1 For individual social care placements the reasons for the choice of provider are recorded on the individual's case notes [CPR-64]; contracts under the Provider Selection Regime record key decisions and follow its process [CPR-59]; Appendix C exemptions for contracts above the Threshold are approved by the relevant board [CPR-65].; C-08-2 Each placement payment is supported by written evidence of the care purchased and the period it covers, so that repeated equal payments relate to distinct periods of care [CPR-31].
+Score 3 (Low (Green)); controls: C-10-1 Awards are approved at the tier their total value requires: Service Director up to the threshold [CPR-50], with reports and board approval above it [CPR-51], as a Key Decision [CPR-52] [CPR-03], and by the Executive at the top tier [CPR-53].; C-10-2 Tenders are handled securely on the portal [CPR-13], late tenders rejected unless the Monitoring Officer agrees [CPR-14], opened with an audit record [CPR-15], evaluated against notified criteria [CPR-16] and awarded on best value [CPR-17], with CDP notices approved by the Service Lead [CPR-10] and the supplier checked for suitability [CPR-08].; C-10-3 Exceptions and waivers are granted only on permitted grounds [CPR-18] with written reasons for discretionary exceptions [CPR-19], by the Monitoring Officer or S151 Officer in advance [CPR-20] at the approval tier for their value [CPR-21] [CPR-22] [CPR-23], fully documented [CPR-24], with an exception report [CPR-25] and a recorded statement of exceptional circumstances [CPR-26].; C-10-4 Appendix C exemptions are approved as required: excluded contracts by the Monitoring Officer [CPR-59], Provider Selection Regime contracts with key decisions recorded [CPR-60], and board approval for exempted contracts above the threshold [CPR-66].
 
-### T-08-1 (tests C-08-1)
+### T-10-1 (tests C-10-1, C-10-2)
 
-The placement windows themselves are not sampled, so this case-note test does not conclude on the window indicator. Placement windows aggregate many individual packages with one provider [A8], so drawing whole windows would pull every package of the largest providers; the test therefore stands in at payment level on the largest placement providers [A18]. Only payments tagged as placements are tested: confirm the tag of each drawn payment first and record any payment that is not a placement as out of this test. For each sampled placement payment, identify the individual placement and confirm the reasons for the choice of provider are on the case notes [CPR-64]; where the service falls under the Provider Selection Regime, confirm key decisions are recorded [CPR-59]; where the provider's annual value exceeds the Threshold under an Appendix C exemption, confirm board approval [CPR-65].
+For each sampled general procurement supplier above £173,100 with an exact notice match [A17] (that metric counts every spend type; the sample takes general procurement only, so its population is smaller), obtain the award decision and confirm it was approved at the tier for the total contract value [CPR-50] [CPR-51] [CPR-52] [CPR-53], as a Key Decision where required [CPR-03]. Where the award was tendered, inspect the portal record for secure handling and opening [CPR-13] [CPR-15] and any late tender [CPR-14], and confirm evaluation against notified criteria [CPR-16], best value award [CPR-17], CDP notice approval [CPR-10] and the suitability check [CPR-08]. Suppliers with no notice found are covered under R-04.
 
-- **Sample:** `analytics-full/high_value_suppliers.csv`; filter: dominant_tag = care_or_education_placement; sort: annualised estimate descending; first 15 suppliers (largest 3 payments each). Population 307; drawn 15; 45 transactions, £1,655,037.59. File: `outputs/samples/T-08-1.csv`.
-- **PBC:** Case notes recording the reasons for the choice of provider for each sampled placement; Placement agreement or individual service contract for each sampled placement; Board approval of any Appendix C exemption above the Threshold for the sampled providers
+- **Sample:** `analytics-full/high_value_suppliers.csv`; filter: dominant_tag = general_procurement; match_class = exact; annualised estimate {">=": "$.tests.high_value_suppliers.statutory_tier.parameters.threshold"}; sort: annualised estimate descending; first 5 suppliers (largest 3 payments each). Population 18; drawn 5; 13 transactions, £916,841.43. File: `outputs/samples/T-10-1.csv`.
+- **PBC:** Award reports and approval records for each sampled contract; Procurement Portal tender opening and audit records for each sampled contract
 
-### T-08-2 (tests C-08-2)
+### T-10-2 (tests C-10-3, C-10-4)
 
-For each sampled group of equal placement payments to one provider at different times within a week [A19], obtain the invoices or schedules [CPR-31] and confirm each payment relates to a distinct individual or period of care; where two payments relate to one period, confirm a credit or recovery is recorded. Confirm the placement reasons are on the case notes for one individual in each group [CPR-64].
+Walk through the exception, waiver and Appendix C exemption process and obtain the register for the spend window. For the exceptions and exemptions recorded, confirm the grounds [CPR-18] and written reasons [CPR-19], advance approval [CPR-20] at the tier for the value [CPR-21] [CPR-22] [CPR-23], documentation [CPR-24], the exception report [CPR-25] and the statement of exceptional circumstances [CPR-26]; for exemptions, Monitoring Officer approval of excluded contracts [CPR-59], the Provider Selection Regime record [CPR-60] and board approval above the threshold [CPR-66]. Cross-refer any exception that covers a supplier sampled under R-03 or R-04.
 
-- **Sample:** `analytics-full/duplicates.csv`; filter: tier = different_time; tag = care_or_education_placement; sort: gbp_beyond_first descending; first 15 groups (all payments in each). Population 204; drawn 15; 101 transactions, £2,110,700.78. File: `outputs/samples/T-08-2.csv`.
-- **PBC:** Invoices and purchase evidence for each sampled payment; Accounts payable ledger extract for each sampled payment, with any credit notes or recoveries; Case notes recording the reasons for the choice of provider for each sampled placement
+- **Sample:** none. The spend data holds no exception, waiver or approval field, so items are selected from the council's exception and exemption register at fieldwork.
+- **PBC:** The register of exceptions, waivers and Appendix C exemptions for the spend window, with approvals and exception reports
 
-## R-09: No published action tracker to confirm follow-up of prior procurement audit actions
+## R-11: No published tracker of agreed audit actions to confirm prior procurement findings are closed
 
-Score 2 (Low (Green)); controls: C-09-1 Actions agreed in prior audits of contract letting and accounts payable, covering the quotation and tender rules [CPR-54] [CPR-56] and purchase evidence [CPR-31], are tracked to implementation and reported [IAP-07].
+Score 2 (Low (Green)); controls: C-11-1 Agreed actions from the Contract Letting and Accounts Payable audits are tracked to closure with owners and due dates, so the controls over competitive quotation [CPR-55] and written evidence of purchases [CPR-31] operate as agreed.
 
-### T-09-1 (tests C-09-1)
+### T-11-1 (tests C-11-1)
 
-Obtain the internal audit action tracker for Contract Letting [AUD-01] and Accounts Payable [AUD-11]; confirm the status and due dates of agreed actions and, for any open action on the quotation or tender procedure [CPR-54] [CPR-56] or purchase evidence [CPR-31], take its status into account when concluding on R-01, R-03 and R-05.
+Obtain the action tracker for the Contract Letting [AUD-01] and Accounts Payable [AUD-11] audits, which the committee papers do not publish [GAP-01]. Confirm the status, owner and due date of each agreed action and, for actions reported closed that concern quotation [CPR-55] or purchase evidence [CPR-31], confirm the evidence of closure.
 
-- **Sample:** none. A document request for the action tracker; no transactions are needed.
-- **PBC:** Internal audit action tracker with agreed actions, due dates and status for Contract Letting and Accounts Payable
+- **Sample:** none. A document request on the action tracker; no transactions are needed.
+- **PBC:** The internal audit action tracker for the Contract Letting and Accounts Payable audits, with status, owners, due dates and closure evidence
 
 ## Sources
 
 - A1: `$.population.rows_after_exclusions` in analytics.json = 8,534
-- A2: `$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.windows` in analytics.json = 39
-- A3: `$.tests.threshold_clustering.per_threshold[?threshold==25000].band_by_tag.general_procurement.n` in analytics.json = 10
-- A4: `$.tests.off_contract.headline_general_procurement_no_notice_found.suppliers` in analytics.json = 186
+- A2: `$.tests.threshold_clustering.per_threshold[?threshold==25000].band_by_tag.general_procurement.n` in analytics.json = 10
+- A3: `$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.windows` in analytics.json = 39
+- A4: `$.tests.off_contract.statutory_tier.headline_general_procurement_no_notice_found.suppliers` in analytics.json = 42
 - A5: `$.tests.duplicates.per_tier.different_time.by_tag.general_procurement.groups` in analytics.json = 35
 - A6: `$.tests.expired_notice_spend.suppliers` in analytics.json = 8
 - A7: `$.tests.spend_vs_award.flagged` in analytics.json = 12
-- A8: `$.tests.split_purchases.per_threshold[?threshold==25000].care_or_education_placement.windows` in analytics.json = 126
-- A9: `$.tests.split_purchases.note` in analytics.json = population is expenditure over £500 only, so results are a lower bound; placement windows reported separately because periodic care fees legitimately recur
+- A8: `$.population.annualisation_factor` in analytics.json = 4
+- A9: `$.population.excluded.redacted_supplier.rows` in analytics.json = 2,015
 - A10: `$.contracts.register_present` in analytics.json = False
-- A11: `$.tests.off_contract.publication_note` in analytics.json = Contracts Finder does not carry smaller awards; only suppliers at or above the publication threshold are classed, and results must never be used to question smaller suppliers.
-- A12: `$.skipped[3].reason` in analytics.json = STATUTORY_THRESHOLD_RELEVANT is null in rules.json parameters
-- A13: `$.tests.spend_vs_award.caveat` in analytics.json = Indicator of spend beyond the award without an approved variation; award values may be estimates or maxima, and the annualised estimate extrapolates three months.
+- A11: `$.skipped[0].reason` in analytics.json = STATUTORY_THRESHOLD_RELEVANT is null in rules.json parameters: Not a separate figure: it means whichever of the three thresholds fits each contract's type. The spend data has no reliable contract-type field, so tests citing it stay skipped and are listed under 'skipped' with this reason.
+- A12: `$.tests.threshold_clustering.per_threshold[?threshold==173100].band_by_tag.general_procurement.n` in analytics.json = 2
+- A13: `$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.windows` in analytics.json = 6
 - A14: `$.tests.split_purchases.per_threshold[?threshold==500000].headline_general_procurement.windows` in analytics.json = 2
 - A15: `$.tests.off_contract.by_match_class.near_contain.suppliers` in analytics.json = 5
 - A16: `$.tests.off_contract.by_match_class.near_ratio.suppliers` in analytics.json = 2
-- A17: `$.tests.spend_vs_award.parameters.flag_at` in analytics.json = 1.25
-- A18: `$.tests.high_value_suppliers.by_dominant_tag.care_or_education_placement.suppliers` in analytics.json = 307
-- A19: `$.tests.duplicates.per_tier.different_time.by_tag.care_or_education_placement.groups` in analytics.json = 204
+- A17: `$.tests.off_contract.statutory_tier.by_match_class.exact.suppliers` in analytics.json = 19
 
 ## PBC list
 
@@ -155,25 +157,24 @@ Documents and information to request from the council before fieldwork.
 
 | # | Item | For tests |
 |---|---|---|
-| 1 | Purchase orders and invoices for each sampled payment | T-01-1, T-06-1, T-07-1 |
-| 2 | Quotation records (quotes sought, received and evaluated) for each sampled purchase | T-01-1, T-03-1 |
-| 3 | Any written exception or waiver, with reasons and approvals, for the sampled purchases | T-01-1, T-04-1 |
-| 4 | The council's contract register with values, start and end dates and suppliers | T-03-1, T-04-1, T-04-2, T-04-3, T-06-1, T-07-1 |
-| 5 | Purchase orders and invoices for each sampled window | T-03-1, T-03-2 |
-| 6 | The contract, framework call-off or Purchasing Scheme advice covering each sampled supplier | T-03-1 |
-| 7 | Tender and award file for each contract identified (advert, CDP notices, tender evaluation, award decision) | T-03-2 |
-| 8 | Key Decision or Executive decision record for each contract identified | T-03-2 |
-| 9 | E-tendering system audit record for each contract identified | T-03-2 |
-| 10 | Award report, sealed contract and performance bond or bond risk assessment for each contract identified | T-03-3 |
-| 11 | The contract and its award approval for each sampled supplier | T-04-1, T-04-2 |
-| 12 | Monthly contract information reports to the relevant board for the spend window | T-04-3 |
-| 13 | The published list of invitations to tender for the spend window | T-04-3 |
-| 14 | Invoices and purchase evidence for each sampled payment | T-05-1, T-08-2 |
-| 15 | Accounts payable ledger extract for each sampled payment, with any credit notes or recoveries | T-05-1, T-08-2 |
-| 16 | Contract extension approvals (S151 Officer) for each sampled supplier | T-06-1 |
-| 17 | The contract and any variation approvals or extension reports for each sampled supplier | T-07-1 |
-| 18 | Spend to date against each sampled contract from the finance system | T-07-1 |
-| 19 | Case notes recording the reasons for the choice of provider for each sampled placement | T-08-1, T-08-2 |
-| 20 | Placement agreement or individual service contract for each sampled placement | T-08-1 |
-| 21 | Board approval of any Appendix C exemption above the Threshold for the sampled providers | T-08-1 |
-| 22 | Internal audit action tracker with agreed actions, due dates and status for Contract Letting and Accounts Payable | T-09-1 |
+| 1 | Purchase orders and invoices for each sampled payment | T-01-1, T-02-1, T-04-1, T-05-1, T-06-1 |
+| 2 | Quotation or invitation-to-quote records, evaluation and award decision for each sampled purchase | T-01-1 |
+| 3 | Other orders raised with the same supplier for the same requirement | T-01-1, T-02-1 |
+| 4 | The contract or order, its total value and the procurement route record for each sampled purchase | T-02-1 |
+| 5 | CDP notices and their approval for each sampled contract | T-02-1 |
+| 6 | Purchase orders and invoices for each sampled window | T-03-1, T-03-2 |
+| 7 | The contract, framework call-off or Purchasing Scheme advice record for each sampled supplier | T-03-1, T-03-2 |
+| 8 | Quotation, tender and award approval records for each sampled supplier | T-03-1, T-03-2 |
+| 9 | The council's contract register with values and end dates | T-04-1, T-04-2, T-06-1 |
+| 10 | The contract, framework call-off or exemption record for each sampled supplier | T-04-1, T-04-2, T-04-3 |
+| 11 | Data Protection Impact Assessment, bond or bond risk assessment, and insurance evidence for each contract obtained | T-04-3 |
+| 12 | Goods-received records for each sampled payment | T-05-1 |
+| 13 | Duplicate payment reports and recovery records for the spend window | T-05-1 |
+| 14 | Contract extensions and their S151 Officer approval for each sampled supplier | T-06-1 |
+| 15 | The contract and any variations with their approvals for each sampled supplier | T-07-1 |
+| 16 | Spend to date against contract value for each sampled supplier | T-07-1 |
+| 17 | Monthly contract reports to the relevant board for the spend window | T-07-1 |
+| 18 | Award reports and approval records for each sampled contract | T-10-1 |
+| 19 | Procurement Portal tender opening and audit records for each sampled contract | T-10-1 |
+| 20 | The register of exceptions, waivers and Appendix C exemptions for the spend window, with approvals and exception reports | T-10-2 |
+| 21 | The internal audit action tracker for the Contract Letting and Accounts Payable audits, with status, owners, due dates and closure evidence | T-11-1 |

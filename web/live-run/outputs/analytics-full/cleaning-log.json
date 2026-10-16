@@ -64,44 +64,44 @@
  "contracts": {
   "contracts_present": true,
   "warnings": [
-   "6 notice rows dropped whose Organisation Name is a case variant of the council's name (['WEST BERKSHIRE COUNCIL']); spec keeps only exact 'West Berkshire Council'/'West Berkshire'. Auditor to decide whether to include them (would add notices to the match set).",
-   "publication year 2021 has 2 notices, under half the median per year: check export completeness",
-   "publication year 2026 (current, partial year) has 4 notices, under half the median per year: check export completeness"
+   "publication year 2021 has 7 notices, under half the median per year: check export completeness",
+   "publication year 2026 (current, partial year) has 5 notices, under half the median per year: check export completeness"
   ],
   "rows_in_file": 150,
-  "rows_for_council": 135,
-  "rows_dropped_other_buyers": 15,
+  "rows_for_council": 141,
+  "rows_dropped_other_buyers": 9,
   "org_names_kept": {
    "West Berkshire Council": 115,
-   "West Berkshire": 20
+   "West Berkshire": 20,
+   "WEST BERKSHIRE COUNCIL": 6
   },
   "org_names_dropped": {
-   "WEST BERKSHIRE COUNCIL": 6,
    "Ministry of Defence": 5,
    "Westworks Procurement Ltd": 1,
    "SOUTHAMPTON CITY COUNCIL": 1,
    "CITY OF BRADFORD METROPOLITAN DISTRICT COUNCIL": 1,
    "Health Education England": 1
   },
-  "rows_dropped_case_variant_of_council_name": 6,
-  "notices": 135,
+  "rows_dropped_case_variant_of_council_name": 0,
+  "rows_kept_case_variant_of_council_name": 6,
+  "notices": 141,
   "notices_without_supplier": 0,
-  "notice_supplier_pairs": 204,
-  "distinct_suppliers": 138,
-  "active_in_window": 61,
-  "ended_before_window": 74,
-  "active_notice_supplier_pairs": 130,
+  "notice_supplier_pairs": 210,
+  "distinct_suppliers": 142,
+  "active_in_window": 62,
+  "ended_before_window": 79,
+  "active_notice_supplier_pairs": 131,
   "zero_value_awards": 7,
   "rows_per_year": {
-   "2021": 2,
+   "2021": 7,
    "2022": 10,
    "2023": 39,
    "2024": 52,
    "2025": 28,
-   "2026": 4
+   "2026": 5
   },
   "published_range": [
-   "2021-12-10",
+   "2021-02-23",
    "2026-09-09"
   ],
   "window_start_used": "2026-05-01"

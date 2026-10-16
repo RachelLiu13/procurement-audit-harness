@@ -1,0 +1,886 @@
+{
+ "generated_at": "2026-10-16T00:10:24",
+ "computed": [
+  {
+   "name": "risks_in_scope",
+   "value": 9,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "risks_out_of_scope",
+   "value": 2,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.T-01-1.size_for_score",
+   "value": 10,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-01-1.population",
+   "value": 10,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-01-1.units_drawn",
+   "value": 10,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-01-1.transactions",
+   "value": 10,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-01-1.gbp",
+   "value": 239427.82,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.size_for_score",
+   "value": 15,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.population",
+   "value": 2,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.units_drawn",
+   "value": 2,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.transactions",
+   "value": 2,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-02-1.gbp",
+   "value": 318885.53,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-1.size_for_score",
+   "value": 25,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-1.population",
+   "value": 39,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-1.units_drawn",
+   "value": 25,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-1.transactions",
+   "value": 138,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-1.gbp",
+   "value": 1182808.12,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-2.size_for_score",
+   "value": 25,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-2.population",
+   "value": 8,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-2.units_drawn",
+   "value": 8,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-2.transactions",
+   "value": 128,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-03-2.gbp",
+   "value": 5404533.12,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-1.size_for_score",
+   "value": 25,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-1.population",
+   "value": 42,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-1.units_drawn",
+   "value": 25,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-1.transactions",
+   "value": 62,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-1.gbp",
+   "value": 14865447.37,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-2.size_for_score",
+   "value": 25,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-2.population",
+   "value": 6,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-2.units_drawn",
+   "value": 6,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-2.transactions",
+   "value": 18,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-04-2.gbp",
+   "value": 239360.31,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-05-1.size_for_score",
+   "value": 15,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-05-1.population",
+   "value": 35,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-05-1.units_drawn",
+   "value": 15,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-05-1.transactions",
+   "value": 39,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-05-1.gbp",
+   "value": 525039.22,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-06-1.size_for_score",
+   "value": 15,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-06-1.population",
+   "value": 8,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-06-1.units_drawn",
+   "value": 8,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-06-1.transactions",
+   "value": 13,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-06-1.gbp",
+   "value": 191349.42,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-07-1.size_for_score",
+   "value": 15,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-07-1.population",
+   "value": 12,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-07-1.units_drawn",
+   "value": 12,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-07-1.transactions",
+   "value": 28,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-07-1.gbp",
+   "value": 795139.63,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-10-1.size_for_score",
+   "value": 5,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-10-1.population",
+   "value": 18,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-10-1.units_drawn",
+   "value": 5,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-10-1.transactions",
+   "value": 13,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.T-10-1.gbp",
+   "value": 916841.43,
+   "where": [
+    "planning-memo.md",
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "sample.transactions_total",
+   "value": 451,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.unique_transactions",
+   "value": 377,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "pbc_items",
+   "value": 21,
+   "where": [
+    "audit-program.md"
+   ]
+  },
+  {
+   "name": "rules_total",
+   "value": 66,
+   "where": [
+    "risk-control-matrix.md"
+   ]
+  },
+  {
+   "name": "rules_cited",
+   "value": 53,
+   "where": [
+    "risk-control-matrix.md"
+   ]
+  },
+  {
+   "name": "rules_not_tested",
+   "value": 13,
+   "where": [
+    "risk-control-matrix.md"
+   ]
+  },
+  {
+   "name": "sample_size_rule.score_15_plus",
+   "value": 25,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample_size_rule.score_8_plus",
+   "value": 15,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample_size_rule.score_4_plus",
+   "value": 10,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample_size_rule.score_1_plus",
+   "value": 5,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-01.transactions",
+   "value": 10,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-02.transactions",
+   "value": 2,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-03.transactions",
+   "value": 266,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-04.transactions",
+   "value": 80,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-05.transactions",
+   "value": 39,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-06.transactions",
+   "value": 13,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-07.transactions",
+   "value": 28,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-10.transactions",
+   "value": 13,
+   "where": [
+    "planning-memo.md"
+   ]
+  },
+  {
+   "name": "sample.R-11.transactions",
+   "value": 0,
+   "where": [
+    "planning-memo.md"
+   ]
+  }
+ ],
+ "from_register": [
+  {
+   "name": "R-01.L",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-01.I",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-01.score",
+   "value": 6,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-02.L",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-02.I",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-02.score",
+   "value": 9,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-03.L",
+   "value": 4,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-03.I",
+   "value": 5,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-03.score",
+   "value": 20,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-04.L",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-04.I",
+   "value": 5,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-04.score",
+   "value": 15,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-05.L",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-05.I",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-05.score",
+   "value": 9,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-06.L",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-06.I",
+   "value": 4,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-06.score",
+   "value": 8,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-07.L",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-07.I",
+   "value": 5,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-07.score",
+   "value": 10,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-10.L",
+   "value": 1,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-10.I",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-10.score",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-11.L",
+   "value": 1,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-11.I",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-11.score",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-08.L",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-08.I",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-08.score",
+   "value": 4,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-09.L",
+   "value": 3,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-09.I",
+   "value": 2,
+   "source": "risk-register.state.json"
+  },
+  {
+   "name": "R-09.score",
+   "value": 6,
+   "source": "risk-register.state.json"
+  }
+ ],
+ "from_analytics": [
+  {
+   "path": "$.contracts.register_present",
+   "value": false
+  },
+  {
+   "path": "$.population.annualisation_factor",
+   "value": 4.0
+  },
+  {
+   "path": "$.population.date_max",
+   "value": "2026-07-31",
+   "rendered": [
+    "2026-07-31"
+   ]
+  },
+  {
+   "path": "$.population.date_min",
+   "value": "2026-05-01",
+   "rendered": [
+    "2026-05-01"
+   ]
+  },
+  {
+   "path": "$.population.excluded.redacted_supplier.rows",
+   "value": 2015,
+   "rendered": [
+    "2,015"
+   ]
+  },
+  {
+   "path": "$.population.months_covered",
+   "value": 3,
+   "rendered": [
+    "3"
+   ]
+  },
+  {
+   "path": "$.population.rows_after_exclusions",
+   "value": 8534,
+   "rendered": [
+    "8,534"
+   ]
+  },
+  {
+   "path": "$.population.total_gbp",
+   "value": 66778104.78,
+   "rendered": [
+    "£66,778,105"
+   ]
+  },
+  {
+   "path": "$.skipped[0].reason",
+   "value": "STATUTORY_THRESHOLD_RELEVANT is null in rules.json parameters: Not a separate figure: it means whichever of the three thresholds fits each contract's type. The spend data has no reliable contract-type field, so tests citing it stay skipped and are listed under 'skipped' with this reason."
+  },
+  {
+   "path": "$.tests.duplicates.parameters.max_gap_days",
+   "value": 7,
+   "rendered": [
+    "7"
+   ]
+  },
+  {
+   "path": "$.tests.duplicates.per_tier.different_time.by_tag.general_procurement.groups",
+   "value": 35
+  },
+  {
+   "path": "$.tests.expired_notice_spend.suppliers",
+   "value": 8
+  },
+  {
+   "path": "$.tests.high_value_suppliers.statutory_tier.parameters.threshold",
+   "value": 173100,
+   "rendered": [
+    "£173,100"
+   ]
+  },
+  {
+   "path": "$.tests.off_contract.by_match_class.near_contain.suppliers",
+   "value": 5
+  },
+  {
+   "path": "$.tests.off_contract.by_match_class.near_ratio.suppliers",
+   "value": 2
+  },
+  {
+   "path": "$.tests.off_contract.parameters.threshold",
+   "value": 25000,
+   "rendered": [
+    "£25,000"
+   ]
+  },
+  {
+   "path": "$.tests.off_contract.statutory_tier.by_match_class.exact.suppliers",
+   "value": 19
+  },
+  {
+   "path": "$.tests.off_contract.statutory_tier.headline_general_procurement_no_notice_found.suppliers",
+   "value": 42
+  },
+  {
+   "path": "$.tests.spend_vs_award.flagged",
+   "value": 12
+  },
+  {
+   "path": "$.tests.spend_vs_award.parameters.flag_at",
+   "value": 1.25,
+   "rendered": [
+    "1.25"
+   ]
+  },
+  {
+   "path": "$.tests.split_purchases.per_threshold[?threshold==173100].headline_general_procurement.windows",
+   "value": 6
+  },
+  {
+   "path": "$.tests.split_purchases.per_threshold[?threshold==173100].threshold",
+   "value": 173100,
+   "rendered": [
+    "£173,100"
+   ]
+  },
+  {
+   "path": "$.tests.split_purchases.per_threshold[?threshold==25000].headline_general_procurement.windows",
+   "value": 39
+  },
+  {
+   "path": "$.tests.split_purchases.per_threshold[?threshold==25000].threshold",
+   "value": 25000,
+   "rendered": [
+    "£25,000"
+   ]
+  },
+  {
+   "path": "$.tests.split_purchases.per_threshold[?threshold==500000].headline_general_procurement.windows",
+   "value": 2
+  },
+  {
+   "path": "$.tests.split_purchases.per_threshold[?threshold==500000].threshold",
+   "value": 500000,
+   "rendered": [
+    "£500,000"
+   ]
+  },
+  {
+   "path": "$.tests.threshold_clustering.per_threshold[?threshold==173100].band_by_tag.general_procurement.n",
+   "value": 2
+  },
+  {
+   "path": "$.tests.threshold_clustering.per_threshold[?threshold==173100].threshold",
+   "value": 173100,
+   "rendered": [
+    "£173,100"
+   ]
+  },
+  {
+   "path": "$.tests.threshold_clustering.per_threshold[?threshold==25000].band_by_tag.general_procurement.n",
+   "value": 10
+  },
+  {
+   "path": "$.tests.threshold_clustering.per_threshold[?threshold==25000].threshold",
+   "value": 25000,
+   "rendered": [
+    "£25,000"
+   ]
+  }
+ ]
+}

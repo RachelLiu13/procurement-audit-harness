@@ -1,23 +1,35 @@
 # Lead's report · before sign-off
 
-**Lead's report: procurement audit planning pack (v3), ready for your sign-off**
+**The audit planning pack (v2) is ready for you to sign off.**
 
-**QA result: READY FOR SIGN-OFF.** All four checks in `outputs/review.md` pass: quotes (89 checked), numbers (68), trace (105) and samples (686). The first two versions of the pack failed only the trace check, because some challenges were still open. Version 3 passed everything.
+**Risks in scope:** 9 of 11. You approved 8 as written and amended R-02.
+- **Extreme (Red):** R-03 (same-supplier payment windows that cross competition thresholds while each payment stays below) and R-04 (high-value suppliers with no Contracts Finder notice found).
+- **Medium–High (Amber):** R-02, R-05, R-06 and R-07.
+- **Moderate:** R-01.
+- **Low (Green):** R-10 and R-11.
+- **Out of scope, as you decided:** R-08 and R-09.
 
-**Risks in scope:** you approved 8 risks and kept R-02 out of scope. Every risk rated High (score 8 or more) is in scope.
-- **R-03, split purchases across a competition threshold:** score 15, Extreme (Red).
-- **R-04, high-value suppliers with no matching Contracts Finder notice:** score 15, Extreme (Red).
-- **R-07, spend above the published award value:** score 10, Medium–High (Amber).
-- **R-08, placement spend patterns:** score 10, Medium–High (Amber).
-- **R-05, repeated equal payments within a week:** score 9, Medium–High (Amber).
-- **R-01, payments just below £25,000:** score 6, Moderate.
-- **R-06, spend after every matching notice had ended:** score 6, Moderate.
-- **R-09, no published tracker for past audit actions:** score 2, Low (Green).
+**Documents:**
+- `outputs/planning-memo.md`
+- `outputs/risk-control-matrix.md`
+- `outputs/audit-program.md`
 
-**Documents:** `outputs/planning-memo.md`, `outputs/risk-control-matrix.md` and `outputs/audit-program.md`. Code drew 686 sample transactions into 10 files in `outputs/samples/`, and every one was confirmed to exist in the spend data. These are risk indicators to look into, not findings of wrongdoing.
+The targeted samples total 451 transactions across 10 files in `outputs/samples/`. Every sampled transaction was checked against the spend data. The samples flag risk indicators to look into, not wrongdoing.
 
-**Challenges:** the challenger raised 8 over two rounds. The planner accepted and resolved six. Two are left for you to decide:
-- **#4 (scope):** should a risk be added, or R-01 widened, for general procurement payments clustering just below £1,000, the point at which one quote is required [CPR-53]? There are 323 payments in the band just below £1,000 against 219 just above it; 88 of the 323 are general procurement, worth £84,148.45. £1,000 is the only threshold where this clustering signal shows, but the money involved is small.
-- **#5 (rating):** is the Limited Assurance opinion on Personal Budgets (Direct Payments) [AUD-12] the same theme as placement procurement? If it is, the repeat-finding rule raises R-08's likelihood by one point. The register cites AUD-12 as evidence but doesn't say which way it goes. R-08 is planned as currently rated.
+**Challenges that need your decision (3 of 7).** The planner accepted and fixed the other four, and the challenger checked the fixes in v2.
+- **#4, coverage:** Does your scope limit on rules that depend on contract type apply only to the data analysis, or to fieldwork as well? The pack tests CPR-50, -51, -21, -22 and -66 from the contracts it obtains. It leaves CPR-09, -12, -28, -47 and -58 untested, although a step could be added to T-10-1 to cover them.
+- **#6, rating R-06:** Should the risk-assessor re-rate R-06's likelihood (currently 2)? The rating says spend data gives no general procurement breakdown. However, all 8 flagged suppliers are tagged `general_procurement` in `analytics.json`.
+- **#7, rating:** You asked for DISC-01 (Medium impact = 3) to be resolved and stated in the register header. Revision 1 of the register still lists it as unresolved. Please confirm the basis for the ratings of R-01, R-02, R-05 and R-10 and have the register re-issued. The planning memo's Limitations section notes this.
 
-**Next step:** please complete the sign-off block at the end of `outputs/review.md`. Record your decisions on #4 and #5 there, and choose either "Sign off" or "Return to the team".
+**QA verdict: READY FOR SIGN-OFF.** All four checks passed on v2:
+
+| Check | Items checked |
+|---|---|
+| Quotes | 91 |
+| Numbers | 59 |
+| Traceability | 107 |
+| Samples | 451 |
+
+Version 1 failed only the traceability check, because challenges #1–#7 were still open at that point. Every high risk (score 8 or more: R-02 to R-07) is in scope.
+
+**Next step:** Please complete the sign-off block at the end of `outputs/review.md`. Record your decision on challenges #4, #6 and #7, then choose "Sign off" or "Return to the team". If you want #6 or #7 acted on, the risk-assessor will need to produce a new register revision and the pack will be rebuilt.

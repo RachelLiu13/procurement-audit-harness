@@ -14,7 +14,7 @@ It only ran inside Claude Code on a team member's machine.
 | Folder | What it is |
 | --- | --- |
 | [`part-a/`](part-a/) | **Part A**, a full copy of that repository: skills and agents in `part-a/.claude/`, scripts, data and the signed-off outputs. The architecture (skills, agents, prompts, scripts, checks) is kept as it was. Three analysis changes after review: `build_pack.py` reports sample rows *and* unique transactions; buyer names in the Contracts Finder export match case-insensitively (six notices filed as "WEST BERKSHIRE COUNCIL" were previously left out); and the Procurement Act 2023 thresholds, which the rules cite but do not state, are supplied with sources in `data/statutory-thresholds.json` so the statutory tiers are tested (see [Analysis changes](#analysis-changes-after-review)) |
-| [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (2026-10-15): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Two copies, each with a job: `saved-runs/` is what the agent server restores after a restart, `web/live-run/` is the read-only **Completed end-to-end run** page. Update them only together, with `python save_live_run.py <run-id>`, which writes both and checks they are identical |
+| [`saved-runs/`](saved-runs/), [`web/live-run/`](web/live-run/) | A complete end-to-end run on the deployed site (run `20261015-234205-57135e`, signed off 2026-10-16): rules extraction → analysis → risk register → Gate 1 → agent team → QA READY FOR SIGN-OFF → signed off. Two copies, each with a job: `saved-runs/` is what the agent server restores after a restart, `web/live-run/` is the read-only **Completed end-to-end run** page. Update them only together, with `python save_live_run.py <run-id>`, which writes both and checks they are identical |
 | everything else | **Part B**, the deployed harness described below |
 
 This repository turns it into an **independently deployed web application**.
@@ -64,7 +64,7 @@ indicators, not accusations.
 | Buyer name matched case-insensitively | `part-a/scripts/clean.py`, CLAUDE.md, spend-analyst | 141 council notices instead of 135. In the sensitivity check of the earlier run this changed no rating or scope and redrew 3 of 13 transactions in T-06-1 (R-06) |
 | Statutory thresholds supplied | `part-a/data/statutory-thresholds.json`, `part-a/scripts/apply_thresholds.py`, `part-a/scripts/analyse.py` | Goods and services £207,720 incl. VAT (£173,100 excl.), works/concessions £5,193,000, light touch £663,540, in force from 1 Jan 2026 (PPN 023; Threshold Amounts (Amendment) Regulations 2025). Adds a clustering tier below £173,100 (CPR-54), and statutory tiers in `high_value_suppliers` and `off_contract`. "The relevant Threshold" stays skipped with a stated reason: the spend data has no contract-type field to choose between the three figures |
 
-The run signed off on 2026-10-15 predates these changes and is kept as it was.
+The completed run in `saved-runs/` and `web/live-run/` (signed off 2026-10-16) was run with these changes, as a full pipeline run (Phase 1 not reused). It replaces the earlier run `20261015-113403-ce6581`, which predates them.
 
 ## How the harness replaces Claude Code
 
