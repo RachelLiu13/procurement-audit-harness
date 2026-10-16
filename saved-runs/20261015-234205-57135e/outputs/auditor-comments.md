@@ -1,6 +1,6 @@
 # Auditor decisions: procurement risk register
 
-Register: `outputs/risk-register.md` · revision 1 · built 2026-10-16T00:02:33
+Register: `outputs/risk-register.md` · revision 2 · built 2026-10-16T00:40:54
 
 Put **Approve**, **Amend** or **Reject** in Decision for every row. For Amend, say exactly what to change in Comment (e.g. "likelihood 2: the clustering is below its comparator"). Give a reason for Reject. Do not use the `|` character in a cell. The planner cannot start until every row has a decision and the register has been re-issued as a revision that applies them.
 
@@ -11,7 +11,7 @@ Put **Approve**, **Amend** or **Reject** in Decision for every row. For Amend, s
 | R-03 | Same-supplier payment windows that cross competition thresholds while each payment stays below | 4 | 5 | 20 | Extreme (Red) | in | Approve |  |
 | R-04 | High-value general procurement suppliers with no Contracts Finder notice found | 3 | 5 | 15 | Extreme (Red) | in | Approve |  |
 | R-05 | Repeated equal payments to the same supplier within 7 days | 3 | 3 | 9 | Medium - High (Amber) | in | Approve |  |
-| R-06 | Spend with suppliers whose every matching notice ended before the spend window | 2 | 4 | 8 | Medium - High (Amber) | in | Approve |  |
+| R-06 | Spend with suppliers whose every matching notice ended before the spend window | 3 | 4 | 12 | Medium - High (Amber) | in | Amend | Raise likelihood from L2 to L3 (score 12, Amber), as decided at sign-off on challenge #6: all 8 flagged suppliers carry dominant_tag general_procurement in analytics.json, so the L3 condition is shown. Keep in scope; no other change. |
 | R-07 | Annualised spend above the published award value for single-supplier notices | 2 | 5 | 10 | Medium - High (Amber) | in | Approve |  |
 | R-08 | Recurring care and education placement payments crossing competition thresholds | 2 | 2 | 4 | Moderate | out | Approve |  |
 | R-09 | Payments clustered just below the £1,000 quotation threshold | 3 | 2 | 6 | Moderate | out | Approve |  |

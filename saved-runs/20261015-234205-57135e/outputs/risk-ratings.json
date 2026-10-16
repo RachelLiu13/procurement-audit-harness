@@ -1,13 +1,13 @@
 {
   "generated_at": "2026-10-16T00:02:33",
   "revision": {
-    "number": 1,
-    "summary": "Auditor decisions applied: R-02 amended (likelihood L4 to L3, split-window evidence left to R-03); all other risks approved unchanged.",
+    "number": 2,
+    "summary": "Auditor decision at sign-off applied: R-06 amended (likelihood L2 to L3); all other risks unchanged.",
     "changes": [
       {
-        "risk_id": "R-02",
+        "risk_id": "R-06",
         "decision": "Amend",
-        "change": "likelihood 4 → 3 (L4 → L3); split-purchase signal and citations removed from R-02, relying on R-03 for the split-window evidence; scope stays in"
+        "change": "likelihood 2 → 3 (L2 → L3): all 8 flagged suppliers are tagged general_procurement; scope stays in"
       }
     ]
   },
@@ -252,9 +252,9 @@
         "CPR-62"
       ],
       "likelihood": {
-        "base_score": 2,
-        "rubric_level": "L2",
-        "justification": "The indicator is present [metric:$.tests.expired_notice_spend.suppliers], but the analytics give no general procurement breakdown for this test, so the L3 condition cannot be shown; the notices file is not a contract register [metric:$.contracts.register_present].",
+        "base_score": 3,
+        "rubric_level": "L3",
+        "justification": "The indicator is present [metric:$.tests.expired_notice_spend.suppliers] and every flagged supplier's dominant spend tag is general procurement [metric:$.tests.expired_notice_spend.top20[0].dominant_tag] [metric:$.tests.expired_notice_spend.top20[1].dominant_tag] [metric:$.tests.expired_notice_spend.top20[2].dominant_tag] [metric:$.tests.expired_notice_spend.top20[3].dominant_tag] [metric:$.tests.expired_notice_spend.top20[4].dominant_tag] [metric:$.tests.expired_notice_spend.top20[5].dominant_tag] [metric:$.tests.expired_notice_spend.top20[6].dominant_tag] [metric:$.tests.expired_notice_spend.top20[7].dominant_tag], so the indicator sits on the general procurement population. The rating stays at L3, not higher, because the notices file is not a contract register [metric:$.contracts.register_present].",
         "signals": [
           {
             "metric": "$.tests.expired_notice_spend.suppliers",
