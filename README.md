@@ -12,7 +12,8 @@ auditor to approve, and turns the approved risks into a checked audit plan.
 | Signed-off result | [`part-a/outputs/`](part-a/outputs/) | **https://procurement-audit-harness.fly.dev/?run=live** |
 
 Part B runs Part A's skills and agents unchanged in architecture: every run on
-the website starts from a fresh copy of `part-a/`.
+the website starts from a fresh copy of `part-a/`, with Part B's analysis
+changes (`part-b/part-a-changes/`) copied over it.
 
 ---
 
@@ -59,10 +60,10 @@ Throughout, the model reads and judges while Python computes every number;
 every quote, figure and rating is traceable to its source; and outputs describe
 risk indicators to investigate, never wrongdoing.
 
-Part A exactly as completed is commit
-[`b7f510c`](https://github.com/RachelLiu13/procurement-audit-harness/tree/b7f510c/part-a)
-(identical to the team's Part A repository). Three analysis improvements were
-made afterwards for Part B; see [Analysis changes after review](part-b/README.md#analysis-changes-after-review).
+`part-a/` is Part A exactly as completed, identical to the team's Part A
+repository. The analysis improvements made later, for Part B, are kept apart in
+[`part-b/part-a-changes/`](part-b/part-a-changes/); see
+[Analysis changes after review](part-b/README.md#analysis-changes-after-review).
 
 ---
 
@@ -96,6 +97,7 @@ part-b/            Part B: the deployed harness
   README.md          architecture and how to run it
   server.py          FastAPI: the API and the website
   harness/           agent loop, tools, agent team, pipeline, gates
+  part-a-changes/    Part B's analysis changes to Part A files, applied in each run
   web/               the website; web/live-run/ is the completed run, read-only
   saved-runs/        the completed run, restored by the server after a restart
   tests/, tools/     offline tests; a sensitivity check

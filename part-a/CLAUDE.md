@@ -49,7 +49,6 @@ Consequences:
 | `data/contract-rules.pdf` | WBC Contract Procedure Rules (Part 8, Sept 2025), council constitution | The criteria: thresholds, quote/tender rules, approvals, anti-splitting rule |
 | `data/spend/*.xlsx` | "Expenditure over £500" page, monthly workbooks, sheet "Data to publish" (Phase 1: 3 months, ~3–4k rows each; header row position varies) | Full-population transactions. Columns: Service, Expenditure category, Narrative, Date, Net amount, Supplier name. Dates are datetimes (M/D/YY if text) |
 | `data/contracts.csv` | Contracts Finder export: quoted phrase "West Berkshire Council", Awarded contract stage, notice status Open AND Closed, publication date 2021→today, no value filter (~147 notices; under the site's 1,000-row export cap). A second export for quoted "West Berkshire" may be appended to catch the short buyer-name variant | RAW notice export, not a clean register: see parsing rules in spend-analyst. Basis of the off-contract test |
-| `data/statutory-thresholds.json` | Supplied by the auditor: the Procurement Act 2023 thresholds in force from 1 Jan 2026 (PPN 023; Threshold Amounts (Amendment) Regulations 2025), VAT-inclusive, with sources. `scripts/apply_thresholds.py` copies them into rules.json `parameters` as VAT-exclusive values | Statutory tiers of the threshold, high-value and off-contract tests |
 | `data/committee/*.pdf` | Governance Committee papers: internal audit completed-work appendices (2024/25 annual + 2025/26 Q3), Internal Audit Plan 2025–28, Risk Management Strategy 2024–2027. NOTE: the Strategic Risk Register is an exempt (confidential) report and is NOT public: the scoring method comes from the Risk Management Strategy instead | Audit history and the council's risk-rating scale |
 | (optional later) `data/pcard/*.csv` | Corporate procurement card spend, quarterly | Extra split-purchase surface |
 
@@ -223,10 +222,8 @@ Cleaning spend workbooks (scripts/clean.py):
 
 Parsing contracts.csv (it is a raw Contracts Finder notice export):
 - Keep only rows where Organisation Name is "West Berkshire Council" or
-  "West Berkshire", compared case-insensitively after trimming (the export
-  holds some of the council's notices as "WEST BERKSHIRE COUNCIL"; keyword
-  search also pulls in other buyers whose notices mention the phrase). Log
-  how many rows were dropped and how many case variants were kept.
+  "West Berkshire" (keyword search pulls in other buyers whose notices
+  mention the phrase). Log how many rows were dropped.
 - The supplier column is a packed string, one or more bracketed blocks:
   `[Name|Address|Ref type|Ref Number|Is SME|Is VCSE][Name|...]`.
   Split on `][`, strip brackets, take the FIRST pipe-delimited element of

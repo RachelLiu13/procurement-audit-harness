@@ -124,6 +124,10 @@ class Run:
         shutil.copytree(template, self.dir, ignore=lambda d, names: (
             [n for n in names if n in {".venv", "__pycache__"}]
             + (["outputs"] if Path(d).resolve() == template else [])))
+        # Part B's analysis changes replace the Part A files they amend (part-b/part-a-changes/).
+        if config.PROJECT_CHANGES.is_dir():
+            shutil.copytree(config.PROJECT_CHANGES, self.dir, dirs_exist_ok=True,
+                            ignore=shutil.ignore_patterns("README.md", "__pycache__"))
         self.outputs.mkdir(exist_ok=True)
         # The agent files call `.venv/bin/python`; point it at this interpreter.
         venv_bin = self.dir / ".venv" / "bin"

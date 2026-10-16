@@ -6,6 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent  # part-b/
 PROJECT_TEMPLATE = ROOT.parent / "part-a"     # the Part A project, beside part-b/: CLAUDE.md, .claude/, scripts/, data/
+PROJECT_CHANGES = ROOT / "part-a-changes"      # Part B's analysis changes, copied over Part A in each run
 EXAMPLE_RUN = PROJECT_TEMPLATE / "outputs"     # Part A's completed, signed-off run, for browsing
 SAVED_RUNS = ROOT / "saved-runs"               # Part B runs restored after a server restart
 RUNS_DIR = Path(os.environ.get("RUNS_DIR", "/tmp/audit-planner-runs"))
