@@ -20,8 +20,9 @@ changes (`part-b/part-a-changes/`) copied over it.
 ## Part A: Skills and Agents
 
 We completed all 27 steps of the
-[Procurement Audit Planner guide](https://procurement-audit-planner.vercel.app/).
-The full specification is in [`part-a/CLAUDE.md`](part-a/CLAUDE.md), and
+[Procurement Audit Planner guide](https://procurement-audit-planner.vercel.app/);
+the [checklist below](#guide-steps-completed) maps each step to what it left
+in the repository. The full specification is in [`part-a/CLAUDE.md`](part-a/CLAUDE.md), and
 [`part-a/README.md`](part-a/README.md) documents each component in detail.
 
 **Skills** (`part-a/.claude/skills/`)
@@ -60,8 +61,66 @@ Throughout, the model reads and judges while Python computes every number;
 every quote, figure and rating is traceable to its source; and outputs describe
 risk indicators to investigate, never wrongdoing.
 
+### Guide steps completed
+
+All 27 steps of the guide, in its own order and numbering. Paths are relative
+to [`part-a/`](part-a/).
+
+**Setup (7)**
+
+| | Step | Evidence in the repository |
+| --- | --- | --- |
+| ✅ | Prerequisite: VS Code installed | Development environment (no file) |
+| ✅ | Prerequisite: Claude Code installed and signed in | The whole project was built in Claude Code: `.claude/` |
+| ✅ | 1.1 Make a folder, open it, and start Claude Code | The project folder, `part-a/` |
+| ✅ | 1.2 Hand over the project brief | `CLAUDE.md` |
+| ✅ | 1.3 Download the data folder | `data/contract-rules.pdf`, `data/contracts.csv`, `data/spend/` (3 workbooks), `data/committee/` (4 PDFs) |
+| ✅ | 1.4 Set up Python and check the data | `requirements.txt` (pandas, openpyxl); `.venv/` is git-ignored |
+| ✅ | 1.5 Create the project folders | `.claude/skills/`, `.claude/agents/`, `scripts/`, `outputs/` |
+
+**Lesson 1: Skills (2)**
+
+| | Step | Evidence in the repository |
+| --- | --- | --- |
+| ✅ | 2.1 Build the extract-rules skill | `.claude/skills/extract-rules/SKILL.md`, `verify_quotes.py` |
+| ✅ | 2.2 Run the skill | `outputs/rules.json` (67 rules, 95 excluded); `verify_quotes.py`: ALL CHECKS PASSED |
+
+**Lesson 2: Sub-agents (7)**
+
+| | Step | Evidence in the repository |
+| --- | --- | --- |
+| ✅ | 3.1 Build the spend-analyst | `.claude/agents/spend-analyst.md`; the scripts it wrote: `scripts/clean.py`, `scripts/analyse.py`, `scripts/selfcheck.py` |
+| ✅ | 3.2 Run the spend-analyst | `outputs/analytics.json`, `outputs/analytics-full/` |
+| ✅ | 3.3 Build the findings-analyst | `.claude/agents/findings-analyst.md`, `scripts/verify_history.py` |
+| ✅ | 3.4 Run the findings-analyst and check it | `outputs/history.json`, `outputs/committee-text/`; `verify_history.py` passes |
+| ✅ | 3.5 Build the risk-assessment skill | `.claude/skills/risk-assessment/SKILL.md`, `build_register.py`, `tests/` |
+| ✅ | 3.6 Build the risk-assessor sub-agent | `.claude/agents/risk-assessor.md` |
+| ✅ | 3.7 Run the risk-assessor and review the register | `outputs/risk-ratings.json`, `outputs/risk-register.md`, `outputs/auditor-comments.md` |
+
+**Lesson 3: The human gate (3)**
+
+| | Step | Evidence in the repository |
+| --- | --- | --- |
+| ✅ | 4.1 Open the decision template | `outputs/auditor-comments.md`, one Decision row per risk |
+| ✅ | 4.2 Record your decisions | `outputs/auditor-comments.md`: a decision on all 7 risks (all Approve) |
+| ✅ | 4.3 Revise the register | `outputs/risk-register.md` is Revision 1 and applies the decisions; `outputs/risk-register.state.json` |
+
+**Lesson 4: Agent teams (8)**
+
+| | Step | Evidence in the repository |
+| --- | --- | --- |
+| ✅ | 5.1 Close the gate | Every risk approved in revision 1, so no further revision was needed; `build_pack.py --gate` prints GATE OPEN |
+| ✅ | 5.2 Enable agent teams | `.claude/settings.json`: `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` |
+| ✅ | 5.3 Build the audit-program skill | `.claude/skills/audit-program/SKILL.md`, `build_pack.py`, `tests/` |
+| ✅ | 5.4 Build the planner | `.claude/agents/planner.md` |
+| ✅ | 5.5 Build the challenger | `.claude/agents/challenger.md` |
+| ✅ | 5.6 Build the qa-reviewer and its checks | `.claude/agents/qa-reviewer.md`; `scripts/checks/` (`run_checks.py`, `check_quotes.py`, `check_numbers.py`, `check_trace.py`, `check_samples.py`) |
+| ✅ | 5.7 Run the team | `outputs/planning-memo.md`, `risk-control-matrix.md`, `audit-program.md`, `samples/` (8 files), `challenges.md`, `review.md` (pack v4, READY FOR SIGN-OFF); team lessons in `.claude/agent-memory/` |
+| ✅ | 5.8 Sign off | The completed sign-off block at the end of `outputs/review.md` |
+
 `part-a/` is Part A exactly as completed, identical to the team's Part A
-repository. The analysis improvements made later, for Part B, are kept apart in
+repository apart from the Role and Comments fields of the sign-off block in
+`part-a/outputs/review.md`, filled in afterwards. The analysis improvements made later, for Part B, are kept apart in
 [`part-b/part-a-changes/`](part-b/part-a-changes/); see
 [Analysis changes after review](part-b/README.md#analysis-changes-after-review).
 

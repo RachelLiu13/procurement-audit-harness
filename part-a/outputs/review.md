@@ -50,6 +50,6 @@ See `outputs/challenges.md` ("For the auditor"): 5 challenges, #2, #3, #4, #6 an
       recorded my decision on each below.
 - Decision: Sign off
 - Name: Team 9
-- Role:
+- Role: Internal auditor
 - Date: 2026-10-14
-- Comments:
+- Comments: Approved for this coursework demonstration. The five challenges marked "for the auditor" (#2, #3, #4, #6 and #7 in challenges.md) are accepted as recorded there and carried forward to fieldwork; they change no rating or scope in this pack, which covers R-01 to R-07 as approved in register revision 1.
