@@ -92,7 +92,7 @@ to [`part-a/`](part-a/).
 | ✅ | 3.1 Build the spend-analyst | `.claude/agents/spend-analyst.md`; the scripts it wrote: `scripts/clean.py`, `scripts/analyse.py`, `scripts/selfcheck.py` |
 | ✅ | 3.2 Run the spend-analyst | `outputs/analytics.json`, `outputs/analytics-full/` |
 | ✅ | 3.3 Build the findings-analyst | `.claude/agents/findings-analyst.md`, `scripts/verify_history.py` |
-| ✅ | 3.4 Run the findings-analyst and check it | `outputs/history.json`, `outputs/committee-text/`; `verify_history.py` passes |
+| ✅ | 3.4 Run the findings-analyst and check it | `outputs/history.json` (every item checked by `scripts/verify_history.py`), `outputs/committee-text/` |
 | ✅ | 3.5 Build the risk-assessment skill | `.claude/skills/risk-assessment/SKILL.md`, `build_register.py`, `tests/` |
 | ✅ | 3.6 Build the risk-assessor sub-agent | `.claude/agents/risk-assessor.md` |
 | ✅ | 3.7 Run the risk-assessor and review the register | `outputs/risk-ratings.json`, `outputs/risk-register.md`, `outputs/auditor-comments.md` |
