@@ -119,8 +119,7 @@ to [`part-a/`](part-a/).
 | ✅ | 5.8 Sign off | The completed sign-off block at the end of `outputs/review.md` |
 
 `part-a/` is Part A exactly as completed, identical to the team's Part A
-repository apart from the Role and Comments fields of the sign-off block in
-`part-a/outputs/review.md`, filled in afterwards. The analysis improvements made later, for Part B, are kept apart in
+repository. The analysis improvements made later, for Part B, are kept apart in
 [`part-b/part-a-changes/`](part-b/part-a-changes/); see
 [Analysis changes after review](part-b/README.md#analysis-changes-after-review).
 
