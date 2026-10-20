@@ -30,7 +30,7 @@ import anthropic
 
 from . import config, gate
 from .agent import Agent, Cancelled, Usage
-from .team import Team
+from .team import REWORK_KICKOFF, Team
 
 PHASE1_FILES = ["rules.json", "analytics.json", "history.json", "analytics-full", "committee-text"]
 
@@ -39,7 +39,7 @@ STATUS_TEXT = {
     "awaiting_decisions": "Waiting for the auditor's decisions on the risk register",
     "awaiting_signoff": "Waiting for the auditor's sign-off",
     "complete": "Signed off",
-    "blocked": "QA verdict BLOCKED: the pack went back to the team",
+    "blocked": "Pack blocked: not ready for sign-off; it can be sent back to the team",
     "failed": "Stopped with an error",
     "cancelled": "Cancelled",
 }
@@ -344,27 +344,68 @@ class Run:
         self._stage("5 · agent team: planner, challenger, qa-reviewer")
         team = Team(self.dir, client, self.log, self.usage, self.cancel)
         team.run(out)
+        self._finish_pack(client)
 
+    def _finish_pack(self, client) -> None:
         self._stage("6 · lead report")
         lead = self._agent(client, "lead", role=LEAD_ROLE)
         report = lead.run("Write the lead's report to the auditor now.")
         self.log("lead", "report", report)
-        self._script("final checks", "scripts/checks/run_checks.py")
+        # The exit code of the final checks decides, not only the verdict an agent wrote in review.md.
+        code, _ = self._script("final checks", "scripts/checks/run_checks.py")
         review = self.outputs / "review.md"
-        verdict = ""
-        if review.exists():
-            text = review.read_text(encoding="utf-8")
-            verdict = "READY FOR SIGN-OFF" if "Verdict: READY FOR SIGN-OFF" in text else (
-                "BLOCKED" if "Verdict: BLOCKED" in text else "")
-        status = "awaiting_signoff" if verdict == "READY FOR SIGN-OFF" else "blocked"
+        status, verdict = gate.pack_verdict(code, review.read_text(encoding="utf-8") if review.exists() else None)
+        if status == "blocked":
+            self.log("lead", "status", f"Pack blocked: {verdict}. It can be sent back to the team.")
         self.save(status=status, stage="Gate 2 · auditor sign-off" if status == "awaiting_signoff"
-                  else "Pack blocked", lead_report=report, verdict=verdict or "no review.md")
+                  else "Pack blocked", lead_report=report, verdict=verdict,
+                  error=None if status == "awaiting_signoff" else verdict)
+
+    # ------------------------------------------------------------- rework
+    def send_back(self, instructions: str, reason: str) -> None:
+        """Send the pack back to the agent team, with the auditor's points as its instructions.
+        Used when the auditor returns the pack at sign-off, and after a BLOCKED pack."""
+        if not instructions.strip():
+            raise RuntimeError("Say what the team should address.")
+        self._background(lambda client: self._rework(client, instructions.strip(), reason))
+
+    def _rework(self, client, instructions: str, reason: str) -> None:
+        n = int(self.state().get("rework_round") or 0) + 1
+        archived = f"review-returned-{n}.md"
+        review = self.outputs / "review.md"
+        if review.exists():  # kept as history; the qa-reviewer writes a new review.md
+            review.rename(self.outputs / archived)
+        self.save(rework_round=n, lead_report=None, final_report=None, final_report_status=None, verdict=None)
+        self.log("lead", "status", f"Rework round {n} ({reason}). The team is asked to address:\n{instructions}")
+
+        code, out = self._script("gate", ".claude/skills/audit-program/build_pack.py", "--gate")
+        if code != 0:
+            self.save(status="awaiting_decisions", stage="Gate 1 · auditor decisions", gate_output=out)
+            self.log("lead", "status", "Gate closed: the auditor must complete or change the decisions.")
+            return
+        self._stage(f"5 · agent team: rework round {n}")
+        team = Team(self.dir, client, self.log, self.usage, self.cancel)
+        team.run(out, kickoff=REWORK_KICKOFF, instructions=instructions, reason=reason,
+                 round=str(n), archived=f"outputs/{archived}")
+        self._finish_pack(client)
 
     def sign_off(self, decision: str, name: str, role: str, comments: str) -> None:
+        if decision != "Sign off":  # check the team can start before the return is recorded
+            if not comments.strip():
+                raise RuntimeError("Say in Comments what the team should change.")
+            if not config.api_key():
+                raise RuntimeError("ANTHROPIC_API_KEY is not configured on the server.")
+            if Run.active_count() >= config.MAX_ACTIVE_RUNS:
+                raise RuntimeError("Another run is already working on this server. Try again when it reaches a gate.")
         gate.sign_off(self.outputs, decision, name, role, dt.date.today().isoformat(), comments)
         self.log("auditor", "decision", f"Sign-off: {decision} by {name}")
-        self.save(status="complete" if decision == "Sign off" else "blocked",
-                  stage="Signed off" if decision == "Sign off" else "Returned to the team")
+        if decision != "Sign off":
+            # Returned: the auditor's comments go to the team as its instructions, and the revised
+            # pack comes back to this gate. (The final report is for a pack that is signed off.)
+            self.save(stage="Returned to the team")
+            self.send_back(comments, f"returned by the auditor, {name}")
+            return
+        self.save(status="complete", stage="Signed off")
         if config.api_key():
             self.start_final_report()
 

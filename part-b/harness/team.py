@@ -31,6 +31,29 @@ KICKOFF = {
                     "PACK READY v1 arrives; end your turn now. You will be woken when it does."),
 }
 
+# A pack sent back to the team (by the auditor at sign-off, or after a BLOCKED QA verdict). The same
+# three teammates run their protocols again on the next pack version, aimed at what was raised.
+REWORK_KICKOFF = {
+    "planner": ("The pack has been sent back to the team ({reason}, rework round {round}). The approval gate "
+                "is still open (output below). Your teammates are `challenger` and `qa-reviewer`.\n\n"
+                "What to address:\n{instructions}\n\n"
+                "Read the previous review ({archived}), outputs/challenges.md and your outputs/audit-plan.json. "
+                "Revise the plan to address these points within the approved scope: you never re-rate a risk "
+                "or change scope, so record anything that needs that \"for the auditor\" in the memo's "
+                "Limitations. Rebuild with build_pack.py until it passes, then announce PACK READY with the "
+                "next version number to both teammates and handle messages as they arrive.\n\nGate output:\n{gate}"),
+    "challenger": ("The pack has been sent back to the team ({reason}, rework round {round}). Your teammates are "
+                   "`planner` and `qa-reviewer`. The planner is revising the pack to address:\n{instructions}\n\n"
+                   "Read the previous review ({archived}) and challenges.md now, then end your turn; you will be "
+                   "woken when the planner's next PACK READY arrives. Review that version, checking first that "
+                   "these points are addressed. Send nothing before it."),
+    "qa-reviewer": ("The pack has been sent back to the team ({reason}, rework round {round}); the previous "
+                    "review is archived as {archived} and outputs/review.md no longer exists. Your teammates are "
+                    "`planner` and `challenger`. Do nothing until the planner's next PACK READY arrives; end your "
+                    "turn now. Then run your protocol on that version and, after PLANNER DONE and CHALLENGER DONE, "
+                    "write a new outputs/review.md, carrying over the review history from {archived}."),
+}
+
 LEAD_REPLY = ("Lead: I have no information beyond the inputs, the register and auditor-comments.md. "
               "Decide within your instructions; where they do not allow it, record the point "
               "\"for the auditor\" and carry on.")
@@ -108,9 +131,9 @@ class Team:
                 return f"{frm}: {msg}"
         return None
 
-    def run(self, gate_output: str) -> None:
+    def run(self, gate_output: str, kickoff: dict[str, str] | None = None, **fields: str) -> None:
         queue = deque(TEAM)
-        first = {n: KICKOFF[n].format(gate=gate_output) for n in TEAM}
+        first = {n: (kickoff or KICKOFF)[n].format(gate=gate_output, **fields) for n in TEAM}
         turns = 0
         while turns < config.MAX_TEAM_TURNS:
             if {"PLANNER DONE", "CHALLENGER DONE", "QA DONE"} <= self.done:

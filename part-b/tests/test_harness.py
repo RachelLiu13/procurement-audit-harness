@@ -206,6 +206,86 @@ def test_sign_off_writes_final_lead_report_and_keeps_the_first():
     assert "Team 9" in (run.outputs / "lead-report-after-sign-off.md").read_text()
 
 
+def test_failed_final_checks_block_sign_off_whatever_review_md_says():
+    ready = "## Verdict: READY FOR SIGN-OFF\n"
+    assert gate.pack_verdict(0, ready) == ("awaiting_signoff", "READY FOR SIGN-OFF")
+    status, verdict = gate.pack_verdict(1, ready)  # the agent wrote READY, the checks failed
+    assert status == "blocked" and "final QA checks failed" in verdict and "said READY" in verdict
+    assert gate.pack_verdict(0, "## Verdict: BLOCKED\n")[0] == "blocked"
+    assert gate.pack_verdict(0, "no verdict here")[0] == "blocked"
+    assert gate.pack_verdict(0, None) == ("blocked", "BLOCKED: no review.md")
+
+
+SIGN_OFF_REVIEW = ("# QA review\n\n## Verdict: READY FOR SIGN-OFF\n\n## Auditor sign-off\n\n"
+                   "- [ ] I have read planning-memo.md\n- [ ] I accept the challenges\n"
+                   "- Decision: Sign off / Return to the team\n- Name:\n- Role:\n- Date:\n- Comments:\n")
+
+
+def test_return_without_comments_is_refused_and_records_nothing():
+    os.environ.setdefault("ANTHROPIC_API_KEY", "sk-ant-test-not-used")
+    run = new_run()
+    (run.outputs / "review.md").write_text(SIGN_OFF_REVIEW)
+    run.save(status="awaiting_signoff")
+    try:
+        run.sign_off("Return to the team", "Team 9", "Internal auditor", "  ")
+        raise AssertionError("a return with no comments must be refused")
+    except RuntimeError:
+        pass
+    assert (run.outputs / "review.md").read_text() == SIGN_OFF_REVIEW
+    assert run.state()["status"] == "awaiting_signoff"
+
+
+def test_return_to_team_reworks_the_pack_and_comes_back_to_sign_off():
+    import time
+    os.environ.setdefault("ANTHROPIC_API_KEY", "sk-ant-test-not-used")
+    run = new_run()
+    (run.outputs / "review.md").write_text(SIGN_OFF_REVIEW)
+    run.save(status="awaiting_signoff", lead_report="Ready for your sign-off.")
+    new_review = "# QA review\n\n## Verdict: READY FOR SIGN-OFF\n\nv2\n"
+    client = FakeClient({
+        "planner": [
+            resp(tool("p1", "SendMessage", to="challenger", message="PACK READY v2"),
+                 tool("p2", "SendMessage", to="qa-reviewer", message="PACK READY v2"), stop="tool_use"),
+            resp(text("announced")),
+            resp(tool("p3", "SendMessage", to="lead", message="PLANNER DONE v2"), stop="tool_use"),
+            resp(text("done")),
+        ],
+        "challenger": [
+            resp(tool("c1", "SendMessage", to="lead", message="CHALLENGER DONE"), stop="tool_use"),
+            resp(text("sent")),
+        ],
+        "QA reviewer": [
+            resp(tool("q1", "SendMessage", to="planner", message="QA v2: PASS"),
+                 tool("q2", "Write", file_path="outputs/review.md", content=new_review),
+                 tool("q3", "SendMessage", to="lead", message="QA DONE v2: READY FOR SIGN-OFF"), stop="tool_use"),
+            resp(text("review written")),
+        ],
+        "lead (the main session)": [resp(text("Revised pack v2 is ready for your sign-off."))],
+    })
+    run._client = lambda: client
+    scripts = []
+
+    def fake_script(label, *args):
+        scripts.append(label)
+        return (0, "GATE OPEN: register revision 1") if "--gate" in args else (0, "VERDICT: READY FOR SIGN-OFF")
+    run._script = fake_script
+
+    run.sign_off("Return to the team", "Team 9", "Internal auditor", "Add a CPR-38 step to T-03-1.")
+    for _ in range(200):
+        if run.state().get("status") != "running":
+            break
+        time.sleep(0.05)
+    s = run.state()
+    assert s["status"] == "awaiting_signoff" and s["rework_round"] == 1, s
+    assert s["lead_report"] == "Revised pack v2 is ready for your sign-off."
+    assert scripts == ["gate", "final checks"]
+    archived = (run.outputs / "review-returned-1.md").read_text()
+    assert "- Decision: Return to the team" in archived and "Add a CPR-38 step" in archived
+    assert (run.outputs / "review.md").read_text() == new_review
+    planner_kickoff = next(r for r in client.requests if "You are the planner" in r["system"][0]["text"])
+    assert "Add a CPR-38 step to T-03-1." in planner_kickoff["messages"][0]["content"]
+
+
 def test_gate_files_round_trip():
     run = new_run()
     (run.outputs / "auditor-comments.md").write_text(

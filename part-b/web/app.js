@@ -282,7 +282,8 @@ async function renderAction(id, s) {
       <label><input type="radio" name="d" value="Return to the team"> Return to the team</label></div>
       <label class="f">Name</label><input type="text" name="name" required>
       <label class="f">Role</label><input type="text" name="role" value="Internal auditor">
-      <label class="f">Comments</label><textarea name="comments"></textarea>
+      <label class="f">Comments</label><textarea name="comments" placeholder="Required to return the pack: what the team should change"></textarea>
+      <p class="muted small">Return to the team sends your comments to the planner, challenger and qa-reviewer; the revised pack comes back here for sign-off.</p>
       <p><button class="primary">Record decision in review.md</button></p></form></div>` + zip;
     $("#so").onsubmit = async (e) => {
       e.preventDefault();
@@ -292,7 +293,20 @@ async function renderAction(id, s) {
         lastStatus = null; tick(id);
       } catch (err) { alert(err.message); }
     };
-  } else if (["complete", "blocked"].includes(s.status)) {
+  } else if (s.status === "blocked") {
+    el.innerHTML = lead + `<div class="card"><h2>Send the pack back to the team</h2>
+      <p class="muted small">The pack is not ready for sign-off (${esc(s.verdict || "blocked")}). Read review.md under Outputs,
+      then tell the team what to fix. The planner revises the pack, the challenger and qa-reviewer check it again,
+      and it comes back to Gate 2.</p>
+      <form id="rw"><label class="f">What the team should address</label><textarea name="instructions" required></textarea>
+      <p><button class="primary">Send back to the team</button></p></form></div>` + zip;
+    $("#rw").onsubmit = async (e) => {
+      e.preventDefault();
+      const f = new FormData(e.target);
+      try { await api(base + "/rework", { method: "POST", json: { instructions: f.get("instructions") } }); lastStatus = null; tick(id); }
+      catch (err) { alert(err.message); }
+    };
+  } else if (s.status === "complete") {
     el.innerHTML = lead + zip;
   } else {
     el.innerHTML = `<p class="muted">Start a new run from the left to try again.</p>`;

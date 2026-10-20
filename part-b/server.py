@@ -150,8 +150,26 @@ def sign_off(run_id: str, body: SignOff) -> dict:
         raise HTTPException(409, "The pack is not waiting for sign-off.")
     if body.decision not in {"Sign off", "Return to the team"} or not body.name.strip():
         raise HTTPException(422, "Choose a decision and enter your name.")
-    run.sign_off(body.decision, body.name.strip(), body.role.strip(), body.comments.strip())
-    return {"ok": True}
+    if body.decision == "Return to the team" and not body.comments.strip():
+        raise HTTPException(422, "To return the pack, say in Comments what the team should change.")
+    return _act(lambda: run.sign_off(body.decision, body.name.strip(), body.role.strip(), body.comments.strip()))
+
+
+class Rework(BaseModel):
+    instructions: str
+
+
+@app.post("/api/runs/{run_id}/rework", dependencies=[Depends(check_password)])
+def rework(run_id: str, body: Rework) -> dict:
+    """Send a blocked pack back to the agent team with the auditor's instructions."""
+    run = get_run(run_id)
+    if run.state().get("status") != "blocked":
+        raise HTTPException(409, "Only a blocked pack can be sent back to the team.")
+    if not body.instructions.strip():
+        raise HTTPException(422, "Say what the team should address.")
+    if not config.api_key():
+        raise HTTPException(503, "ANTHROPIC_API_KEY is not configured on the server.")
+    return _act(lambda: run.send_back(body.instructions, "the pack was blocked"))
 
 
 @app.post("/api/runs/{run_id}/final-report", dependencies=[Depends(check_password)])

@@ -67,6 +67,24 @@ def write_decisions(outputs: Path, decisions: dict[str, tuple[str, str]], other:
     path.write_text(text, encoding="utf-8")
 
 
+def pack_verdict(checks_exit: int, review_text: str | None) -> tuple[str, str]:
+    """Whether the pack may go to the auditor for sign-off: (run status, verdict).
+
+    The final run of scripts/checks/run_checks.py decides by its exit code; review.md, which an
+    agent writes, must also say READY FOR SIGN-OFF. A failed check blocks the pack whatever
+    review.md says, so a wrong verdict in review.md can never open the sign-off gate."""
+    if review_text is None:
+        return "blocked", "BLOCKED: no review.md"
+    said = ("READY FOR SIGN-OFF" if "Verdict: READY FOR SIGN-OFF" in review_text
+            else "BLOCKED" if "Verdict: BLOCKED" in review_text else "")
+    if checks_exit != 0:
+        return "blocked", "BLOCKED: the final QA checks failed" + (
+            " (review.md said READY FOR SIGN-OFF)" if said == "READY FOR SIGN-OFF" else "")
+    if said == "READY FOR SIGN-OFF":
+        return "awaiting_signoff", said
+    return "blocked", said or "BLOCKED: review.md has no verdict"
+
+
 AFTER_SIGN_OFF = "**Status after sign-off:**"
 DECIDED_HEADING = "## Auditor decisions at sign-off"
 

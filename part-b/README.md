@@ -37,8 +37,15 @@ also installs `pdftotext` (poppler) for the PDF quote checks.
 | **Gate 1** | **The auditor approves, amends or rejects each risk in the web UI** | `auditor-comments.md` filled in |
 | 4 | `risk-assessor` issues the revision; the harness runs `build_pack.py --gate` | register revision, gate open |
 | 5 | Agent team: `planner` (+ `audit-program` skill), `challenger`, `qa-reviewer` | planning memo, risk-control matrix, audit program, samples, `challenges.md`, `review.md` |
-| 6 | Lead report | summary for the auditor |
-| **Gate 2** | **The auditor signs off (or returns) the pack in the web UI** | `review.md` signed |
+| 6 | Lead report; the harness re-runs the four QA checks (`run_checks.py`) | summary for the auditor; sign-off opens only if the checks exit 0 **and** `review.md` says READY FOR SIGN-OFF |
+| **Gate 2** | **The auditor signs off or returns the pack in the web UI** | `review.md` signed |
+
+**Returned or blocked packs go back to the team.** If the auditor chooses
+*Return to the team* (Comments are then required), or the pack is blocked
+because a final check failed, the auditor's points are sent to the agent team
+as instructions. The previous review is kept as `review-returned-N.md`; the
+planner revises the pack, the challenger and qa-reviewer check the new version,
+and stages 5 and 6 run again, ending back at Gate 2.
 
 Every file the agents read and write is the same as in Part A, so Part A's
 Python builders and its four QA checks run as they are (apart from the
